@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   version="1.0"
+   width="124.99999pt"
+   height="93.868538pt"
+   viewBox="0 0 124.99999 93.868538"
+   preserveAspectRatio="xMidYMid"
+   id="svg14"
+   sodipodi:docname="shedhaus_logo_menu_large1111.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs18" />
+  <sodipodi:namedview
+     id="namedview16"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="pt"
+     showgrid="false" />
+  <g
+     transform="matrix(0.1,0,0,-0.1,-1.0000001,94.868545)"
+     fill="#000000"
+     stroke="none"
+     id="g12"
+     style="fill:#860000;fill-opacity:1">
+    <path
+       d="M 430,836 C 317,769 178,685 120,649 L 15,585 12,497 c -1,-48 -1,-87 2,-87 2,0 53,31 113,69 161,101 500,301 510,301 7,0 253,-147 591,-352 l 32,-20 v 89 88 L 967,759 C 807,855 666,939 655,946 638,956 609,942 430,836 Z"
+       id="path2"
+       style="fill:#860000;fill-opacity:1" />
+    <path
+       d="M 433,553 240,438 V 229 20 h 60 60 l 2,161 3,160 136,80 136,80 137,-82 136,-82 V 179 20 h 65 65 l -2,207 -3,207 -195,118 C 733,616 641,669 635,669 630,669 538,617 433,553 Z"
+       id="path4"
+       style="fill:#860000;fill-opacity:1" />
+    <path
+       d="M 547,337 460,285 V 158 30 h 175 175 v 128 127 l -52,32 c -29,17 -69,40 -88,52 l -35,20 z"
+       id="path6"
+       style="fill:#860000;fill-opacity:1" />
+    <path
+       d="M 73,332 10,295 V 153 10 h 65 65 v 180 c 0,99 -1,180 -2,180 -2,0 -31,-17 -65,-38 z"
+       id="path8"
+       style="fill:#860000;fill-opacity:1" />
+    <path
+       d="M 1130,191 V 10 h 65 65 v 143 142 l -57,35 c -32,19 -61,37 -65,38 -5,2 -8,-78 -8,-177 z"
+       id="path10"
+       style="fill:#860000;fill-opacity:1" />
+  </g>
+</svg>
