@@ -11,7 +11,7 @@ export default async function Page() {
         description={`Details about ${CONTACT_PAGE_SLUG}`}
       />
       <div className="flex flex-col items-center justify-center w-screen">
-        <ContactFooter className="-mt-12" />
+        <ContactFooter />
       </div>
     </>
   );

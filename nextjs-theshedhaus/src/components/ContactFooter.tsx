@@ -17,7 +17,7 @@ import {
 import { faFacebook, faInstagram } from "@fortawesome/free-brands-svg-icons";
 import { ActionButton } from "./buttons/ActionButton";
 
-export const ContactFooter = () => {
+export const ContactFooter = ({ className }: { className?: string }) => {
   // Form state management
   const [formData, setFormData] = useState({
     name: "",
@@ -112,7 +112,7 @@ export const ContactFooter = () => {
 
   return (
     <section
-      className={`relative w-full my-12 md:my-36 py-12 md:py-24 overflow-hidden bg-[#fafafa] ${!isContactPage ? "py-12 md:py-24" : "mt-12"}`}
+      className={`relative w-full my-12 md:my-36 py-12 md:py-24 overflow-hidden bg-[#fafafa] ${!isContactPage ? "py-12 md:py-24" : "mt-12"} ${className || ""}`}
     >
       {/* 1. Background Map Layer (Using responsive Next.js Image component with dummy source) */}
       <div className="absolute inset-0 w-full h-full z-0">
