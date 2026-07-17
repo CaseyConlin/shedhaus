@@ -5,7 +5,7 @@ import { Geist, Geist_Mono, Montserrat, Inter } from "next/font/google";
 import "./globals.css";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
-import { ContactFooter } from "@/components/ContactFooter";
+import { ConditionallyRenderContactFooter } from "@/components/ConditionallyRenderContactFooter";
 
 config.autoAddCss = false;
 
@@ -47,7 +47,7 @@ export default function RootLayout({
       <body>
         <Navbar />
         {children}
-        <ContactFooter />
+        <ConditionallyRenderContactFooter />
         <Footer />
       </body>
     </html>

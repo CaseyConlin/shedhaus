@@ -6,7 +6,9 @@ interface H2Props extends React.HTMLAttributes<HTMLHeadingElement> {
 
 export const H2 = ({ text, className }: H2Props) => {
   return (
-    <h2 className={`text-2xl font-black text-center ${className || ""}`}>
+    <h2
+      className={`text-2xl font-black font-montserrat text-center ${className || ""}`}
+    >
       {text}
     </h2>
   );

@@ -1,6 +1,10 @@
 "use client";
-import { ChevronRightIcon } from "@heroicons/react/24/outline";
+import {
+  faChevronRight,
+  faChevronLeft,
+} from "@fortawesome/free-solid-svg-icons";
 import { useRef } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { XRayCard } from "@/components/shedxray/XrayCard";
 import type { ArrowHotspot } from "@/components/shedxray/ShedXray";
 export const CardCarousel = ({
@@ -84,17 +88,22 @@ export const CardCarousel = ({
         <button
           type="button"
           onClick={() => scrollCards("left")}
-          className="transform -rotate-180"
           aria-label="Scroll cards left"
         >
-          <ChevronRightIcon className="h-7 w-7 stroke-5 text-primary" />
+          <FontAwesomeIcon
+            icon={faChevronLeft}
+            className="stroke-10 text-3xl text-primary"
+          />
         </button>
         <button
           type="button"
           onClick={() => scrollCards("right")}
           aria-label="Scroll cards right"
         >
-          <ChevronRightIcon className="h-7 w-7 stroke-5 text-primary" />
+          <FontAwesomeIcon
+            icon={faChevronRight}
+            className="stroke-5 text-3xl text-primary"
+          />
         </button>
       </div>
     </div>

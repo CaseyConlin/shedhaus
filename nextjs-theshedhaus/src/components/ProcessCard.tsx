@@ -1,0 +1,35 @@
+import { Body } from "./text/Body";
+interface ProcessCardProps {
+  title: string;
+  description: string[];
+  icon: React.ReactNode;
+  odd: boolean;
+}
+export const ProcessCard = ({
+  title,
+  description,
+  icon,
+  odd,
+}: ProcessCardProps) => {
+  return (
+    <div
+      className={`relative flex flex-col-reverse md:${odd ? "flex-row-reverse" : "flex-row"} items-center justify-start gap-4 w-full max-w-2xl text-center z-10`}
+    >
+      <div
+        className="absolute md:hidden left-1/2 -translate-x-1/2 top-18.75 h-4 w-1 bg-primary z-0"
+        aria-hidden="true"
+      />
+      <div className="flex-1 flex flex-col items-start justify-start gap-2 w-full border rounded-md p-4 md:p-4 shadow-xl bg-white">
+        <h3 className="text-lg font-bold text-primary text-start">{title}</h3>
+        <Body text={description} className="text-start" />
+      </div>
+      <div className="relative w-[75px] h-[75px] flex items-center justify-center shrink-0 z-10">
+        <div className="w-[73px] h-[73px] rounded-full bg-primary flex items-center justify-center shadow-md">
+          <div className="w-[52px] h-[52px] flex items-center justify-center text-white font-black text-sm">
+            {icon}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};

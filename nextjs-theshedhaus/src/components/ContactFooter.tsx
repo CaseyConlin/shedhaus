@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, FormEvent } from "react";
+import { usePathname } from "next/navigation";
+
 import Image from "next/image";
 import { H2 } from "./text/H2";
 import { Body } from "./text/Body";
@@ -14,7 +16,7 @@ import {
 import { faFacebook, faInstagram } from "@fortawesome/free-brands-svg-icons";
 import { ActionButton } from "./buttons/ActionButton";
 
-export const ContactFooter = () => {
+export const ContactFooter = ({ className }: { className?: string }) => {
   // Form state management
   const [formData, setFormData] = useState({
     name: "",
@@ -22,6 +24,11 @@ export const ContactFooter = () => {
     phone: "",
     message: "",
   });
+
+  const pathname = usePathname();
+  const isContactPage = ["/contact"].some(
+    (path) => pathname === path || pathname === `${path}/`,
+  );
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -47,7 +54,9 @@ export const ContactFooter = () => {
   };
 
   return (
-    <section className="relative w-full my-36 py-12 md:py-24 overflow-hidden bg-[#fafafa] ">
+    <section
+      className={`relative w-full my-12 md:my-36 py-12 md:py-24 overflow-hidden bg-[#fafafa] ${!isContactPage ? "py-12 md:py-24" : "mt-12"}`}
+    >
       {/* 1. Background Map Layer (Using responsive Next.js Image component with dummy source) */}
       <div className="absolute inset-0 w-full h-full z-0">
         <Image

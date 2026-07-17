@@ -371,7 +371,7 @@ export const Navbar = () => {
       className="relative w-full z-50 bg-white"
       onMouseLeave={() => setHoveredLink(null)}
     >
-      <nav className="flex items-center justify-between w-full font-montserrat px-4 md:px-0">
+      <nav className="flex items-center justify-between w-full font-montserrat px-2 md:px-0">
         {/* ========================================================
             MOBILE HEADER (Matches shNavMobile.png layout precisely)
             ======================================================== */}

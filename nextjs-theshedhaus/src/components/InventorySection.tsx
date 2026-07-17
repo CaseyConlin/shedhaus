@@ -47,22 +47,22 @@ export const InventorySection = () => {
         <InventoryItem
           title="Sheds"
           imgSrc="/images/sheds.png"
-          link="/inventory/sheds"
+          link="/structures/sheds"
         />
         <InventoryItem
           title="Barns"
           imgSrc="/images/barns.jpg"
-          link="/inventory/barns"
+          link="/structures/barns"
         />
         <InventoryItem
           title="Gazebos"
           imgSrc="/images/gazebos.jpg"
-          link="/inventory/gazebos"
+          link="/structures/gazebos"
         />
         <InventoryItem
           title="Pergolas"
           imgSrc="/images/pergolas.jpg"
-          link="/inventory/pergolas"
+          link="/structures/pergolas"
         />
       </div>
       <div className="flex flex-col md:flex-row items-center justify-center gap-4 ">
