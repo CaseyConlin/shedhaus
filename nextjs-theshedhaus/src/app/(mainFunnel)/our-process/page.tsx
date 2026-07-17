@@ -2,11 +2,9 @@ import { PageHeader } from "@/components/text/PageHeader";
 import { SideBarCard } from "@/components/SideBarCard";
 import { ProcessCard } from "@/components/ProcessCard";
 import { LinkButton } from "@/components/buttons/LinkButton";
-export default async function Page({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
+const OUR_PROCESS_PAGE_SLUG = "our-process";
+
+export default async function Page() {
   const processSteps = [
     {
       title: "Explore & Select Your Style",
@@ -118,8 +116,7 @@ export default async function Page({
     },
   ];
 
-  const { slug } = await params;
-  //   const OUR_WORK_QUERY = `*[_type == "ourWork" && slug.current == "${slug}"]`;
+  //   const OUR_WORK_QUERY = `*[_type == "ourWork" && slug.current == "${OUR_PROCESS_PAGE_SLUG}"]`;
 
   //   const ourWorkData = await sanityFetchData(OUR_WORK_QUERY);
 
@@ -127,7 +124,10 @@ export default async function Page({
 
   return (
     <>
-      <PageHeader title={slug} description={`Details about ${slug}`} />
+      <PageHeader
+        title={OUR_PROCESS_PAGE_SLUG}
+        description={`Details about ${OUR_PROCESS_PAGE_SLUG}`}
+      />
       <div className="flex flex-col items-center justify-center w-screen">
         <div className="flex flex-col md:flex-row items-start justify-center max-w-6xl md:gap-15 py-4 md:py-8md:px-0">
           <div className="flex-3 flex flex-col justify-start items-start min-w-screen md:min-w-xl  px-4 md:px-0">
@@ -150,7 +150,7 @@ export default async function Page({
               </div>
             ))}
           </div>
-          <div className="hidden md:flex flex-1 flex-col items-start justify-start w-full">
+          <div className="hidden md:flex flex-1 flex-col items-start justify-start w-full lg:sticky lg:top-8">
             <SideBarCard
               topBadgeTitle="We’re Your Project Partner"
               bannerTitle="Not just a shed purchase"

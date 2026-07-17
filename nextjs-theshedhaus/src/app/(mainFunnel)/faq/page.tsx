@@ -1,11 +1,9 @@
 import { PageHeader } from "@/components/text/PageHeader";
 import { SideBarCard } from "@/components/SideBarCard";
 import { FAQDropdown } from "@/components/text/FAQDropdown";
-export default async function Page({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
+const FAQ_PAGE_SLUG = "faq";
+
+export default async function Page() {
   const faqs = [
     {
       question: "Do you offer shipping?",
@@ -91,8 +89,7 @@ export default async function Page({
     },
   ];
 
-  const { slug } = await params;
-  //   const OUR_WORK_QUERY = `*[_type == "ourWork" && slug.current == "${slug}"]`;
+  //   const OUR_WORK_QUERY = `*[_type == "ourWork" && slug.current == "${FAQ_PAGE_SLUG}"]`;
 
   //   const ourWorkData = await sanityFetchData(OUR_WORK_QUERY);
 
@@ -100,9 +97,12 @@ export default async function Page({
 
   return (
     <>
-      <PageHeader title={slug} description={`Details about ${slug}`} />
+      <PageHeader
+        title={FAQ_PAGE_SLUG}
+        description={`Details about ${FAQ_PAGE_SLUG}`}
+      />
       <div className="flex flex-col items-center justify-center w-screen">
-        <div className="flex flex-col md:flex-row items-start justify-center max-w-6xl md:gap-10 py-4 md:py-8md:px-0">
+        <div className="flex flex-col md:flex-row items-start justify-center max-w-6xl md:gap-10 py-4 md:py-8md:px-0 ">
           <div className="flex-3 flex flex-col justify-start items-start min-w-screen md:min-w-xl gap-4 px-4 md:px-0">
             {faqs.map((item, index) => (
               <FAQDropdown
@@ -112,7 +112,7 @@ export default async function Page({
               />
             ))}
           </div>
-          <div className="hidden md:flex flex-1 flex-col items-start justify-start w-full">
+          <div className="hidden md:flex flex-1 flex-col items-start justify-start w-full lg:sticky lg:top-8">
             <SideBarCard
               topBadgeTitle="Still have questions?"
               bodyText={[

@@ -4,11 +4,10 @@ import { TeamCard } from "@/components/text/TeamCard";
 import { H2 } from "@/components/text/H2";
 import { Body } from "@/components/text/Body";
 import { ListItemWithLead } from "@/components/text/ListItemWithLead";
-export default async function Page({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
+
+const ABOUT_PAGE_SLUG = "about";
+
+export default async function Page() {
   const teamMembers = [
     {
       name: "Christine",
@@ -107,19 +106,20 @@ export default async function Page({
     },
   ];
 
-  const { slug } = await params;
-  //   const OUR_WORK_QUERY = `*[_type == "ourWork" && slug.current == "${slug}"]`;
+  // const pageQuery = `*[_type == "page" && slug.current == $slug][0]`;
+  // const pageData = await client.fetch(pageQuery, { slug: ABOUT_PAGE_SLUG });
 
-  //   const ourWorkData = await sanityFetchData(OUR_WORK_QUERY);
-
-  //   const { title, body } = ourWorkData[0];
+  // const { title, body } = pageData;
 
   return (
     <>
-      <PageHeader title={slug} description={`Details about ${slug}`} />
+      <PageHeader
+        title={ABOUT_PAGE_SLUG}
+        description={`Details about ${ABOUT_PAGE_SLUG}`}
+      />
       <div className="flex flex-col items-center justify-center w-screen">
         <div className="flex flex-col md:flex-row items-start justify-center max-w-6xl md:gap-10 py-4 md:py-8md:px-0">
-          <div className="hidden md:flex flex-1 flex-col items-start justify-start w-full">
+          <div className="hidden md:flex flex-1 flex-col items-start justify-start w-full lg:sticky lg:top-8">
             <SideBarCard
               bodyText={[
                 "Our outdoor display lot on Route 22 in Pawling is always open and unlocked. Stop by anytime to inspect our construction quality firsthand or connect with our team to start a custom design.",

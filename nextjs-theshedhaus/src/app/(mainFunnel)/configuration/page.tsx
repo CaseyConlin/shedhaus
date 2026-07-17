@@ -165,16 +165,15 @@ const WINDOWS_SECTION: DesignSectionProps = {
 
 import { PageHeader } from "@/components/text/PageHeader";
 
-export default async function Page({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const { slug } = await params;
+const CONFIGURATION_PAGE_SLUG = "configuration";
 
+export default async function Page() {
   return (
     <>
-      <PageHeader title={slug} description={`Details about ${slug}`} />
+      <PageHeader
+        title={CONFIGURATION_PAGE_SLUG}
+        description={`Details about ${CONFIGURATION_PAGE_SLUG}`}
+      />
       <DesignOptionsPage
         sections={[
           SIDING_SECTION,

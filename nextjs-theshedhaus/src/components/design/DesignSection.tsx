@@ -4,7 +4,9 @@ import {
   MediumLandscapeCard,
 } from "./DesignOptionsCards";
 import type { SidingItem, SwatchItem, MediumItem } from "./DesignOptionsCards";
-import { DesignCarousel } from "./DesignCarousel";
+import { SidingCarousel } from "./SidingCarousel";
+import { SwatchCarousel } from "./SwatchCarousel";
+import { MediumCarousel } from "./MediumCarousel";
 import { H2 } from "../text/H2";
 import { Body } from "../text/Body";
 
@@ -110,80 +112,24 @@ export const DesignSection = ({
   subSections,
 }: DesignSectionProps) => {
   return (
-    // <section id={id} className="scroll-mt-24 space-y-2 pb-12">
     <section id={id} className="scroll-mt-24 space-y-2 pb-12 w-full min-w-0">
       <div>
         <H2 text={sectionTitle} className="text-primary text-left" />
         <Body className="text-left mb-4" text={[sectionDescription]} />
       </div>
-      <div className="hidden sm:grid grid-cols-1 gap-2">
+      <div className="hidden md:grid grid-cols-1 gap-2">
         {subSections?.map((subSection) => (
           <div key={subSection.id} id={subSection.id} className="scroll-mt-24">
             {renderSubSectionItems(subSection)}
           </div>
         ))}
       </div>
-      {/* <div className="md:hidden flex flex-col items-center w-full max-w-full overflow-hidden"> */}
-      {/* <div className="md:hidden flex flex-col items-center w-full max-w-full">
-        <DesignCarousel>
-          {subSections?.map((subSection) => {
-            if (subSection.cardType === "siding") {
-              return (subSection.items as SidingItem[]).map((item) => (
-                <div
-                  key={item.id}
-                  // className="snap-center shrink-0"
-                  className=" shrink-0"
-                  style={{ minWidth: "85vw", maxWidth: "85vw" }}
-                >
-                  <SidingLargeCard item={item} />
-                </div>
-              ));
-            }
-            if (subSection.cardType === "swatch") {
-              return (subSection.items as SwatchItem[]).map((item) => (
-                <div
-                  key={item.id}
-                  // className="snap-center shrink-0"
-                  className=" shrink-0"
-                  style={{ minWidth: "100px", maxWidth: "100px" }}
-                >
-                  <SwatchSmallCard item={item} />
-                </div>
-              ));
-            }
-            if (subSection.cardType === "medium") {
-              return (subSection.items as MediumItem[]).map((item) => (
-                <div
-                  key={item.id}
-                  // className="snap-center shrink-0"
-                  className=" shrink-0"
-                  style={{ minWidth: "85vw", maxWidth: "85vw" }}
-                >
-                  <MediumLandscapeCard item={item} />
-                </div>
-              ));
-            }
-            return null;
-          })}
-        </DesignCarousel>
-        
-      </div>*/}
       <div className="md:hidden flex flex-col items-center w-full max-w-full space-y-8">
         {subSections?.map((subSection) => {
           if (subSection.cardType === "siding") {
             return (
               <div key={subSection.id} className="w-full">
-                <DesignCarousel>
-                  {(subSection.items as SidingItem[]).map((item) => (
-                    <div
-                      key={item.id}
-                      className=" shrink-0"
-                      style={{ minWidth: "85vw", maxWidth: "85vw" }} // Keep your existing widths
-                    >
-                      <SidingLargeCard item={item} />
-                    </div>
-                  ))}
-                </DesignCarousel>
+                <SidingCarousel items={subSection.items as SidingItem[]} />
               </div>
             );
           }
@@ -191,17 +137,7 @@ export const DesignSection = ({
           if (subSection.cardType === "swatch") {
             return (
               <div key={subSection.id} className="w-full">
-                <DesignCarousel>
-                  {(subSection.items as SwatchItem[]).map((item) => (
-                    <div
-                      key={item.id}
-                      className="snap-center shrink-0"
-                      style={{ minWidth: "100px", maxWidth: "100px" }}
-                    >
-                      <SwatchSmallCard item={item} />
-                    </div>
-                  ))}
-                </DesignCarousel>
+                <SwatchCarousel items={subSection.items as SwatchItem[]} />
               </div>
             );
           }
@@ -209,17 +145,7 @@ export const DesignSection = ({
           if (subSection.cardType === "medium") {
             return (
               <div key={subSection.id} className="w-full">
-                <DesignCarousel>
-                  {(subSection.items as MediumItem[]).map((item) => (
-                    <div
-                      key={item.id}
-                      className="snap-center shrink-0"
-                      style={{ minWidth: "85vw", maxWidth: "85vw" }}
-                    >
-                      <MediumLandscapeCard item={item} />
-                    </div>
-                  ))}
-                </DesignCarousel>
+                <MediumCarousel items={subSection.items as MediumItem[]} />
               </div>
             );
           }

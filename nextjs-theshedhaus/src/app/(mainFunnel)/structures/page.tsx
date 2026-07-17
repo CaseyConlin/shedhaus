@@ -1,10 +1,7 @@
-export default async function Page({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const { slug } = await params;
-  //   const OUR_WORK_QUERY = `*[_type == "ourWork" && slug.current == "${slug}"]`;
+const STRUCTURES_PAGE_SLUG = "structures";
+
+export default async function Page() {
+  //   const OUR_WORK_QUERY = `*[_type == "ourWork" && slug.current == "${STRUCTURES_PAGE_SLUG}"]`;
 
   //   const ourWorkData = await sanityFetchData(OUR_WORK_QUERY);
 
@@ -12,7 +9,7 @@ export default async function Page({
 
   return (
     <div>
-      <h1>{slug}</h1>
+      <h1>{STRUCTURES_PAGE_SLUG}</h1>
       {/* <p>{body}</p> */}
     </div>
   );
