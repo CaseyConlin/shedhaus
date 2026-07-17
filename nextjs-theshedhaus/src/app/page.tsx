@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { Hero } from "@/components/Hero";
 import { InventorySection } from "@/components/InventorySection";
 import { ShedXray } from "@/components/shedxray/ShedXray";

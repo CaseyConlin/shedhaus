@@ -258,7 +258,6 @@ const LinkItem = ({
   name,
   href,
   className,
-  hovered,
   onMouseEnter,
   onMouseLeave,
 }: {

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
+import ReCAPTCHA from "react-google-recaptcha";
 import { ActionButton } from "@/components/buttons/ActionButton";
 import { H2 } from "./text/H2";
 import { Caret } from "@/components/Caret";
@@ -73,6 +74,8 @@ export const RequestAQuoteForm: React.FC = () => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [captchaValue, setCaptchaValue] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState("");
 
   // Refs for handling clicks outside dropdowns to close them gracefully
   const formRef = useRef<HTMLFormElement>(null);
@@ -92,6 +95,10 @@ export const RequestAQuoteForm: React.FC = () => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  const handleCaptchaChange = (value: string | null) => {
+    setCaptchaValue(value);
+  };
 
   const handleDropdownSelect = (field: keyof DropdownState, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -120,13 +127,39 @@ export const RequestAQuoteForm: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setErrorMessage("");
 
-    // Simulate sending form payload to a server or Sanity API
-    console.log("Submitting Quote Request:", formData);
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    if (!captchaValue) {
+      setErrorMessage("Please complete the CAPTCHA");
+      setIsSubmitting(false);
+      return;
+    }
 
-    setIsSubmitting(false);
-    setSubmitSuccess(true);
+    try {
+      const response = await fetch("/api/request-a-quote", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...formData,
+          captchaValue,
+        }),
+      });
+
+      if (response.ok) {
+        setSubmitSuccess(true);
+        resetForm();
+      } else {
+        const errorData = await response.json();
+        setErrorMessage(errorData.error || "Error sending quote request");
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      setErrorMessage("Error sending quote request. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const resetForm = () => {
@@ -145,6 +178,8 @@ export const RequestAQuoteForm: React.FC = () => {
       phone: "",
     });
     setSubmitSuccess(false);
+    setCaptchaValue(null);
+    setErrorMessage("");
   };
 
   return (
@@ -532,10 +567,33 @@ export const RequestAQuoteForm: React.FC = () => {
             {/* ========================================================
                 Submit Button Area
                 ======================================================== */}
+            {/* reCAPTCHA Widget */}
+            {process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY && (
+              <div className="py-2">
+                <ReCAPTCHA
+                  sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+                  onChange={handleCaptchaChange}
+                />
+              </div>
+            )}
+
+            {/* Error Messages */}
+            {errorMessage && (
+              <div className="bg-red-50 border border-red-200 rounded-md p-3">
+                <p className="text-red-700 text-sm">{errorMessage}</p>
+              </div>
+            )}
+
+            {!captchaValue && (
+              <p className="text-neutral-600 text-sm">
+                Please complete the CAPTCHA above
+              </p>
+            )}
+
             <div className="pt-2">
               <ActionButton
                 type="submit"
-                disabled={isSubmitting}
+                disabled={isSubmitting || !captchaValue}
                 className=""
                 text={isSubmitting ? "Sending Request..." : "Submit Request"}
               ></ActionButton>

@@ -2,6 +2,7 @@
 
 import { useState, FormEvent } from "react";
 import { usePathname } from "next/navigation";
+import ReCAPTCHA from "react-google-recaptcha";
 
 import Image from "next/image";
 import { H2 } from "./text/H2";
@@ -16,7 +17,7 @@ import {
 import { faFacebook, faInstagram } from "@fortawesome/free-brands-svg-icons";
 import { ActionButton } from "./buttons/ActionButton";
 
-export const ContactFooter = ({ className }: { className?: string }) => {
+export const ContactFooter = () => {
   // Form state management
   const [formData, setFormData] = useState({
     name: "",
@@ -25,12 +26,17 @@ export const ContactFooter = ({ className }: { className?: string }) => {
     message: "",
   });
 
+  const [captchaValue, setCaptchaValue] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<
+    "idle" | "success" | "error"
+  >("idle");
+  const [errorMessage, setErrorMessage] = useState("");
+
   const pathname = usePathname();
   const isContactPage = ["/contact"].some(
     (path) => pathname === path || pathname === `${path}/`,
   );
-
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -42,15 +48,66 @@ export const ContactFooter = ({ className }: { className?: string }) => {
     }));
   };
 
+  const handleCaptchaChange = (value: string | null) => {
+    setCaptchaValue(value);
+  };
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setErrorMessage("");
 
-    // Simulate submission handler to be wired with your custom API or email library
-    console.log("Form submitted successfully:", formData);
+    if (!captchaValue) {
+      setErrorMessage("Please complete the CAPTCHA");
+      setIsSubmitting(false);
+      return;
+    }
 
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    setIsSubmitting(false);
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...formData,
+          captchaValue,
+        }),
+      });
+
+      if (response.ok) {
+        setSubmitStatus("success");
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          message: "",
+        });
+        setCaptchaValue(null);
+      } else {
+        const errorData = await response.json();
+        setSubmitStatus("error");
+        setErrorMessage(errorData.error || "Error sending email");
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      setSubmitStatus("error");
+      setErrorMessage("Error sending email. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const resetForm = () => {
+    setFormData({
+      name: "",
+      email: "",
+      phone: "",
+      message: "",
+    });
+    setCaptchaValue(null);
+    setSubmitStatus("idle");
+    setErrorMessage("");
   };
 
   return (
@@ -152,7 +209,7 @@ export const ContactFooter = ({ className }: { className?: string }) => {
                   href="https://facebook.com/theshedhaus"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[#860000] hover:scale-105 transition-transform"
+                  className="text-primary hover:scale-105 transition-transform"
                   aria-label="Facebook Profile"
                 >
                   <FontAwesomeIcon
@@ -164,7 +221,7 @@ export const ContactFooter = ({ className }: { className?: string }) => {
                   href="https://instagram.com/theshedhaus"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[#860000] hover:scale-105 transition-transform"
+                  className="text-primary hover:scale-105 transition-transform"
                   aria-label="Instagram Profile"
                 >
                   <FontAwesomeIcon
@@ -181,98 +238,139 @@ export const ContactFooter = ({ className }: { className?: string }) => {
                 Request a Quote or Info
               </h3>
 
-              <form onSubmit={handleSubmit} className="space-y-4">
-                {/* Name */}
-                <div className="space-y-1">
-                  <label
-                    htmlFor="name"
-                    className="block font-semibold tracking-wider"
+              {submitStatus === "success" ? (
+                <div className="bg-green-50 border border-green-200 rounded-md p-6">
+                  <h4 className="text-green-800 font-bold text-lg mb-2">
+                    Thank you for your message!
+                  </h4>
+                  <p className="text-green-700 mb-4">
+                    We&apos;ve received your inquiry and will get back to you
+                    soon.
+                  </p>
+                  <button
+                    onClick={resetForm}
+                    className="bg-primary hover:opacity-85 text-white font-bold py-2 px-4 rounded transition-all"
                   >
-                    Name
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    required
-                    placeholder="Your name"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    className="w-full text-base bg-white border border-neutral-400 rounded-md px-4 py-3 text-neutral-900 placeholder-neutral-400 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-all"
-                  />
+                    Send Another Message
+                  </button>
                 </div>
-
-                {/* Dynamic fields (Stacked on mobile, side-by-side on desktop) */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {/* Email */}
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  {/* Name */}
                   <div className="space-y-1">
                     <label
-                      htmlFor="email"
+                      htmlFor="name"
                       className="block font-semibold tracking-wider"
                     >
-                      Email
+                      Name
                     </label>
                     <input
-                      type="email"
-                      id="email"
-                      name="email"
+                      type="text"
+                      id="name"
+                      name="name"
                       required
-                      placeholder="Your email"
-                      value={formData.email}
+                      placeholder="Your name"
+                      value={formData.name}
                       onChange={handleInputChange}
                       className="w-full text-base bg-white border border-neutral-400 rounded-md px-4 py-3 text-neutral-900 placeholder-neutral-400 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-all"
                     />
                   </div>
 
-                  {/* Phone */}
+                  {/* Dynamic fields (Stacked on mobile, side-by-side on desktop) */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {/* Email */}
+                    <div className="space-y-1">
+                      <label
+                        htmlFor="email"
+                        className="block font-semibold tracking-wider"
+                      >
+                        Email
+                      </label>
+                      <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        required
+                        placeholder="Your email"
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        className="w-full text-base bg-white border border-neutral-400 rounded-md px-4 py-3 text-neutral-900 placeholder-neutral-400 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-all"
+                      />
+                    </div>
+
+                    {/* Phone */}
+                    <div className="space-y-1">
+                      <label
+                        htmlFor="phone"
+                        className="block font-semibold tracking-wider"
+                      >
+                        Phone
+                      </label>
+                      <input
+                        type="tel"
+                        id="phone"
+                        name="phone"
+                        placeholder="Your phone"
+                        value={formData.phone}
+                        onChange={handleInputChange}
+                        className="w-full text-base bg-white border border-neutral-400 rounded-md px-4 py-3 text-neutral-900 placeholder-neutral-400 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-all"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Message Textarea */}
                   <div className="space-y-1">
                     <label
-                      htmlFor="phone"
+                      htmlFor="message"
                       className="block font-semibold tracking-wider"
                     >
-                      Phone
+                      Message
                     </label>
-                    <input
-                      type="tel"
-                      id="phone"
-                      name="phone"
-                      placeholder="Your phone"
-                      value={formData.phone}
+                    <textarea
+                      id="message"
+                      name="message"
+                      required
+                      rows={4}
+                      placeholder="Tell us about your project"
+                      value={formData.message}
                       onChange={handleInputChange}
-                      className="w-full text-base bg-white border border-neutral-400 rounded-md px-4 py-3 text-neutral-900 placeholder-neutral-400 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-all"
+                      className="w-full text-base bg-white border border-neutral-400 rounded-md px-4 py-3 text-neutral-900 placeholder-neutral-400 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-all resize-none"
                     />
                   </div>
-                </div>
 
-                {/* Message Textarea */}
-                <div className="space-y-1">
-                  <label
-                    htmlFor="message"
-                    className="block font-semibold tracking-wider"
-                  >
-                    Message
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    required
-                    rows={4}
-                    placeholder="Tell us about your project"
-                    value={formData.message}
-                    onChange={handleInputChange}
-                    className="w-full text-base bg-white border border-neutral-400 rounded-md px-4 py-3 text-neutral-900 placeholder-neutral-400 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-all resize-none"
-                  />
-                </div>
+                  {/* reCAPTCHA Widget */}
+                  {process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY && (
+                    <div className="py-2">
+                      <ReCAPTCHA
+                        sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+                        onChange={handleCaptchaChange}
+                      />
+                    </div>
+                  )}
 
-                {/* Submit Action Block */}
-                <div className="pt-2">
-                  <ActionButton
-                    text={isSubmitting ? "Sending..." : "Send"}
-                    type="submit"
-                    disabled={isSubmitting}
-                  />
-                </div>
-              </form>
+                  {/* Error Messages */}
+                  {errorMessage && (
+                    <div className="bg-red-50 border border-red-200 rounded-md p-3">
+                      <p className="text-red-700 text-sm">{errorMessage}</p>
+                    </div>
+                  )}
+
+                  {!captchaValue && (
+                    <p className="text-neutral-600 text-sm">
+                      Please complete the CAPTCHA above
+                    </p>
+                  )}
+
+                  {/* Submit Action Block */}
+                  <div className="pt-2">
+                    <ActionButton
+                      text={isSubmitting ? "Sending..." : "Send"}
+                      type="submit"
+                      disabled={isSubmitting || !captchaValue}
+                    />
+                  </div>
+                </form>
+              )}
             </div>
           </div>
         </div>

@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { Body } from "./text/Body";
 import { H2 } from "./text/H2";
 import { LinkButton } from "./buttons/LinkButton";
@@ -110,15 +109,15 @@ const PROCESS_STEPS: ProcessStep[] = [
 
 export const OurProcess = () => {
   return (
-    <section className="w-full bg-white text-black py-12 px-4 md:px-[97px] mb-25 flex flex-col items-center select-none font-inter">
-      <div className="w-full max-w-full flex flex-col items-center gap-[25px]">
+    <section className="w-full bg-white text-black py-12 px-4 md:px-24.25 mb-25 flex flex-col items-center select-none font-inter">
+      <div className="w-full max-w-full flex flex-col items-center gap-6.25">
         {/* Header (shH2) */}
         <div className="flex flex-row justify-center items-center py-1 gap-2">
           <H2 text="Our Process" className="text-primary" />
         </div>
 
         {/* Subtitle (shBody) */}
-        <div className="w-full max-w-[368px] md:max-w-[552px] min-h-[60px] flex items-center justify-center">
+        <div className="w-full max-w-92 md:max-w-138 min-h-15 flex items-center justify-center">
           <Body
             text={[
               "Whether you're looking for a custom build or a structure from our inventory on-hand, our local experts are here to help you find the perfect fit for your needs and space",
@@ -127,25 +126,24 @@ export const OurProcess = () => {
         </div>
 
         {/* Dynamic Timeline / Steps Grid (Desktop Horizontal, Mobile Vertical) */}
-        {/* Container: width 1246px on full desktop, flex-col with gaps */}
-        <div className="relative w-full max-w-[1246px] flex flex-col gap-10 mt-4">
+        <div className="relative w-full max-w-311.5 flex flex-col gap-10 mt-4">
           {/* Desktop Connecting Line (Line 6) */}
           {/* Hidden on mobile, absolutely positioned on desktop behind the row of circles */}
-          <div className="hidden md:block absolute left-[12%] right-[12%] top-[38px] h-0 border-[4.5px] border-primary -z-10" />
+          <div className="hidden md:block absolute left-[12%] right-[12%] top-9.5 h-0 border-[4.5px] border-primary -z-10" />
 
           {/* Steps Grid */}
-          <div className="flex flex-col md:flex-row justify-center items-center md:items-start gap-12 md:gap-[45px] w-full">
+          <div className="flex flex-col md:flex-row justify-center items-center md:items-start gap-12 md:gap-11.25 w-full">
             {PROCESS_STEPS.map((step) => (
               <div
                 key={step.id}
-                className="flex flex-col items-center gap-[10px] w-[229px] h-auto"
+                className="flex flex-col items-center gap-2.5 w-57.25 h-auto"
               >
                 {/* Step Circle Header (Frame 253 / Ellipse 9) */}
                 {/* 73px circle inside 75px boundary container */}
-                <div className="relative w-[75px] h-[75px] flex items-center justify-center shrink-0 z-10">
-                  <div className="w-[73px] h-[73px] rounded-full bg-primary flex items-center justify-center shadow-md">
+                <div className="relative w-18.75 h-18.75 flex items-center justify-center shrink-0 z-10">
+                  <div className="w-18.25 h-18.25 rounded-full bg-primary flex items-center justify-center shadow-md">
                     {/* Placeholder for your custom icon - drop your Icon code here */}
-                    <div className="w-[52px] h-[52px] flex items-center justify-center text-white font-black text-sm">
+                    <div className="w-13 h-13 flex items-center justify-center text-white font-black text-sm">
                       {/* E.g. <FontAwesomeIcon icon={faDraftingCompass} className="w-6 h-6" /> */}
                       {step.svg}
                     </div>
@@ -154,16 +152,16 @@ export const OurProcess = () => {
 
                 {/* Step Description Card (shProcessCard) */}
                 {/* Fixed dimensions matching Figma: Width 229px, Height 215px */}
-                <div className="relative w-[229px] h-[215px] bg-white border border-black rounded-[5px] shadow-[0px_4px_4px_rgba(0,0,0,0.25)] p-4 flex flex-col items-center shrink-0">
+                <div className="relative w-57.25 h-53.75 bg-white border border-black rounded-[5px] shadow-[0px_4px_4px_rgba(0,0,0,0.25)] p-4 flex flex-col items-center shrink-0">
                   {/* Card Title (shH3 / Montserrat Bold 17px/21px) */}
                   <div className="pt-2 pb-1 border-b-2 border-transparent">
-                    <h3 className="font-montserrat font-bold text-[17px] leading-[21px] text-center text-primary tracking-tight">
+                    <h3 className="font-montserrat font-bold text-[17px] leading-5.25 text-center text-primary tracking-tight">
                       {step.title}
                     </h3>
                   </div>
 
                   {/* Card Description (shBody / Inter Medium 16px/19px) */}
-                  <div className="mt-2 overflow-hidden h-[138px]">
+                  <div className="mt-2 overflow-hidden h-34.5">
                     <Body text={[step.description]} className="text-black " />
                   </div>
                 </div>
