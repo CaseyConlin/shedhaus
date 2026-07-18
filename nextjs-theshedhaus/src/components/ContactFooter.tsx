@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, FormEvent } from "react";
+import { useGoogleReCaptcha } from "@google-recaptcha/react";
 import { usePathname } from "next/navigation";
-import ReCAPTCHA from "react-google-recaptcha";
 
 import Image from "next/image";
 import { H2 } from "./text/H2";
@@ -18,7 +18,8 @@ import { faFacebook, faInstagram } from "@fortawesome/free-brands-svg-icons";
 import { ActionButton } from "./buttons/ActionButton";
 
 export const ContactFooter = ({ className }: { className?: string }) => {
-  // Form state management
+  const googleReCaptcha = useGoogleReCaptcha();
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -26,7 +27,6 @@ export const ContactFooter = ({ className }: { className?: string }) => {
     message: "",
   });
 
-  const [captchaValue, setCaptchaValue] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<
     "idle" | "success" | "error"
@@ -48,22 +48,19 @@ export const ContactFooter = ({ className }: { className?: string }) => {
     }));
   };
 
-  const handleCaptchaChange = (value: string | null) => {
-    setCaptchaValue(value);
-  };
-
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     setErrorMessage("");
 
-    if (!captchaValue) {
-      setErrorMessage("Please complete the CAPTCHA");
-      setIsSubmitting(false);
-      return;
-    }
-
     try {
+      if (!googleReCaptcha?.executeV3) {
+        console.error("reCAPTCHA has not fully loaded yet. Please try again.");
+        return;
+      }
+      // Get reCAPTCHA v3 token (automatic, no user interaction)
+      const token = await googleReCaptcha.executeV3("contact_form_submit");
+
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: {
@@ -71,7 +68,7 @@ export const ContactFooter = ({ className }: { className?: string }) => {
         },
         body: JSON.stringify({
           ...formData,
-          captchaValue,
+          captchaValue: token,
         }),
       });
 
@@ -83,7 +80,6 @@ export const ContactFooter = ({ className }: { className?: string }) => {
           phone: "",
           message: "",
         });
-        setCaptchaValue(null);
       } else {
         const errorData = await response.json();
         setSubmitStatus("error");
@@ -105,7 +101,6 @@ export const ContactFooter = ({ className }: { className?: string }) => {
       phone: "",
       message: "",
     });
-    setCaptchaValue(null);
     setSubmitStatus("idle");
     setErrorMessage("");
   };
@@ -338,16 +333,6 @@ export const ContactFooter = ({ className }: { className?: string }) => {
                     />
                   </div>
 
-                  {/* reCAPTCHA Widget */}
-                  {process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY && (
-                    <div className="py-2">
-                      <ReCAPTCHA
-                        sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
-                        onChange={handleCaptchaChange}
-                      />
-                    </div>
-                  )}
-
                   {/* Error Messages */}
                   {errorMessage && (
                     <div className="bg-red-50 border border-red-200 rounded-md p-3">
@@ -355,18 +340,12 @@ export const ContactFooter = ({ className }: { className?: string }) => {
                     </div>
                   )}
 
-                  {!captchaValue && (
-                    <p className="text-neutral-600 text-sm">
-                      Please complete the CAPTCHA above
-                    </p>
-                  )}
-
                   {/* Submit Action Block */}
                   <div className="pt-2">
                     <ActionButton
                       text={isSubmitting ? "Sending..." : "Send"}
                       type="submit"
-                      disabled={isSubmitting || !captchaValue}
+                      disabled={isSubmitting}
                     />
                   </div>
                 </form>

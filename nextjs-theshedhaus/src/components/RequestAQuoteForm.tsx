@@ -1,7 +1,7 @@
 "use client";
+import { useGoogleReCaptcha } from "@google-recaptcha/react";
 
 import React, { useState, useRef, useEffect } from "react";
-import ReCAPTCHA from "react-google-recaptcha";
 import { ActionButton } from "@/components/buttons/ActionButton";
 import { H2 } from "./text/H2";
 import { Caret } from "@/components/Caret";
@@ -49,6 +49,8 @@ const TIME_OPTIONS = [
 ];
 
 export const RequestAQuoteForm: React.FC = () => {
+  const googleReCaptcha = useGoogleReCaptcha();
+
   const [formData, setFormData] = useState({
     structureType: "",
     style: "",
@@ -74,7 +76,6 @@ export const RequestAQuoteForm: React.FC = () => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
-  const [captchaValue, setCaptchaValue] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState("");
 
   // Refs for handling clicks outside dropdowns to close them gracefully
@@ -95,10 +96,6 @@ export const RequestAQuoteForm: React.FC = () => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
-
-  const handleCaptchaChange = (value: string | null) => {
-    setCaptchaValue(value);
-  };
 
   const handleDropdownSelect = (field: keyof DropdownState, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -129,13 +126,14 @@ export const RequestAQuoteForm: React.FC = () => {
     setIsSubmitting(true);
     setErrorMessage("");
 
-    if (!captchaValue) {
-      setErrorMessage("Please complete the CAPTCHA");
-      setIsSubmitting(false);
-      return;
-    }
-
     try {
+      if (!googleReCaptcha?.executeV3) {
+        console.error("reCAPTCHA has not fully loaded yet. Please try again.");
+        return;
+      }
+      // Get reCAPTCHA v3 token (automatic, no user interaction)
+      const token = await googleReCaptcha.executeV3("contact_form_submit");
+
       const response = await fetch("/api/request-a-quote", {
         method: "POST",
         headers: {
@@ -143,7 +141,7 @@ export const RequestAQuoteForm: React.FC = () => {
         },
         body: JSON.stringify({
           ...formData,
-          captchaValue,
+          captchaValue: token,
         }),
       });
 
@@ -178,7 +176,6 @@ export const RequestAQuoteForm: React.FC = () => {
       phone: "",
     });
     setSubmitSuccess(false);
-    setCaptchaValue(null);
     setErrorMessage("");
   };
 
@@ -567,15 +564,6 @@ export const RequestAQuoteForm: React.FC = () => {
             {/* ========================================================
                 Submit Button Area
                 ======================================================== */}
-            {/* reCAPTCHA Widget */}
-            {process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY && (
-              <div className="py-2">
-                <ReCAPTCHA
-                  sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
-                  onChange={handleCaptchaChange}
-                />
-              </div>
-            )}
 
             {/* Error Messages */}
             {errorMessage && (
@@ -584,16 +572,10 @@ export const RequestAQuoteForm: React.FC = () => {
               </div>
             )}
 
-            {!captchaValue && (
-              <p className="text-neutral-600 text-sm">
-                Please complete the CAPTCHA above
-              </p>
-            )}
-
             <div className="pt-2">
               <ActionButton
                 type="submit"
-                disabled={isSubmitting || !captchaValue}
+                disabled={isSubmitting}
                 className=""
                 text={isSubmitting ? "Sending Request..." : "Submit Request"}
               ></ActionButton>

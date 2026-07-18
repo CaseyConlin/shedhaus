@@ -6,6 +6,7 @@ import "./globals.css";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import { ConditionallyRenderContactFooter } from "@/components/ConditionallyRenderContactFooter";
+import { RecaptchaProvider } from "@/components/RecaptchaProvider";
 
 config.autoAddCss = false;
 
@@ -46,8 +47,10 @@ export default function RootLayout({
     >
       <body>
         <Navbar />
-        {children}
-        <ConditionallyRenderContactFooter />
+        <RecaptchaProvider>
+          {children}
+          <ConditionallyRenderContactFooter />
+        </RecaptchaProvider>
         <Footer />
       </body>
     </html>
