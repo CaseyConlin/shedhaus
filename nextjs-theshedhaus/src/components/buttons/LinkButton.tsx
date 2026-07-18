@@ -7,6 +7,8 @@ export const LinkButton = ({
   className,
   link,
   variant,
+  target,
+  rel,
 }: LinkButtonProps) => {
   return (
     <ButtonBase
@@ -14,6 +16,8 @@ export const LinkButton = ({
       className={className}
       link={link}
       variant={variant}
+      target={target}
+      rel={rel}
     />
   );
 };

@@ -16,7 +16,8 @@ export default async function Page({
         "Super vinyl clean siding",
       ],
       imageUrl: "/images/tempImage.png",
-      link: "/structures/sheds/quaker",
+      category: "sheds",
+      slug: "quaker",
     },
     {
       id: "p2",
@@ -28,7 +29,8 @@ export default async function Page({
         "Super green wood-look siding",
       ],
       imageUrl: "/images/tempImage.png",
-      link: "/structures/sheds/cape",
+      category: "sheds",
+      slug: "cape",
     },
     {
       id: "p3",
@@ -40,7 +42,8 @@ export default async function Page({
         "Premium heavy T1-11 siding",
       ],
       imageUrl: "/images/tempImage.png",
-      link: "/structures/sheds/monterey",
+      category: "sheds",
+      slug: "monterey",
     },
     {
       id: "p4",
@@ -52,7 +55,8 @@ export default async function Page({
         "Super vinyl clean siding",
       ],
       imageUrl: "/images/tempImage.png",
-      link: "/structures/sheds/quaker",
+      category: "sheds",
+      slug: "quaker",
     },
     {
       id: "p5",
@@ -64,7 +68,8 @@ export default async function Page({
         "Super green wood-look siding",
       ],
       imageUrl: "/images/tempImage.png",
-      link: "/structures/sheds/cape",
+      category: "sheds",
+      slug: "cape",
     },
     {
       id: "p6",
@@ -76,7 +81,8 @@ export default async function Page({
         "Premium heavy T1-11 siding",
       ],
       imageUrl: "/images/tempImage.png",
-      link: "/structures/sheds/monterey",
+      category: "sheds",
+      slug: "monterey",
     },
     {
       id: "p7",
@@ -88,7 +94,8 @@ export default async function Page({
         "Super vinyl clean siding",
       ],
       imageUrl: "/images/tempImage.png",
-      link: "/structures/sheds/quaker",
+      category: "sheds",
+      slug: "quaker",
     },
     {
       id: "p8",
@@ -100,7 +107,8 @@ export default async function Page({
         "Super green wood-look siding",
       ],
       imageUrl: "/images/tempImage.png",
-      link: "/structures/sheds/cape",
+      category: "sheds",
+      slug: "cape",
     },
     {
       id: "p9",
@@ -112,7 +120,8 @@ export default async function Page({
         "Premium heavy T1-11 siding",
       ],
       imageUrl: "/images/tempImage.png",
-      link: "/structures/sheds/monterey",
+      category: "sheds",
+      slug: "monterey",
     },
     {
       id: "p10",
@@ -124,7 +133,8 @@ export default async function Page({
         "Super vinyl clean siding",
       ],
       imageUrl: "/images/tempImage.png",
-      link: "/structures/sheds/quaker",
+      category: "sheds",
+      slug: "quaker",
     },
     {
       id: "p11",
@@ -136,7 +146,8 @@ export default async function Page({
         "Super green wood-look siding",
       ],
       imageUrl: "/images/tempImage.png",
-      link: "/structures/sheds/cape",
+      category: "sheds",
+      slug: "cape",
     },
   ];
   const { product } = await params;

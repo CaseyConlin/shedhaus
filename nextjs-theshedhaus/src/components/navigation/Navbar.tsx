@@ -188,18 +188,18 @@ const structureMegaMenu: Record<string, MegaMenuCategory[]> = {
     {
       title: "Popular Styles",
       items: [
-        { name: "A-Frame Sheds", href: "/structures/sheds/a-frame" },
-        { name: "High Barn Sheds", href: "/structures/sheds/high-barn" },
-        { name: "Quaker Sheds", href: "/structures/sheds/quaker" },
-        { name: "Cottage Sheds", href: "/structures/sheds/cottage" },
+        { name: "A-Frame Sheds", href: "/signature-styles/sheds" },
+        { name: "High Barn Sheds", href: "/signature-styles/sheds" },
+        { name: "Quaker Sheds", href: "/signature-styles/sheds" },
+        { name: "Cottage Sheds", href: "/signature-styles/sheds" },
       ],
     },
     {
-      title: "Shed Options",
+      title: "Custom Options",
       items: [
-        { name: "Siding & Trim Colors", href: "/custom-options#siding" },
-        { name: "Rooflines & Shingles", href: "/custom-options#roofs" },
-        { name: "Custom Doors & Windows", href: "/custom-options#doors" },
+        { name: "Siding & Trim Colors", href: "/configuration#siding" },
+        { name: "Rooflines & Shingles", href: "/configuration#roofs" },
+        { name: "Custom Doors & Windows", href: "/configuration#doors" },
       ],
     },
   ],
@@ -207,9 +207,20 @@ const structureMegaMenu: Record<string, MegaMenuCategory[]> = {
     {
       title: "Barn Styles",
       items: [
-        { name: "Mini Barns", href: "/structures/barns/mini" },
-        { name: "Dutch Barns", href: "/structures/barns/dutch" },
-        { name: "Double Wide Barns", href: "/structures/barns/double-wide" },
+        { name: "Mini Barns", href: "/signature-styles/barns/mini" },
+        { name: "Dutch Barns", href: "/signature-styles/barns/dutch" },
+        {
+          name: "Double Wide Barns",
+          href: "/signature-styles/barns/double-wide",
+        },
+      ],
+    },
+    {
+      title: "Custom Options",
+      items: [
+        { name: "Siding & Trim Colors", href: "/configuration#siding" },
+        { name: "Rooflines & Shingles", href: "/configuration#roofs" },
+        { name: "Custom Doors & Windows", href: "/configuration#doors" },
       ],
     },
   ],
@@ -217,11 +228,11 @@ const structureMegaMenu: Record<string, MegaMenuCategory[]> = {
     {
       title: "Shapes & Styles",
       items: [
-        { name: "Octagon Gazebos", href: "/structures/gazebos/octagon" },
-        { name: "Oval Gazebos", href: "/structures/gazebos/oval" },
+        { name: "Octagon Gazebos", href: "/signature-styles/gazebos/octagon" },
+        { name: "Oval Gazebos", href: "/signature-styles/gazebos/oval" },
         {
           name: "Rectangular Gazebos",
-          href: "/structures/gazebos/rectangular",
+          href: "/signature-styles/gazebos/rectangular",
         },
       ],
     },
@@ -232,19 +243,32 @@ const structureMegaMenu: Record<string, MegaMenuCategory[]> = {
       items: [
         {
           name: "Traditional Wood Pergolas",
-          href: "/structures/pergolas/wood",
+          href: "/signature-styles/pergolas/wood",
         },
-        { name: "Artisan Vinyl Pergolas", href: "/structures/pergolas/vinyl" },
+        {
+          name: "Artisan Vinyl Pergolas",
+          href: "/signature-styles/pergolas/vinyl",
+        },
+      ],
+    },
+  ],
+  About: [
+    {
+      title: "About the Shed Haus",
+      items: [
+        { name: "About Us", href: "/about" },
+        { name: "Our Process", href: "/about/our-process" },
+        { name: "Our Team", href: "/about#our-team" },
       ],
     },
   ],
 };
 
 const leftNavLinks = [
-  { name: "Sheds", href: "/structures/sheds", className: "mx-4" },
-  { name: "Barns", href: "/structures/barns", className: "mx-4" },
-  { name: "Gazebos", href: "/structures/gazebos", className: "mx-4" },
-  { name: "Pergolas", href: "/structures/pergolas", className: "mx-4" },
+  { name: "Sheds", href: "/signature-styles/sheds", className: "mx-4" },
+  { name: "Barns", href: "/signature-styles/barns", className: "mx-4" },
+  { name: "Gazebos", href: "/signature-styles/gazebos", className: "mx-4" },
+  { name: "Pergolas", href: "/signature-styles/pergolas", className: "mx-4" },
 ];
 
 const rightNavLinks = [
@@ -269,13 +293,13 @@ const LinkItem = ({
   onMouseLeave?: () => void;
 }) => (
   <div
-    className={`flex items-center justify-center flex-col ${className}`}
+    className={`flex items-center justify-center flex-col group ${className}`}
     onMouseEnter={onMouseEnter}
     onMouseLeave={onMouseLeave}
   >
-    <div className="group relative w-10 h-10">
+    <div className="relative w-10 h-10">
       <svg
-        className="w-10 h-10 transition-transform duration-300 scale-0 group-hover:scale-70 origin-bottom"
+        className="w-10 h-10 transition-transform duration-500 scale-0 group-hover:scale-70 origin-bottom opacity-0 group-hover:opacity-100"
         fill="currentColor"
         viewBox="0 0 127.000000 97.000000"
       >
@@ -315,7 +339,7 @@ const LinkItem = ({
         </g>
       </svg>
       <svg
-        className="absolute inset-0 w-10 h-10 transition-transform duration-300 scale-50 group-hover:scale-50 origin-bottom "
+        className="absolute inset-0 w-10 h-10 transition-transform duration-300 scale-50 group-hover:scale-50 origin-bottom"
         fill="currentColor"
         viewBox="0 0 28.222216 22.895269"
       >
@@ -370,7 +394,7 @@ export const Navbar = () => {
       className="relative w-full z-50 bg-white"
       onMouseLeave={() => setHoveredLink(null)}
     >
-      <nav className="flex items-center justify-between w-full font-montserrat px-2 md:px-0">
+      <nav className="flex items-center justify-between w-full font-montserrat px-8 md:px-0">
         {/* ========================================================
             MOBILE HEADER (Matches shNavMobile.png layout precisely)
             ======================================================== */}
@@ -388,12 +412,12 @@ export const Navbar = () => {
           {/* Custom 3-Line Dark Red Hamburger Button matching the figma asset */}
           <button
             onClick={toggleMobileMenu}
-            className="flex flex-col justify-between w-8 h-5 text-[#860000] focus:outline-none"
+            className="flex flex-col justify-between w-8 h-5 text-primary focus:outline-none"
             aria-label="Toggle navigation menu"
           >
-            <span className="w-full h-1 bg-[#860000] rounded-sm transition-transform duration-300" />
-            <span className="w-full h-1 bg-[#860000] rounded-sm transition-transform duration-300" />
-            <span className="w-full h-1 bg-[#860000] rounded-sm transition-transform duration-300" />
+            <span className="w-full h-1 bg-primary rounded-sm transition-transform duration-300" />
+            <span className="w-full h-1 bg-primary rounded-sm transition-transform duration-300" />
+            <span className="w-full h-1 bg-primary rounded-sm transition-transform duration-300" />
           </button>
         </div>
 
@@ -453,21 +477,21 @@ export const Navbar = () => {
         >
           <div className="max-w-6xl mx-auto px-8 py-10 grid grid-cols-3 gap-8">
             <div className="col-span-1 border-r border-neutral-100 pr-8">
-              <h4 className="text-[#860000] font-montserrat font-extrabold text-xl tracking-tight mb-2">
+              <h4 className="text-primary font-montserrat font-extrabold text-xl tracking-tight mb-2">
                 Explore {hoveredLink}
               </h4>
               <Body
                 text={[
                   `Choose from our hand-crafted, architectural structures built to last. All standard builds are ready for fast customization or custom ordering.`,
                 ]}
-                className="text-neutral-500 font-inter text-sm leading-relaxed"
+                className="text-left text-black font-inter text-sm leading-relaxed"
               />
             </div>
 
             <div className="col-span-2 grid grid-cols-2 gap-6">
               {structureMegaMenu[hoveredLink].map((category, index) => (
                 <div key={index} className="space-y-4">
-                  <h5 className="font-montserrat font-black text-xs text-[#860000] uppercase tracking-widest border-b border-neutral-100 pb-2">
+                  <h5 className="font-montserrat font-black text-xs text-primary  border-b border-neutral-100 pb-2">
                     {category.title}
                   </h5>
                   <ul className="space-y-2.5">
@@ -475,7 +499,7 @@ export const Navbar = () => {
                       <li key={itemIndex}>
                         <Link
                           href={item.href}
-                          className="font-inter text-sm text-neutral-600 hover:text-[#860000] transition-colors"
+                          className="font-inter text-sm text-neutral-600 hover:text-primary transition-colors"
                         >
                           {item.name}
                         </Link>
@@ -509,14 +533,14 @@ export const Navbar = () => {
                     <Link
                       href={link.href}
                       onClick={() => setMobileMenuOpen(false)}
-                      className="text-[#860000] text-lg font-black uppercase tracking-wide"
+                      className="text-primary text-lg font-black uppercase tracking-wide"
                     >
                       {link.name}
                     </Link>
                     {hasSubmenu && (
                       <button
                         onClick={() => toggleMobileSection(link.name)}
-                        className="p-1.5 text-neutral-500 hover:text-[#860000]"
+                        className="p-1.5 text-neutral-500 hover:text-primary"
                         aria-label={`Toggle ${link.name} submenu`}
                       >
                         <span
@@ -538,7 +562,7 @@ export const Navbar = () => {
                             key={index}
                             href={item.href}
                             onClick={() => setMobileMenuOpen(false)}
-                            className="text-neutral-600 text-sm py-1 hover:text-[#860000] transition-colors"
+                            className="text-neutral-600 text-sm py-1 hover:text-primary transition-colors"
                           >
                             {item.name}
                           </Link>
@@ -550,17 +574,69 @@ export const Navbar = () => {
             })}
 
             {/* Standard Pages list */}
+            {/* Standard Pages list with submenu support */}
             <div className="flex flex-col gap-4 pt-2 font-montserrat font-semibold">
-              {rightNavLinks.map((link) => (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="text-neutral-800 text-base py-1 hover:text-[#860000] transition-colors"
-                >
-                  {link.name}
-                </Link>
-              ))}
+              {rightNavLinks.map((link) => {
+                const hasSubmenu = !!structureMegaMenu[link.name];
+                const isExpanded = mobileExpandedSection === link.name;
+
+                if (!hasSubmenu) {
+                  return (
+                    <Link
+                      key={link.name}
+                      href={link.href}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="text-neutral-800 text-base py-1 hover:text-primary transition-colors"
+                    >
+                      {link.name}
+                    </Link>
+                  );
+                }
+
+                return (
+                  <div
+                    key={link.name}
+                    className="border-b border-neutral-100 pb-2"
+                  >
+                    <div className="flex items-center justify-between w-full">
+                      <Link
+                        href={link.href}
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="text-neutral-800 text-base font-black uppercase tracking-wide"
+                      >
+                        {link.name}
+                      </Link>
+                      <button
+                        onClick={() => toggleMobileSection(link.name)}
+                        className="p-1.5 text-neutral-500 hover:text-primary"
+                        aria-label={`Toggle ${link.name} submenu`}
+                      >
+                        <span
+                          className={`inline-block text-primary transform transition-transform duration-200 ${isExpanded ? "rotate-90" : ""}`}
+                        >
+                          ▶
+                        </span>
+                      </button>
+                    </div>
+                    {isExpanded && (
+                      <div className="mt-3 pl-4 flex flex-col gap-2.5 border-l border-neutral-100 font-inter">
+                        {structureMegaMenu[link.name]
+                          .flatMap((cat) => cat.items)
+                          .map((item, index) => (
+                            <Link
+                              key={index}
+                              href={item.href}
+                              onClick={() => setMobileMenuOpen(false)}
+                              className="text-neutral-600 text-sm py-1 hover:text-primary transition-colors"
+                            >
+                              {item.name}
+                            </Link>
+                          ))}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>

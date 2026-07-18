@@ -5,7 +5,7 @@ import { H2 } from "@/components/text/H2";
 import { Body } from "@/components/text/Body";
 import { ListItemWithLead } from "@/components/text/ListItemWithLead";
 
-const ABOUT_PAGE_SLUG = "about";
+const ABOUT_PAGE_SLUG = "About";
 
 export default async function Page() {
   const teamMembers = [
@@ -128,7 +128,7 @@ export default async function Page() {
               emailAddress="info@theshedhaus.com"
             />
           </div>
-          <div className="flex-3 flex flex-col justify-start items-start min-w-screen md:min-w-md w-full gap-4 px-4 md:px-0">
+          <div className="flex-3 flex flex-col justify-start items-start min-w-screen md:min-w-md w-full gap-8 px-4 md:px-0">
             <div className="flex flex-col items-start justify-start gap-2">
               <H2
                 text="Our Local Philosophy"
@@ -142,6 +142,7 @@ export default async function Page() {
               />
             </div>
             <div className="flex flex-col items-start justify-start gap-2">
+              <a id="our-team" />
               <H2 text="Meet Our Team" className="text-start text-primary" />
               <div className="ps-2 gap-4 flex flex-col items-start justify-start">
                 {teamMembers.map((member, index) => (

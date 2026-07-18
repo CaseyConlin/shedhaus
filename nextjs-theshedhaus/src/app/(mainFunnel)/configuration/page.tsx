@@ -165,7 +165,7 @@ const WINDOWS_SECTION: DesignSectionProps = {
 
 import { PageHeader } from "@/components/text/PageHeader";
 
-const CONFIGURATION_PAGE_SLUG = "configuration";
+const CONFIGURATION_PAGE_SLUG = "Configuration";
 
 export default async function Page() {
   return (

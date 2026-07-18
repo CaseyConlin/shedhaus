@@ -26,7 +26,7 @@ const DESIGN_OPTIONS: DesignOptionItem[] = [
     imageUrl: "/images/rooflines-masonry.webp", // Replace with your actual asset URL
     mobileOrder: "order-1",
     desktopGridClasses: "md:col-span-2 md:row-span-1",
-    link: "/custom-options#rooflines", // Optional link for this item
+    link: "/configuration#rooflines", // Optional link for this item
   },
   {
     id: "windows",
@@ -36,7 +36,7 @@ const DESIGN_OPTIONS: DesignOptionItem[] = [
     imageUrl: "/images/windows-masonry.webp", // Replace with your actual asset URL
     mobileOrder: "order-2",
     desktopGridClasses: "md:col-span-1 md:row-span-1",
-    link: "/custom-options#windows", // Optional link for this item
+    link: "/configuration#windows", // Optional link for this item
   },
   {
     id: "siding",
@@ -46,7 +46,7 @@ const DESIGN_OPTIONS: DesignOptionItem[] = [
     imageUrl: "/images/siding-trim-masonry.webp", // Replace with your actual asset URL
     mobileOrder: "order-3",
     desktopGridClasses: "md:col-span-1 md:row-span-1",
-    link: "/custom-options#siding", // Optional link for this item
+    link: "/configuration#siding", // Optional link for this item
   },
   {
     id: "doors",
@@ -57,7 +57,7 @@ const DESIGN_OPTIONS: DesignOptionItem[] = [
     mobileOrder: "order-4",
     desktopGridClasses:
       "md:col-span-1 md:row-span-2 md:col-start-1 md:row-start-1",
-    link: "/custom-options#doors", // Optional link for this item
+    link: "/configuration#doors", // Optional link for this item
   },
 ];
 
@@ -77,7 +77,7 @@ export const ShedDesignOptions = () => {
           {/* Buttons: Layout for Desktop (Hidden on Mobile) */}
           <div className="hidden md:flex items-center gap-4 mt-2">
             {/* Replace these wrapper/anchor buttons with your custom button components */}
-            <LinkButton text="View Custom Options" link="/custom-options" />
+            <LinkButton text="View Custom Options" link="/configuration" />
             <LinkButton
               text="Request a Quote"
               link="/request-quote"
@@ -102,7 +102,7 @@ export const ShedDesignOptions = () => {
             >
               {/* Next.js Image filling parent container */}
               <Link
-                href="/custom-options"
+                href="/configuration"
                 className="group block w-full h-full relative"
               >
                 <Image
@@ -132,7 +132,7 @@ export const ShedDesignOptions = () => {
         </div>
         {/* Buttons: Layout for Mobile (Hidden on Desktop) */}
         <div className="flex md:hidden flex-col gap-3 max-w-sm mx-auto mt-4">
-          <LinkButton text="View Custom Options" link="/custom-options" />
+          <LinkButton text="View Custom Options" link="/configuration" />
           <LinkButton
             text="Request a Quote"
             link="/request-quote"

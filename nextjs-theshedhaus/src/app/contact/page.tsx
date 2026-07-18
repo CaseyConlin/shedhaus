@@ -1,7 +1,7 @@
 import { PageHeader } from "@/components/text/PageHeader";
 import { ContactFooter } from "../../components/ContactFooter";
 
-const CONTACT_PAGE_SLUG = "contact";
+const CONTACT_PAGE_SLUG = "Contact";
 
 export default async function Page() {
   return (

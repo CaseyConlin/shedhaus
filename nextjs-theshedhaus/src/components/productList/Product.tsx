@@ -8,7 +8,10 @@ export interface Product {
   dimensions: string;
   bullets: string[];
   imageUrl: string;
-  link: string;
+  slug: string; // Add slug field from Sanity
+  category: string; // e.g., "sheds", "a-frame", etc.
+
+  // link: string;
 }
 /**
  * ProductCard
@@ -19,12 +22,14 @@ export const ProductCard = ({
   dimensions,
   bullets,
   imageUrl,
-  link,
+  slug,
+  category,
 }: Product) => {
+  const link = `/signature-styles/${category}/${slug}`;
   return (
-    <article className="flex flex-col bg-white text-black rounded-md overflow-hidden shadow-xl border border-neutral-200 w-full  md:w-xs md:max-w-none md:min-w-[300px] h-[480px] transition duration-300 hover:shadow-2xl hover:transform hover:scale-105">
+    <article className="flex flex-col bg-white text-black rounded-md overflow-hidden shadow-xl border border-neutral-200 w-full  md:w-xs md:max-w-none md:min-w-75 h-120 transition duration-300 hover:shadow-2xl hover:transform hover:scale-105">
       {/* Aspect Ratio Container for Shed Image */}
-      <div className="relative w-full h-[180px] bg-neutral-100 overflow-hidden">
+      <div className="relative w-full h-45 bg-neutral-100 overflow-hidden">
         <Image
           src={imageUrl}
           alt={title}
@@ -38,7 +43,7 @@ export const ProductCard = ({
       <div className="flex-1 flex flex-col p-5 justify-between">
         <div className="flex flex-col">
           {/* Header Title */}
-          <h3 className="font-montserrat font-black text-xl text-[#860000] tracking-tight leading-tight uppercase">
+          <h3 className="font-montserrat font-black text-xl text-primary tracking-tight leading-tight uppercase">
             {title}
           </h3>
           {/* Sizes / Subtitle */}

@@ -8,6 +8,8 @@ export interface ButtonBaseProps extends ButtonHTMLAttributes<HTMLButtonElement>
   link?: string;
   onClick?: () => void;
   variant?: "default" | "white" | "transRed";
+  target?: string;
+  rel?: string;
 }
 
 export const ButtonBase = ({
@@ -16,6 +18,8 @@ export const ButtonBase = ({
   link,
   onClick,
   variant = "default",
+  target,
+  rel,
 }: ButtonBaseProps) => {
   const baseClass =
     "inline-flex items-center justify-center px-3 py-1.5 rounded-md font-bold transition duration-300 hover:bg-opacity-80  shadow-[0_4px_4px_rgba(0,0,0,0.25)]";
@@ -39,6 +43,8 @@ export const ButtonBase = ({
     <Link
       href={link}
       className={`${baseClass} ${variantClass} ${className ?? ""}`}
+      target={target ? target : undefined}
+      rel={rel ? rel : undefined}
     >
       {text}
     </Link>

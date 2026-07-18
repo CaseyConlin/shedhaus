@@ -2,7 +2,7 @@ import { PageHeader } from "@/components/text/PageHeader";
 import { RequestAQuoteForm } from "@/components/RequestAQuoteForm";
 import { SideBarCard } from "@/components/SideBarCard";
 
-const REQUEST_A_QUOTE_PAGE_SLUG = "request-a-quote";
+const REQUEST_A_QUOTE_PAGE_SLUG = "Request A Quote";
 
 export default async function Page() {
   return (

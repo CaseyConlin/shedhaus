@@ -93,11 +93,13 @@ export const Hero = () => {
           />
           {/* Action Button Wrappers (Stacked on mobile, row-aligned on desktop) */}
           <div className="mt-4 flex flex-col sm:flex-row gap-3 md:gap-4 w-full sm:w-auto">
-            <LinkButton text="Get a Quote Now" link="/contact" />
+            <LinkButton text="Get a Quote Now" link="/request-a-quote" />
             <LinkButton
               variant="white"
               text="Shop Our Inventory"
-              link="/inventory"
+              link="https://facebook.com/theshedhaus"
+              target="_blank"
+              rel="noopener noreferrer"
             />
           </div>
         </div>
