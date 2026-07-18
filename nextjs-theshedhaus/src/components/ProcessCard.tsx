@@ -23,9 +23,9 @@ export const ProcessCard = ({
         <h3 className="text-lg font-bold text-primary text-start">{title}</h3>
         <Body text={description} className="text-start" />
       </div>
-      <div className="relative w-[75px] h-[75px] flex items-center justify-center shrink-0 z-10">
-        <div className="w-[73px] h-[73px] rounded-full bg-primary flex items-center justify-center shadow-md">
-          <div className="w-[52px] h-[52px] flex items-center justify-center text-white font-black text-sm">
+      <div className="relative w-18.75 h-18.75 flex items-center justify-center shrink-0 z-10">
+        <div className="w-18.25 h-18.25 rounded-full bg-primary flex items-center justify-center shadow-md">
+          <div className="w-13 h-13 flex items-center justify-center text-white font-black text-sm">
             {icon}
           </div>
         </div>

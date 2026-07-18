@@ -2,7 +2,7 @@ import { PageHeader } from "@/components/text/PageHeader";
 import { SideBarCard } from "@/components/SideBarCard";
 import { ProcessCard } from "@/components/ProcessCard";
 import { LinkButton } from "@/components/buttons/LinkButton";
-const OUR_PROCESS_PAGE_SLUG = "our-process";
+const OUR_PROCESS_PAGE_SLUG = "Our Process";
 
 export default async function Page() {
   const processSteps = [
@@ -115,12 +115,6 @@ export default async function Page() {
       ),
     },
   ];
-
-  //   const OUR_WORK_QUERY = `*[_type == "ourWork" && slug.current == "${OUR_PROCESS_PAGE_SLUG}"]`;
-
-  //   const ourWorkData = await sanityFetchData(OUR_WORK_QUERY);
-
-  //   const { title, body } = ourWorkData[0];
 
   return (
     <>

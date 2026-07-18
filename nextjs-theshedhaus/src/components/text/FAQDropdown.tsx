@@ -25,11 +25,15 @@ export const FAQDropdown = ({
         {question}
         <Caret isOpen={isOpen} className="ml-2" />
       </button>
-      {isOpen && (
-        <div className="mt-2 text-gray-700 w-full">
+      <div
+        className={`overflow-hidden transition-all duration-500 ease-in ${
+          isOpen ? "max-h-96 " : "max-h-0 "
+        }`}
+      >
+        <div className="mt-2 text-black w-full">
           <Body className="text-left" text={[answer]} />
         </div>
-      )}
+      </div>
     </div>
   );
 };

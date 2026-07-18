@@ -1,7 +1,7 @@
 import { PageHeader } from "@/components/text/PageHeader";
 import { SideBarCard } from "@/components/SideBarCard";
 import { FAQDropdown } from "@/components/text/FAQDropdown";
-const FAQ_PAGE_SLUG = "faq";
+const FAQ_PAGE_SLUG = "Frequently Asked Questions";
 
 export default async function Page() {
   const faqs = [
@@ -88,12 +88,6 @@ export default async function Page() {
         "We partner with BLI Rentals to offer you flexible low payment options to purchase your shed. There is no credit check required and you can get started for as low as the first month’s rent. This is not a loan, but a rental agreement with the option to buy at any time. There are no early payoff fees and comes with a 90 day same as cash payoff. The rent to own agreements do include convenience fees and the purchase of your shed in this fashion is not the same as a cash purchase price.",
     },
   ];
-
-  //   const OUR_WORK_QUERY = `*[_type == "ourWork" && slug.current == "${FAQ_PAGE_SLUG}"]`;
-
-  //   const ourWorkData = await sanityFetchData(OUR_WORK_QUERY);
-
-  //   const { title, body } = ourWorkData[0];
 
   return (
     <>

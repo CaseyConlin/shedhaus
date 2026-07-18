@@ -17,7 +17,24 @@ import {
 import { faFacebook, faInstagram } from "@fortawesome/free-brands-svg-icons";
 import { ActionButton } from "./buttons/ActionButton";
 
-export const ContactFooter = ({ className }: { className?: string }) => {
+export const formatPhoneNumber = (value: string): string => {
+  // Remove all non-digit characters
+  const cleaned = value.replace(/\D/g, "");
+
+  // Limit to 10 digits
+  if (!cleaned) return "";
+  const truncated = cleaned.slice(0, 10);
+
+  // Format as (###) ###-####
+  if (truncated.length <= 3) {
+    return truncated;
+  } else if (truncated.length <= 6) {
+    return `(${truncated.slice(0, 3)}) ${truncated.slice(3)}`;
+  } else {
+    return `(${truncated.slice(0, 3)}) ${truncated.slice(3, 6)}-${truncated.slice(6)}`;
+  }
+};
+export const ContactFooter = () => {
   const googleReCaptcha = useGoogleReCaptcha();
 
   const [formData, setFormData] = useState({
@@ -41,7 +58,14 @@ export const ContactFooter = ({ className }: { className?: string }) => {
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
-    const { name, value } = e.target;
+    const { name } = e.target;
+    let { value } = e.target;
+
+    // Format phone number as user types
+    if (name === "phone") {
+      value = formatPhoneNumber(value);
+    }
+
     setFormData((prev) => ({
       ...prev,
       [name]: value,
@@ -52,6 +76,33 @@ export const ContactFooter = ({ className }: { className?: string }) => {
     e.preventDefault();
     setIsSubmitting(true);
     setErrorMessage("");
+    // Client-side validation
+    if (!formData.name.trim()) {
+      setErrorMessage("Name is required");
+      setIsSubmitting(false);
+      return;
+    }
+
+    if (!formData.message.trim()) {
+      setErrorMessage("Message is required");
+      setIsSubmitting(false);
+      return;
+    }
+    // Validate phone number if provided
+    if (
+      formData.phone.trim() &&
+      formData.phone.replace(/\D/g, "").length !== 10
+    ) {
+      setErrorMessage("Phone number must be 10 digits");
+      setIsSubmitting(false);
+      return;
+    }
+
+    if (!formData.email.trim() && !formData.phone.trim()) {
+      setErrorMessage("Please provide either an email address or phone number");
+      setIsSubmitting(false);
+      return;
+    }
 
     try {
       if (!googleReCaptcha?.executeV3) {
@@ -107,7 +158,7 @@ export const ContactFooter = ({ className }: { className?: string }) => {
 
   return (
     <section
-      className={`relative w-full my-12 md:my-36 py-12 md:py-24 overflow-hidden bg-[#fafafa] ${!isContactPage ? "py-12 md:py-24" : "mt-12"} ${className || ""}`}
+      className={`relative w-full my-12 md:my-36 py-12 md:py-24 overflow-hidden bg-[#fafafa] ${!isContactPage ? "py-12 md:py-24" : "md:mt-8"}`}
     >
       {/* 1. Background Map Layer (Using responsive Next.js Image component with dummy source) */}
       <div className="absolute inset-0 w-full h-full z-0">
@@ -285,7 +336,6 @@ export const ContactFooter = ({ className }: { className?: string }) => {
                         type="email"
                         id="email"
                         name="email"
-                        required
                         placeholder="Your email"
                         value={formData.email}
                         onChange={handleInputChange}

@@ -39,17 +39,26 @@ export async function POST(request: Request): Promise<Response> {
     } = body;
 
     // Validate required fields
-    if (
-      !structureType ||
-      !style ||
-      !dimensions ||
-      !primaryUse ||
-      !name ||
-      !email ||
-      !captchaValue
-    ) {
+    const requiredFields = {
+      structureType: "Structure Type",
+      name: "Name",
+      email: "Email",
+      captchaValue: "reCAPTCHA verification",
+    };
+
+    const missingFields: string[] = [];
+
+    for (const [field, label] of Object.entries(requiredFields)) {
+      if (!body[field as keyof QuoteRequest]) {
+        missingFields.push(label);
+      }
+    }
+
+    if (missingFields.length > 0) {
       return NextResponse.json(
-        { error: "Missing required fields" },
+        {
+          error: `Missing required fields: ${missingFields.join(", ")}`,
+        },
         { status: 400 },
       );
     }
@@ -72,7 +81,7 @@ export async function POST(request: Request): Promise<Response> {
       );
       if (priceListDoc?.file?.asset?._ref) {
         const assetRef = priceListDoc.file.asset._ref;
-        const [, assetId, , extension] = assetRef.split("-");
+        const [, assetId, extension] = assetRef.split("-");
         priceListUrl = `https://cdn.sanity.io/files/${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}/${process.env.NEXT_PUBLIC_SANITY_DATASET}/${assetId}.${extension}`;
       }
     } catch (error) {

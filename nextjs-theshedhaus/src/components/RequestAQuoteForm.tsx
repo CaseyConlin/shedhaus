@@ -1,6 +1,6 @@
 "use client";
 import { useGoogleReCaptcha } from "@google-recaptcha/react";
-
+import { formatPhoneNumber } from "@/components/ContactFooter";
 import React, { useState, useRef, useEffect } from "react";
 import { ActionButton } from "@/components/buttons/ActionButton";
 import { H2 } from "./text/H2";
@@ -50,6 +50,7 @@ const TIME_OPTIONS = [
 
 export const RequestAQuoteForm: React.FC = () => {
   const googleReCaptcha = useGoogleReCaptcha();
+  const [errorFields, setErrorFields] = useState<string[]>([]);
 
   const [formData, setFormData] = useState({
     structureType: "",
@@ -80,6 +81,8 @@ export const RequestAQuoteForm: React.FC = () => {
 
   // Refs for handling clicks outside dropdowns to close them gracefully
   const formRef = useRef<HTMLFormElement>(null);
+  // Add refs for scrolling
+  const structureTypeRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -110,7 +113,14 @@ export const RequestAQuoteForm: React.FC = () => {
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
+    const { name } = e.target;
+    let { value } = e.target;
+
+    // Format phone number as user types
+    if (name === "phone") {
+      value = formatPhoneNumber(value);
+    }
+
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
@@ -125,6 +135,42 @@ export const RequestAQuoteForm: React.FC = () => {
     e.preventDefault();
     setIsSubmitting(true);
     setErrorMessage("");
+    setErrorFields([]);
+
+    const newErrorFields: string[] = [];
+    // Client-side validation
+    if (!formData.structureType.trim()) {
+      newErrorFields.push("structureType");
+      setErrorMessage("Please select a Structure Type");
+      // Scroll to structure type
+      structureTypeRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    }
+
+    if (!formData.name.trim()) {
+      newErrorFields.push("name");
+      if (newErrorFields.length === 1) {
+        setErrorMessage("Name is required");
+      }
+    }
+
+    if (!formData.email.trim() && !formData.phone.trim()) {
+      newErrorFields.push("email");
+      newErrorFields.push("phone");
+      if (newErrorFields.length <= 2) {
+        setErrorMessage(
+          "Please provide either an email address or phone number",
+        );
+      }
+    }
+
+    if (newErrorFields.length > 0) {
+      setErrorFields(newErrorFields);
+      setIsSubmitting(false);
+      return;
+    }
 
     try {
       if (!googleReCaptcha?.executeV3) {
@@ -132,7 +178,9 @@ export const RequestAQuoteForm: React.FC = () => {
         return;
       }
       // Get reCAPTCHA v3 token (automatic, no user interaction)
-      const token = await googleReCaptcha.executeV3("contact_form_submit");
+      const token = await googleReCaptcha.executeV3(
+        "request_a_quote_form_submit",
+      );
 
       const response = await fetch("/api/request-a-quote", {
         method: "POST",
@@ -218,11 +266,15 @@ export const RequestAQuoteForm: React.FC = () => {
               {/* Grid layout adapts to columns on desktop matching shRequestAQuote.png */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                 {/* Structure Type Select Dropdown */}
-                <div className="relative">
+                <div className="relative" ref={structureTypeRef}>
                   <button
                     type="button"
                     onClick={() => toggleDropdown("structureType")}
-                    className="w-full bg-white border border-neutral-300 rounded-md py-3.5 px-4 text-left flex items-center justify-between text-base"
+                    className={`w-full bg-white border rounded-md py-3.5 px-4 text-left flex items-center justify-between text-base ${
+                      errorFields.includes("structureType")
+                        ? "border-red-500 border-2"
+                        : "border-neutral-300"
+                    }`}
                   >
                     <span
                       className={
@@ -495,10 +547,13 @@ export const RequestAQuoteForm: React.FC = () => {
                     placeholder="Your name"
                     value={formData.name}
                     onChange={handleInputChange}
-                    className="w-full bg-white border border-neutral-300 rounded-md py-3.5 px-4 text-base placeholder-neutral-500 focus:outline-none focus:border-neutral-500"
+                    className={`w-full bg-white border rounded-md py-3.5 px-4 text-base placeholder-neutral-500 focus:outline-none ${
+                      errorFields.includes("name")
+                        ? "border-red-500 border-2"
+                        : "border-neutral-300 focus:border-neutral-500"
+                    }`}
                   />
                 </div>
-
                 {/* Best Time To Reach You Dropdown Select */}
                 <div className="relative">
                   <button
@@ -538,11 +593,14 @@ export const RequestAQuoteForm: React.FC = () => {
                   <input
                     type="email"
                     name="email"
-                    required
                     placeholder="Email"
                     value={formData.email}
                     onChange={handleInputChange}
-                    className="w-full bg-white border border-neutral-300 rounded-md py-3.5 px-4 text-base placeholder-neutral-500 focus:outline-none focus:border-neutral-500"
+                    className={`w-full bg-white border rounded-md py-3.5 px-4 text-base placeholder-neutral-500 focus:outline-none ${
+                      errorFields.includes("email")
+                        ? "border-red-500 border-2"
+                        : "border-neutral-300 focus:border-neutral-500"
+                    }`}
                   />
                 </div>
 
@@ -551,11 +609,14 @@ export const RequestAQuoteForm: React.FC = () => {
                   <input
                     type="tel"
                     name="phone"
-                    required
                     placeholder="Phone"
                     value={formData.phone}
                     onChange={handleInputChange}
-                    className="w-full bg-white border border-neutral-300 rounded-md py-3.5 px-4 text-base placeholder-neutral-500 focus:outline-none focus:border-neutral-500"
+                    className={`w-full bg-white border rounded-md py-3.5 px-4 text-base placeholder-neutral-500 focus:outline-none ${
+                      errorFields.includes("phone")
+                        ? "border-red-500 border-2"
+                        : "border-neutral-300 focus:border-neutral-500"
+                    }`}
                   />
                 </div>
               </div>

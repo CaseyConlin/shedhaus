@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { LinkButton } from "./buttons/LinkButton";
+// import { LinkButton } from "./buttons/LinkButton";
 import { H2 } from "./text/H2";
 import { Body } from "./text/Body";
 
@@ -47,31 +47,31 @@ export const InventorySection = () => {
         <InventoryItem
           title="Sheds"
           imgSrc="/images/sheds.png"
-          link="/structures/sheds"
+          link="/signature-styles/sheds"
         />
         <InventoryItem
           title="Barns"
           imgSrc="/images/barns.jpg"
-          link="/structures/barns"
+          link="/signature-styles/barns"
         />
         <InventoryItem
           title="Gazebos"
           imgSrc="/images/gazebos.jpg"
-          link="/structures/gazebos"
+          link="/signature-styles/gazebos"
         />
         <InventoryItem
           title="Pergolas"
           imgSrc="/images/pergolas.jpg"
-          link="/structures/pergolas"
+          link="/signature-styles/pergolas"
         />
       </div>
       <div className="flex flex-col md:flex-row items-center justify-center gap-4 ">
-        <LinkButton text="See All Our Structures" link="/inventory" />
+        {/* <LinkButton text="See All Our Structures" link="/inventory" />
         <LinkButton
           text="Design Your Own Shed"
           link="/custom"
           variant="transRed"
-        />
+        /> */}
       </div>
     </div>
   );

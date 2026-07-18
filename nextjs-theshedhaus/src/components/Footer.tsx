@@ -26,12 +26,12 @@ const COMPANY_LINKS = [
 export const Footer = () => {
   return (
     /* Padding matches the specified padding: 44px 0px (py-11) and background #860000 */
-    <footer className="w-full bg-[#860000] text-white px-6 py-11 md:py-16 font-montserrat">
+    <footer className="w-full bg-primary text-white px-6 py-11 md:py-16 font-montserrat">
       <div className="max-w-7xl pb-36 mx-auto flex flex-col gap-10 md:gap-10">
         {/* 1. Responsive Columns Layout */}
         {/* On mobile: strictly centers columns in a single vertical stack matching Frame 285.png */}
         {/* On desktop: maps beautifully to horizontal auto layouts with accurate width boundaries */}
-        <div className="flex flex-col md:flex-row items-center md:items-start justify-between gap-[16px] md:gap-8 w-full text-center md:text-left">
+        <div className="flex flex-col md:flex-row items-center md:items-start justify-between gap-4 md:gap-8 w-full text-center md:text-left">
           {/* Column 1: Brand Logo & Title Mark (Matches Figma image 55 layout footprints) */}
           <div className="flex flex-col items-center justify-start w-full max-w-85 min-h-6">
             <Link
@@ -51,20 +51,20 @@ export const Footer = () => {
           {}
           {/* Column 2: Contact Info Blocks & Interactive Social Icons (Figma Frame 281) */}
           {/* Defined width: 262px, height: 141px (auto scaled), with custom gap: 7px */}
-          <div className="flex flex-col items-center md:items-start gap-[7px] w-full max-w-[262px]">
-            <div className="flex flex-col items-center md:items-start gap-[7px]">
+          <div className="flex flex-col items-center md:items-start gap-1.75 w-full max-w-65.5">
+            <div className="flex flex-col items-center md:items-start gap-1.75">
               {/* Address Map Pin Anchor (Montserrat 17px/21px bold) */}
               <a
                 href="https://maps.google.com/?q=816+Route+22+Pawling+NY"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2.5 hover:text-neutral-200 transition-colors duration-200 h-[31px]"
+                className="flex items-center gap-2.5 hover:text-neutral-200 transition-colors duration-200 h-7.75"
               >
                 <FontAwesomeIcon
                   icon={faMapMarkerAlt}
                   className="text-2xl shrink-0 text-white"
                 />
-                <span className="font-bold text-[17px] leading-[21px] tracking-tight">
+                <span className="font-bold text-[17px] leading-5.25 tracking-tight">
                   816 Route 22 Pawling, NY
                 </span>
               </a>
@@ -72,13 +72,13 @@ export const Footer = () => {
               {/* Interactive Phone Link (Montserrat 17px/21px bold) */}
               <a
                 href="tel:8458555989"
-                className="flex items-center gap-[10px] hover:text-neutral-200 transition-colors duration-200 h-[31px]"
+                className="flex items-center gap-2.5 hover:text-neutral-200 transition-colors duration-200 h-7.75"
               >
                 <FontAwesomeIcon
                   icon={faPhone}
                   className="text-2xl shrink-0 text-white"
                 />
-                <span className="font-bold text-[17px] leading-[21px] tracking-tight">
+                <span className="font-bold text-[17px] leading-5.25 tracking-tight">
                   845 855 5989
                 </span>
               </a>
@@ -86,13 +86,13 @@ export const Footer = () => {
               {/* Digital Mail Connection (Montserrat 17px/21px bold) */}
               <a
                 href="mailto:info@theshedhaus.com"
-                className="flex items-center gap-[10px] hover:text-neutral-200 transition-colors duration-200 h-[31px]"
+                className="flex items-center gap-2.5 hover:text-neutral-200 transition-colors duration-200 h-7.75"
               >
                 <FontAwesomeIcon
                   icon={faEnvelope}
                   className="text-2xl shrink-0 text-white"
                 />
-                <span className="font-bold text-[17px] leading-[21px] tracking-tight">
+                <span className="font-bold text-[17px] leading-5.25 tracking-tight">
                   info@theshedhaus.com
                 </span>
               </a>
@@ -104,7 +104,7 @@ export const Footer = () => {
                 href="https://facebook.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:scale-110 hover:text-neutral-200 transition-transform duration-200 w-[25px] h-[25px] flex items-center justify-center"
+                className="hover:scale-110 hover:text-neutral-200 transition-transform duration-200 w-6.25 h-6.25 flex items-center justify-center"
                 aria-label="Find us on Facebook"
               >
                 <FontAwesomeIcon
@@ -116,7 +116,7 @@ export const Footer = () => {
                 href="https://instagram.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:scale-110 hover:text-neutral-200 transition-transform duration-200 w-[26px] h-[26px] flex items-center justify-center"
+                className="hover:scale-110 hover:text-neutral-200 transition-transform duration-200 w-6.25 h-6.25 flex items-center justify-center"
                 aria-label="Find us on Instagram"
               >
                 <FontAwesomeIcon
@@ -130,16 +130,16 @@ export const Footer = () => {
           {}
           {/* Column 3: Sheds, Barns, Gazebos, Pergolas List (Figma Frame 283) */}
           {/* Defined width: 89px, height: 103px, gap: 9px, text center-aligned */}
-          <div className="flex flex-col items-center md:items-start gap-[9px] w-full max-w-52">
+          <div className="flex flex-col items-center md:items-start gap-2.25 w-full max-w-52">
             <h3 className="hidden md:block text-xs font-black uppercase tracking-wider text-white/50">
               Products
             </h3>
-            <ul className="flex flex-col gap-[9px] w-full items-center md:items-start">
+            <ul className="flex flex-col gap-2.25 w-full items-center md:items-start">
               {PRODUCTS_LINKS.map((link) => (
-                <li key={link.href} className="h-[19px] flex items-center">
+                <li key={link.href} className="h-4.75 flex items-center">
                   <Link
                     href={link.href}
-                    className="font-bold text-[16px] leading-[19px] text-center md:text-left hover:text-neutral-200 transition-colors duration-150 inline-block"
+                    className="font-bold text-[16px] leading-4.75 text-center md:text-left hover:text-neutral-200 transition-colors duration-150 inline-block"
                   >
                     {link.label}
                   </Link>
@@ -150,16 +150,16 @@ export const Footer = () => {
 
           {/* Column 4: Company Explore List (Figma Frame 282) */}
           {/* Defined width: 133px, height: 103px, gap: 9px, text center-aligned */}
-          <div className="flex flex-col items-center md:items-start gap-[9px] w-full max-w-52">
+          <div className="flex flex-col items-center md:items-start gap-2.25 w-full max-w-52">
             <h3 className="hidden md:block text-xs font-black uppercase tracking-wider text-white/50">
               Explore
             </h3>
-            <ul className="flex flex-col gap-[9px] w-full items-center md:items-start">
+            <ul className="flex flex-col gap-2.25 w-full items-center md:items-start">
               {COMPANY_LINKS.map((link) => (
-                <li key={link.href} className="h-[19px] flex items-center">
+                <li key={link.href} className="h-4.75 flex items-center">
                   <Link
                     href={link.href}
-                    className="font-bold text-[16px] leading-[19px] text-center md:text-left hover:text-neutral-200 transition-colors duration-150 inline-block"
+                    className="font-bold text-[16px] leading-4.75 text-center md:text-left hover:text-neutral-200 transition-colors duration-150 inline-block"
                   >
                     {link.label}
                   </Link>

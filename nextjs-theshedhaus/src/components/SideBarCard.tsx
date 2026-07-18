@@ -25,7 +25,6 @@ export const SideBarCard = ({
   className = "",
   shadow = "",
 }: SideBarCardProps) => {
-  console.log("children", children);
   return (
     <div
       className={`w-xs bg-[#707070] text-white font-bold rounded-md ${shadow} font-inter overflow-hidden md:flex flex-col border border-[#575757] ${className}`}
