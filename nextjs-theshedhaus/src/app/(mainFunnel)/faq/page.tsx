@@ -110,7 +110,7 @@ export default async function Page() {
   //       "We partner with BLI Rentals to offer you flexible low payment options to purchase your shed. There is no credit check required and you can get started for as low as the first month’s rent. This is not a loan, but a rental agreement with the option to buy at any time. There are no early payoff fees and comes with a 90 day same as cash payoff. The rent to own agreements do include convenience fees and the purchase of your shed in this fashion is not the same as a cash purchase price.",
   //   },
   // ];
-
+  console.log("seo", seo);
   return (
     <>
       <PageHeader
