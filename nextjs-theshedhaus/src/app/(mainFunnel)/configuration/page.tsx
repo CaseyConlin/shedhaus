@@ -1,5 +1,31 @@
+import type { Metadata } from "next";
 import { DesignOptionsPage } from "../../../components/design/DesignOptions";
 import type { DesignSectionProps } from "../../../components/design/DesignSection";
+import { PageHeader } from "@/components/text/PageHeader";
+import { getConfigurationPageData } from "@/lib/sanity/content";
+import { getConfigurationPageMetadata } from "@/lib/sanity/metadata";
+import { portableTextToString } from "@/lib/utils/portableText";
+
+export async function generateMetadata(): Promise<Metadata> {
+  return getConfigurationPageMetadata();
+}
+
+// Transform image objects from Sanity to string URLs
+const transformSections = (sections: any[]): DesignSectionProps[] => {
+  return sections.map((section) => ({
+    ...section,
+    subSections: section.subSections?.map((subSection: any) => ({
+      ...subSection,
+      items: subSection.items?.map((item: any) => ({
+        ...item,
+        imageUrl:
+          typeof item.imageUrl === "string"
+            ? item.imageUrl
+            : item.imageUrl?.asset?.url || "/images/tempDesignImage.png",
+      })),
+    })),
+  }));
+};
 
 const SIDING_SECTION: DesignSectionProps = {
   id: "siding",
@@ -9,7 +35,7 @@ const SIDING_SECTION: DesignSectionProps = {
   linksToShow: ["T1-11 Siding", "Vinyl Siding"],
   subSections: [
     {
-      cardType: "siding",
+      cardType: "large",
       id: "siding-options",
       items: [
         {
@@ -163,25 +189,35 @@ const WINDOWS_SECTION: DesignSectionProps = {
   ],
 };
 
-import { PageHeader } from "@/components/text/PageHeader";
-
-const CONFIGURATION_PAGE_SLUG = "Configuration";
-
 export default async function Page() {
+  const pageData = await getConfigurationPageData();
+
+  if (!pageData) {
+    return (
+      <>
+        <PageHeader
+          title="Configuration"
+          description="Customize your shed design"
+        />
+        <div>Error loading page data. Please try again later.</div>
+      </>
+    );
+  }
+
+  const { pageTitle, pageDescription, sections } = pageData;
+  const transformedSections = transformSections(sections || []);
+
   return (
     <>
       <PageHeader
-        title={CONFIGURATION_PAGE_SLUG}
-        description={`Details about ${CONFIGURATION_PAGE_SLUG}`}
+        title={pageTitle || "Configuration"}
+        description={
+          pageDescription
+            ? portableTextToString(pageDescription)
+            : "Customize your shed design"
+        }
       />
-      <DesignOptionsPage
-        sections={[
-          SIDING_SECTION,
-          COLOR_SECTION,
-          WOOD_DOORS_SECTION,
-          WINDOWS_SECTION,
-        ]}
-      />
+      <DesignOptionsPage sections={transformedSections} />
     </>
   );
 }

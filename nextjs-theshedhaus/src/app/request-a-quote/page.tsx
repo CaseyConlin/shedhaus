@@ -1,15 +1,41 @@
+import type { Metadata } from "next";
 import { PageHeader } from "@/components/text/PageHeader";
 import { RequestAQuoteForm } from "@/components/RequestAQuoteForm";
 import { SideBarCard } from "@/components/SideBarCard";
+import { getQuotePageData } from "@/lib/sanity/content";
+import { getQuotePageMetadata } from "@/lib/sanity/metadata";
+import { portableTextToString } from "@/lib/utils/portableText";
 
-const REQUEST_A_QUOTE_PAGE_SLUG = "Request A Quote";
+export async function generateMetadata(): Promise<Metadata> {
+  return getQuotePageMetadata();
+}
 
 export default async function Page() {
+  const pageData = await getQuotePageData();
+
+  if (!pageData) {
+    return (
+      <>
+        <PageHeader
+          title="Request a Quote"
+          description="Get a free quote for your shed"
+        />
+        <div>Error loading page data. Please try again later.</div>
+      </>
+    );
+  }
+
+  const { pageTitle, pageDescription } = pageData;
+
   return (
     <>
       <PageHeader
-        title={REQUEST_A_QUOTE_PAGE_SLUG}
-        description={`Details about ${REQUEST_A_QUOTE_PAGE_SLUG}`}
+        title={pageTitle || "Request a Quote"}
+        description={
+          pageDescription
+            ? portableTextToString(pageDescription)
+            : "Get a free quote for your shed"
+        }
       />
       <div className="flex flex-col items-center justify-center w-screen">
         <div className="flex flex-col md:flex-row items-start justify-center max-w-6xl md:gap-10 py-4 md:py-8md:px-0">

@@ -1,92 +1,33 @@
+import type { Metadata } from "next";
+import Image from "next/image";
 import { PageHeader } from "@/components/text/PageHeader";
 import { SideBarCard } from "@/components/SideBarCard";
 import { TeamCard } from "@/components/text/TeamCard";
 import { H2 } from "@/components/text/H2";
 import { Body } from "@/components/text/Body";
 import { ListItemWithLead } from "@/components/text/ListItemWithLead";
+import { getAboutPageData } from "@/lib/sanity/content";
+import { getAboutPageMetadata } from "@/lib/sanity/metadata";
+import { portableTextToString } from "@/lib/utils/portableText";
 
-const ABOUT_PAGE_SLUG = "About";
+export async function generateMetadata(): Promise<Metadata> {
+  return getAboutPageMetadata();
+}
 
 export default async function Page() {
-  const teamMembers = [
-    {
-      name: "Christine",
-      title: "Customer Service Liaison",
-      details: [
-        {
-          leadText: "Expertise",
-          bodyText:
-            "Deep background in regional building materials and practical structural solutions.",
-        },
-        {
-          leadText: "Role",
-          bodyText:
-            "Your primary advocate from initial inquiry to scheduling, ensuring every technical question is answered with absolute clarity and respect.",
-        },
-      ],
-    },
-    {
-      name: "Cal",
-      title: "Customer Support Agent",
-      details: [
-        {
-          leadText: "Expertise",
-          bodyText: "Creative concept mapping and structural aesthetic design.",
-        },
-        {
-          leadText: "Role",
-          bodyText:
-            "Brings a sharp eye for visual balance to help turn your backyard layout goals into a high-functioning reality while providing friendly, approachable lot support.",
-        },
-      ],
-    },
-    {
-      name: "Kathleen",
-      title: "Chief Operations Officer",
-      details: [
-        {
-          leadText: "Expertise",
-          bodyText:
-            "Construction project management, complex site logistics, and structural problem-solving.",
-        },
-        {
-          leadText: "Role",
-          bodyText:
-            "Bridges field knowledge with operations. Kathleen is frequently on-site overseeing complex, unique custom builds that demand strict technical precision.",
-        },
-      ],
-    },
-    {
-      name: "Tony",
-      title: "Ground & Logistics Crew Head",
-      details: [
-        {
-          leadText: "Expertise",
-          bodyText: "Precision delivery and transport.",
-        },
-        {
-          leadText: "Role",
-          bodyText:
-            "Assessment and planning of shed delivery to ensure your shed lands safely exactly where you want it with minimal disruption to your property.",
-        },
-      ],
-    },
-    {
-      name: "Jason",
-      title: "Foundation Foreman",
-      details: [
-        {
-          leadText: "Expertise",
-          bodyText: "Foundation construction for outdoor structures.",
-        },
-        {
-          leadText: "Role",
-          bodyText:
-            "Brings years of heavy landscaping experience and a meticulous eye to every crushed stone and slab pad installation.",
-        },
-      ],
-    },
-  ];
+  const pageData = await getAboutPageData();
+
+  if (!pageData) {
+    return (
+      <>
+        <PageHeader title="About" description="About The Shed Haus" />
+        <div>Error loading page data. Please try again later.</div>
+      </>
+    );
+  }
+
+  const { seo, pageTitle, pageDescription, teamMembers } = pageData;
+  const teamList = teamMembers || [];
 
   const integrityDetails = [
     {
@@ -97,7 +38,7 @@ export default async function Page() {
     {
       leadText: "Foundation Focus",
       bodyText:
-        "A structure is only as good as its base. We don’t just 'drop off' units; we ensure your site meets the standards required for the heavy snow loads and freeze-thaw cycles of the Hudson Valley.",
+        "A structure is only as good as its base. We don't just 'drop off' units; we ensure your site meets the standards required for the heavy snow loads and freeze-thaw cycles of the Hudson Valley.",
     },
     {
       leadText: "Logistics-First Approach",
@@ -106,16 +47,15 @@ export default async function Page() {
     },
   ];
 
-  // const pageQuery = `*[_type == "page" && slug.current == $slug][0]`;
-  // const pageData = await client.fetch(pageQuery, { slug: ABOUT_PAGE_SLUG });
-
-  // const { title, body } = pageData;
-
   return (
     <>
       <PageHeader
-        title={ABOUT_PAGE_SLUG}
-        description={`Details about ${ABOUT_PAGE_SLUG}`}
+        title={pageTitle || "About"}
+        description={
+          pageDescription
+            ? portableTextToString(pageDescription)
+            : "About The Shed Haus"
+        }
       />
       <div className="flex flex-col items-center justify-center w-screen">
         <div className="flex flex-col md:flex-row items-start justify-center max-w-6xl md:gap-10 py-4 md:py-8md:px-0">
@@ -145,7 +85,7 @@ export default async function Page() {
               <a id="our-team" />
               <H2 text="Meet Our Team" className="text-start text-primary" />
               <div className="ps-2 gap-4 flex flex-col items-start justify-start">
-                {teamMembers.map((member, index) => (
+                {teamList.map((member, index) => (
                   <TeamCard
                     key={index}
                     name={member.name}

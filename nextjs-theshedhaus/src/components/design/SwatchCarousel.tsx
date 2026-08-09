@@ -6,9 +6,21 @@ import {
   faChevronLeft,
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
-import { SwatchSmallCard, type SwatchItem } from "./DesignOptionsCards";
+import {
+  SwatchSmallCard,
+  type SwatchItem,
+  SwatchPortraitCircleCard,
+  type MediumItem,
+} from "./DesignOptionsCards";
 
-export const SwatchCarousel = ({ items }: { items: SwatchItem[] }) => {
+interface SwatchCarouselProps {
+  items: SwatchItem[] | MediumItem[];
+  type?: "swatch" | "swatch-portrait-circle";
+}
+export const SwatchCarousel = ({
+  items,
+  type = "swatch",
+}: SwatchCarouselProps) => {
   const carouselRef = useRef<HTMLDivElement>(null);
 
   const handleScroll = (direction: "prev" | "next") => {
@@ -41,7 +53,10 @@ export const SwatchCarousel = ({ items }: { items: SwatchItem[] }) => {
             data-carousel-item
             className="shrink-0 min-w-25 max-w-25"
           >
-            <SwatchSmallCard item={item} />
+            {type === "swatch" && <SwatchSmallCard item={item as SwatchItem} />}
+            {type === "swatch-portrait-circle" && (
+              <SwatchPortraitCircleCard item={item as MediumItem} />
+            )}
           </div>
         ))}
       </div>

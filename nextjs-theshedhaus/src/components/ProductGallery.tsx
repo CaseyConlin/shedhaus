@@ -14,25 +14,11 @@ interface GalleryImage {
   alt: string;
 }
 
-const GALLERY_IMAGES: GalleryImage[] = [
-  {
-    id: 1,
-    src: "/images/tempImage.png", // Replace with your actual Asset path
-    alt: "The Shed Haus Premium Gable Shed Style A",
-  },
-  {
-    id: 2,
-    src: "/images/tempImage.png", // Replace with your actual Asset path
-    alt: "The Shed Haus Premium Gable Shed Style B",
-  },
-  {
-    id: 3,
-    src: "/images/tempImage.png", // Replace with your actual Asset path
-    alt: "The Shed Haus Premium Gable Shed Style C",
-  },
-];
-
-export const ProductGallery = () => {
+export const ProductGallery = ({
+  galleryImages,
+}: {
+  galleryImages: GalleryImage[];
+}) => {
   const carouselRef = useRef<HTMLDivElement>(null);
 
   // Scroll function for Mobile Slider Button Controls
@@ -59,7 +45,7 @@ export const ProductGallery = () => {
             1. DESKTOP VIEWPORT: Stacked Vertical Column (Full Width of Container)
             ========================================== */}
         <div className="hidden md:flex flex-col gap-6 w-full">
-          {GALLERY_IMAGES.map((img) => (
+          {galleryImages.map((img) => (
             <div
               key={img.id}
               className="relative w-full aspect-[4/3] rounded-lg overflow-hidden"
@@ -86,7 +72,7 @@ export const ProductGallery = () => {
             className="w-full flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth scrollbar-none pb-4"
             style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
           >
-            {GALLERY_IMAGES.map((img) => (
+            {galleryImages.map((img) => (
               <div
                 key={img.id}
                 className="snap-center shrink-0 w-full aspect-[4/3] relative rounded-lg overflow-hidden"

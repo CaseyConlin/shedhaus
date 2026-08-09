@@ -7,6 +7,24 @@ export default async function Page({
 }: {
   params: Promise<{ slug: string }>;
 }) {
+  const GALLERY_IMAGES = [
+    {
+      id: 1,
+      src: "/images/tempImage.png", // Replace with your actual Asset path
+      alt: "The Shed Haus Premium Gable Shed Style A",
+    },
+    {
+      id: 2,
+      src: "/images/tempImage.png", // Replace with your actual Asset path
+      alt: "The Shed Haus Premium Gable Shed Style B",
+    },
+    {
+      id: 3,
+      src: "/images/tempImage.png", // Replace with your actual Asset path
+      alt: "The Shed Haus Premium Gable Shed Style C",
+    },
+  ];
+
   const specs = [
     {
       lead: "Roofline",
@@ -64,7 +82,7 @@ export default async function Page({
       <div className="flex flex-col items-center justify-center w-screen">
         <div className="flex flex-col md:flex-row items-start justify-center max-w-6xl gap-4 md:gap-10 py-4 md:py-8 md:px-0">
           <div className="flex-4 flex justify-start items-start min-w-screen md:min-w-0 w-full">
-            <ProductGallery />
+            <ProductGallery galleryImages={GALLERY_IMAGES} />
           </div>
           <div className="flex-3 flex flex-col items-start justify-start w-full ">
             <KeyFeatures features={features} />

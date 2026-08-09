@@ -114,7 +114,7 @@ export const DesignOptionsPage = ({
 
   return (
     // <div className="flex flex-col items-center justify-center w-screen">
-    <div className="flex flex-col items-center justify-center w-full overflow-x-hidden">
+    <div className="flex flex-col items-center justify-center w-full ">
       <div className="flex w-full max-w-6xl mx-auto flex-col md:flex-row items-start justify-center md:gap-10 py-4 md:py-8 md:px-0">
         <div className="hidden lg:block lg:flex-1 lg:sticky lg:top-8 lg:self-start">
           {/* Sticky Left Navigation (Desktop Only - hidden on mobile) */}

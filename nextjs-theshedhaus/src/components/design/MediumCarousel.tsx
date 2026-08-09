@@ -6,9 +6,21 @@ import {
   faChevronLeft,
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
-import { MediumLandscapeCard, type MediumItem } from "./DesignOptionsCards";
+import {
+  MediumLandscapeCard,
+  type MediumItem,
+  SwatchPortraitCircleCard,
+  MediumPortraitCard,
+} from "./DesignOptionsCards";
 
-export const MediumCarousel = ({ items }: { items: MediumItem[] }) => {
+interface MediumCarouselProps {
+  items: MediumItem[];
+  cardType?: "medium" | "medium-portrait" | "swatch-portrait-circle";
+}
+export const MediumCarousel = ({
+  items,
+  cardType = "medium",
+}: MediumCarouselProps) => {
   const carouselRef = useRef<HTMLDivElement>(null);
 
   const handleScroll = (direction: "prev" | "next") => {
@@ -42,7 +54,13 @@ export const MediumCarousel = ({ items }: { items: MediumItem[] }) => {
             data-carousel-item
             className="snap-center shrink-0 min-w-[85vw] max-w-[85vw]"
           >
-            <MediumLandscapeCard item={item} />
+            {cardType === "medium" && <MediumLandscapeCard item={item} />}
+            {cardType === "medium-portrait" && (
+              <MediumPortraitCard item={item} />
+            )}
+            {cardType === "swatch-portrait-circle" && (
+              <SwatchPortraitCircleCard item={item} />
+            )}
           </div>
         ))}
       </div>

@@ -9,6 +9,14 @@ const nextConfig: NextConfig = {
     // Keep Turbopack scoped to this app folder to avoid scanning the parent workspace.
     root: appRoot,
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "cdn.sanity.io",
+      },
+    ],
+  },
 };
 
 export default nextConfig;

@@ -2,8 +2,10 @@ import {
   SidingLargeCard,
   SwatchSmallCard,
   MediumLandscapeCard,
+  MediumPortraitCard,
+  SwatchPortraitCircleCard,
 } from "./DesignOptionsCards";
-import type { SidingItem, SwatchItem, MediumItem } from "./DesignOptionsCards";
+import type { SwatchItem, MediumItem, LargeItem } from "./DesignOptionsCards";
 import { SidingCarousel } from "./SidingCarousel";
 import { SwatchCarousel } from "./SwatchCarousel";
 import { MediumCarousel } from "./MediumCarousel";
@@ -14,8 +16,13 @@ export interface SubSection {
   id: string;
   title?: string;
   description?: string;
-  items: SidingItem[] | SwatchItem[] | MediumItem[];
-  cardType: "siding" | "swatch" | "medium";
+  items: LargeItem[] | SwatchItem[] | MediumItem[];
+  cardType:
+    | "large"
+    | "swatch"
+    | "medium"
+    | "medium-portrait"
+    | "swatch-portrait-circle";
   includeInNav?: boolean;
   navLabel?: string;
 }
@@ -38,7 +45,7 @@ const sectionLeadIn = ({
   return (
     <>
       {title && (
-        <h3 className="font-montserrat font-semibold text-lg text-primary tracking-tight leading-tight mb-0">
+        <h3 className="font-montserrat font-semibold text-lg text-primary tracking-tight leading-tight mb-0 mt-10">
           {title}
         </h3>
       )}
@@ -49,7 +56,7 @@ const sectionLeadIn = ({
 
 const renderSubSectionItems = (subSection: SubSection) => {
   switch (subSection.cardType) {
-    case "siding":
+    case "large":
       return (
         <div className="w-full flex flex-col gap-2">
           {(subSection.title || subSection.description) &&
@@ -60,7 +67,7 @@ const renderSubSectionItems = (subSection: SubSection) => {
                 : undefined,
             })}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {(subSection.items as SidingItem[]).map((item) => (
+            {(subSection.items as LargeItem[]).map((item) => (
               <SidingLargeCard key={item.id} item={item} />
             ))}
           </div>
@@ -100,6 +107,40 @@ const renderSubSectionItems = (subSection: SubSection) => {
           </div>
         </div>
       );
+    case "medium-portrait":
+      return (
+        <div className="w-full flex flex-col gap-2">
+          {(subSection.title || subSection.description) &&
+            sectionLeadIn({
+              title: subSection.title,
+              description: subSection.description
+                ? [subSection.description]
+                : undefined,
+            })}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {(subSection.items as MediumItem[]).map((item) => (
+              <MediumPortraitCard key={item.id} item={item} />
+            ))}
+          </div>
+        </div>
+      );
+    case "swatch-portrait-circle":
+      return (
+        <>
+          {(subSection.title || subSection.description) &&
+            sectionLeadIn({
+              title: subSection.title,
+              description: subSection.description
+                ? [subSection.description]
+                : undefined,
+            })}
+          <div className="flex flex-wrap justify-center gap-2">
+            {(subSection.items as MediumItem[]).map((item) => (
+              <SwatchPortraitCircleCard key={item.id} item={item} />
+            ))}
+          </div>
+        </>
+      );
     default:
       return null;
   }
@@ -126,10 +167,17 @@ export const DesignSection = ({
       </div>
       <div className="md:hidden flex flex-col items-center w-full max-w-full space-y-8">
         {subSections?.map((subSection) => {
-          if (subSection.cardType === "siding") {
+          if (subSection.cardType === "large") {
             return (
               <div key={subSection.id} className="w-full">
-                <SidingCarousel items={subSection.items as SidingItem[]} />
+                {(subSection.title || subSection.description) &&
+                  sectionLeadIn({
+                    title: subSection.title,
+                    description: subSection.description
+                      ? [subSection.description]
+                      : undefined,
+                  })}
+                <SidingCarousel items={subSection.items as LargeItem[]} />
               </div>
             );
           }
@@ -137,6 +185,13 @@ export const DesignSection = ({
           if (subSection.cardType === "swatch") {
             return (
               <div key={subSection.id} className="w-full">
+                {(subSection.title || subSection.description) &&
+                  sectionLeadIn({
+                    title: subSection.title,
+                    description: subSection.description
+                      ? [subSection.description]
+                      : undefined,
+                  })}
                 <SwatchCarousel items={subSection.items as SwatchItem[]} />
               </div>
             );
@@ -145,7 +200,48 @@ export const DesignSection = ({
           if (subSection.cardType === "medium") {
             return (
               <div key={subSection.id} className="w-full">
+                {(subSection.title || subSection.description) &&
+                  sectionLeadIn({
+                    title: subSection.title,
+                    description: subSection.description
+                      ? [subSection.description]
+                      : undefined,
+                  })}
                 <MediumCarousel items={subSection.items as MediumItem[]} />
+              </div>
+            );
+          }
+          if (subSection.cardType === "medium-portrait") {
+            return (
+              <div key={subSection.id} className="w-full">
+                {(subSection.title || subSection.description) &&
+                  sectionLeadIn({
+                    title: subSection.title,
+                    description: subSection.description
+                      ? [subSection.description]
+                      : undefined,
+                  })}
+                <MediumCarousel
+                  items={subSection.items as MediumItem[]}
+                  cardType="medium-portrait"
+                />
+              </div>
+            );
+          }
+          if (subSection.cardType === "swatch-portrait-circle") {
+            return (
+              <div key={subSection.id} className="w-full">
+                {(subSection.title || subSection.description) &&
+                  sectionLeadIn({
+                    title: subSection.title,
+                    description: subSection.description
+                      ? [subSection.description]
+                      : undefined,
+                  })}
+                <SwatchCarousel
+                  items={subSection.items as MediumItem[]}
+                  type="swatch-portrait-circle"
+                />
               </div>
             );
           }

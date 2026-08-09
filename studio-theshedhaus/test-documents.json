@@ -1,0 +1,362 @@
+[
+  {
+    "_type": "ourProcessPage",
+    "seo": {
+      "title": "Our Process | The Shed Haus",
+      "description": "Learn how The Shed Haus builds premium structures from consultation to delivery",
+      "slug": {
+        "_type": "slug",
+        "current": "our-process"
+      }
+    },
+    "steps": [
+      {
+        "_type": "processStep",
+        "_key": "step1",
+        "title": "Explore & Select Your Style",
+        "description": [
+          {
+            "_type": "block",
+            "_key": "p1",
+            "markDefs": [],
+            "children": [
+              {
+                "_type": "span",
+                "_key": "span1",
+                "text": "Whether you are browsing our unlocked, 24/7 open display lot on Route 22 in Pawling or testing configurations online, your project starts with finding the right blueprint.",
+                "marks": []
+              }
+            ]
+          }
+        ],
+        "order": 1
+      },
+      {
+        "_type": "processStep",
+        "_key": "step2",
+        "title": "Get Transparent Pricing Instantly",
+        "description": [
+          {
+            "_type": "block",
+            "_key": "p2",
+            "markDefs": [],
+            "children": [
+              {
+                "_type": "span",
+                "_key": "span2",
+                "text": "We don't believe in hidden fees or high-pressure sales tactics.",
+                "marks": []
+              }
+            ]
+          }
+        ],
+        "order": 2
+      },
+      {
+        "_type": "processStep",
+        "_key": "step3",
+        "title": "Site Foundation & Stone Pad Preparation",
+        "description": [
+          {
+            "_type": "block",
+            "_key": "p3",
+            "markDefs": [],
+            "children": [
+              {
+                "_type": "span",
+                "_key": "span3",
+                "text": "A premium structure is only as reliable as its foundation.",
+                "marks": []
+              }
+            ]
+          }
+        ],
+        "order": 3
+      },
+      {
+        "_type": "processStep",
+        "_key": "step4",
+        "title": "Procurement & Quality Control",
+        "description": [
+          {
+            "_type": "block",
+            "_key": "p4",
+            "markDefs": [],
+            "children": [
+              {
+                "_type": "span",
+                "_key": "span4",
+                "text": "We coordinate directly with our top-tier regional structure manufacturers.",
+                "marks": []
+              }
+            ]
+          }
+        ],
+        "order": 4
+      },
+      {
+        "_type": "processStep",
+        "_key": "step5",
+        "title": "Transport Logistics & Precision Placement",
+        "description": [
+          {
+            "_type": "block",
+            "_key": "p5",
+            "markDefs": [],
+            "children": [
+              {
+                "_type": "span",
+                "_key": "span5",
+                "text": "Final delivery is executed by our experienced transport logistics team.",
+                "marks": []
+              }
+            ]
+          }
+        ],
+        "order": 5
+      }
+    ]
+  },
+  {
+    "_type": "faqPage",
+    "seo": {
+      "title": "Frequently Asked Questions | The Shed Haus",
+      "description": "Common questions about The Shed Haus structures, delivery, warranties, and financing options",
+      "slug": {
+        "_type": "slug",
+        "current": "faq"
+      }
+    },
+    "faqs": [
+      {
+        "_type": "faqItem",
+        "_key": "faq1",
+        "question": "Do you offer shipping?",
+        "answer": [
+          {
+            "_type": "block",
+            "_key": "a1",
+            "markDefs": [],
+            "children": [
+              {
+                "_type": "span",
+                "_key": "s1",
+                "text": "Yes, we offer shipping on our structures for a nominal charge based on your delivery location.",
+                "marks": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "_type": "faqItem",
+        "_key": "faq2",
+        "question": "Do you move sheds?",
+        "answer": [
+          {
+            "_type": "block",
+            "_key": "a2",
+            "markDefs": [],
+            "children": [
+              {
+                "_type": "span",
+                "_key": "s2",
+                "text": "We are able to perform the service of moving a shed or structure as long as it is Amish made.",
+                "marks": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "_type": "faqItem",
+        "_key": "faq3",
+        "question": "Can I get a Shed with Vinyl Siding?",
+        "answer": [
+          {
+            "_type": "block",
+            "_key": "a3",
+            "markDefs": [],
+            "children": [
+              {
+                "_type": "span",
+                "_key": "s3",
+                "text": "Yes, we do offer sheds with vinyl siding.",
+                "marks": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "_type": "faqItem",
+        "_key": "faq4",
+        "question": "Do I need a permit for my shed?",
+        "answer": [
+          {
+            "_type": "block",
+            "_key": "a4",
+            "markDefs": [],
+            "children": [
+              {
+                "_type": "span",
+                "_key": "s4",
+                "text": "Every town has their own requirements.",
+                "marks": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "_type": "faqItem",
+        "_key": "faq5",
+        "question": "What is included in my delivery?",
+        "answer": [
+          {
+            "_type": "block",
+            "_key": "a5",
+            "markDefs": [],
+            "children": [
+              {
+                "_type": "span",
+                "_key": "s5",
+                "text": "Your delivery charge includes the use of our truck and trailer.",
+                "marks": []
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "_type": "aboutPage",
+    "seo": {
+      "title": "About The Shed Haus",
+      "description": "Meet the expert team behind The Shed Haus. Locally owned and committed to premium outdoor structures",
+      "slug": {
+        "_type": "slug",
+        "current": "about"
+      }
+    },
+    "heroTitle": "About The Shed Haus",
+    "heroDescription": [
+      {
+        "_type": "block",
+        "_key": "desc1",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span1",
+            "text": "Locally owned, personally invested. We don't just sell structures—we partner with you from design through delivery",
+            "marks": []
+          }
+        ]
+      }
+    ],
+    "teamMembers": [
+      {
+        "_type": "teamMember",
+        "_key": "team1",
+        "name": "Christine",
+        "title": "Customer Service Liaison",
+        "details": [
+          {
+            "_type": "object",
+            "_key": "detail1",
+            "leadText": "Expertise",
+            "bodyText": "Deep background in regional building materials and practical structural solutions."
+          },
+          {
+            "_type": "object",
+            "_key": "detail2",
+            "leadText": "Role",
+            "bodyText": "Your primary advocate from initial inquiry to scheduling, ensuring every technical question is answered with absolute clarity and respect."
+          }
+        ]
+      },
+      {
+        "_type": "teamMember",
+        "_key": "team2",
+        "name": "Cal",
+        "title": "Customer Support Agent",
+        "details": [
+          {
+            "_type": "object",
+            "_key": "detail1",
+            "leadText": "Expertise",
+            "bodyText": "Creative concept mapping and structural aesthetic design."
+          },
+          {
+            "_type": "object",
+            "_key": "detail2",
+            "leadText": "Role",
+            "bodyText": "Brings a sharp eye for visual balance to help turn your backyard layout goals into a high-functioning reality."
+          }
+        ]
+      },
+      {
+        "_type": "teamMember",
+        "_key": "team3",
+        "name": "Kathleen",
+        "title": "Chief Operations Officer",
+        "details": [
+          {
+            "_type": "object",
+            "_key": "detail1",
+            "leadText": "Expertise",
+            "bodyText": "Construction project management, complex site logistics, and structural problem-solving."
+          },
+          {
+            "_type": "object",
+            "_key": "detail2",
+            "leadText": "Role",
+            "bodyText": "Bridges field knowledge with operations. Kathleen is frequently on-site overseeing complex builds."
+          }
+        ]
+      },
+      {
+        "_type": "teamMember",
+        "_key": "team4",
+        "name": "Tony",
+        "title": "Ground & Logistics Crew Head",
+        "details": [
+          {
+            "_type": "object",
+            "_key": "detail1",
+            "leadText": "Expertise",
+            "bodyText": "Precision delivery and transport."
+          },
+          {
+            "_type": "object",
+            "_key": "detail2",
+            "leadText": "Role",
+            "bodyText": "Assessment and planning of shed delivery to ensure your shed lands safely exactly where you want it."
+          }
+        ]
+      },
+      {
+        "_type": "teamMember",
+        "_key": "team5",
+        "name": "Jason",
+        "title": "Foundation Foreman",
+        "details": [
+          {
+            "_type": "object",
+            "_key": "detail1",
+            "leadText": "Expertise",
+            "bodyText": "Foundation construction for outdoor structures."
+          },
+          {
+            "_type": "object",
+            "_key": "detail2",
+            "leadText": "Role",
+            "bodyText": "Brings years of heavy landscaping experience and a meticulous eye to every installation."
+          }
+        ]
+      }
+    ]
+  }
+]

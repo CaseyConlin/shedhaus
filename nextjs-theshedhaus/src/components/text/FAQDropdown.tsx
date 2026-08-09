@@ -3,13 +3,11 @@ import { useState } from "react";
 import { Caret } from "../Caret";
 import { Body } from "./Body";
 
-export const FAQDropdown = ({
-  question,
-  answer,
-}: {
+export interface FAQDropdownProps {
   question: string;
   answer: string;
-}) => {
+}
+export const FAQDropdown = ({ question, answer }: FAQDropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleDropdown = () => {
@@ -17,7 +15,7 @@ export const FAQDropdown = ({
   };
 
   return (
-    <div className="w-full md:w-xl rounded-md border-2 border-gray-300 md:min-w-xl py-2 px-3">
+    <div className="w-full md:w-2xl rounded-md border-2 border-gray-300 md:min-w-xl py-2 px-3">
       <button
         onClick={toggleDropdown}
         className="flex justify-between items-center w-full text-left font-extrabold text-lg text-primary "
