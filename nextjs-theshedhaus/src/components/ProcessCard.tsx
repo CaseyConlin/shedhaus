@@ -1,5 +1,5 @@
 import { Body } from "./text/Body";
-interface ProcessCardProps {
+export interface ProcessCardProps {
   title: string;
   description: string[];
   icon: React.ReactNode;
