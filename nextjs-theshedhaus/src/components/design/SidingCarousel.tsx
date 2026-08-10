@@ -6,9 +6,9 @@ import {
   faChevronLeft,
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
-import { SidingLargeCard, type SidingItem } from "./DesignOptionsCards";
+import { SidingLargeCard, type LargeItem } from "./DesignOptionsCards";
 
-export const SidingCarousel = ({ items }: { items: SidingItem[] }) => {
+export const SidingCarousel = ({ items }: { items: LargeItem[] }) => {
   const carouselRef = useRef<HTMLDivElement>(null);
 
   const handleScroll = (direction: "prev" | "next") => {
