@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { PageHeader } from "@/components/text/PageHeader";
 import { SideBarCard } from "@/components/SideBarCard";
-import { TeamCard } from "@/components/text/TeamCard";
+import { TeamCard, type TeamCardProps } from "@/components/text/TeamCard";
 import { H2 } from "@/components/text/H2";
 import { Body } from "@/components/text/Body";
 import { ListItemWithLead } from "@/components/text/ListItemWithLead";
@@ -27,6 +26,7 @@ export default async function Page() {
   }
 
   const { seo, pageTitle, pageDescription, teamMembers } = pageData;
+  console.log("seo", seo);
   const teamList = teamMembers || [];
 
   const integrityDetails = [
@@ -85,7 +85,7 @@ export default async function Page() {
               <a id="our-team" />
               <H2 text="Meet Our Team" className="text-start text-primary" />
               <div className="ps-2 gap-4 flex flex-col items-start justify-start">
-                {teamList.map((member, index) => (
+                {teamList.map((member: TeamCardProps, index: number) => (
                   <TeamCard
                     key={index}
                     name={member.name}

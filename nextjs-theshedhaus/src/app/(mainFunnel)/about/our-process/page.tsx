@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { PageHeader } from "@/components/text/PageHeader";
 import { SideBarCard } from "@/components/SideBarCard";
 import { ProcessCard, type ProcessCardProps } from "@/components/ProcessCard";
@@ -53,21 +52,8 @@ export default async function Page() {
                       portableTextToString(step.description) ||
                         "Process step details",
                     ]}
-                    icon={
-                      step.icon?.asset?.url ? (
-                        <Image
-                          src={step.icon.asset.url}
-                          alt={step.icon.alt || step.title}
-                          width={52}
-                          height={52}
-                          style={{ width: "auto", height: "auto" }}
-                        />
-                      ) : (
-                        <div className="w-13 h-13 bg-gray-300 rounded flex items-center justify-center text-xs text-gray-600">
-                          {step.order}
-                        </div>
-                      )
-                    }
+                    icon={step.icon}
+                    order={step.order}
                     odd={index % 2 !== 0}
                   />
                   {index < processSteps.length - 1 && (

@@ -3,7 +3,7 @@ import {
   type ListItemWithLeadProps,
 } from "./ListItemWithLead";
 
-interface TeamCardProps {
+export interface TeamCardProps {
   name: string;
   title: string;
   details: ListItemWithLeadProps[];
