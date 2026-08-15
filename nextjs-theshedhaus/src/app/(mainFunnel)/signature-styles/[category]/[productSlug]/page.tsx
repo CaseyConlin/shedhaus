@@ -55,7 +55,7 @@ export async function generateStaticParams() {
 
     const products = await Promise.race([
       client.fetch<StaticProductParams[]>(`
-        *[_type == "product" && defined(seo.slug.current)] {
+        *[_type == "productPage" && defined(seo.slug.current)] {
           seo { slug { current } },
           category
         }
