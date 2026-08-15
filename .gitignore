@@ -40,6 +40,9 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# Sanity studio scripts and data files (local only)
+studio-theshedhaus/import-products.mjs
+studio-theshedhaus/products-data.json
 
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 

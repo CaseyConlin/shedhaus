@@ -2,9 +2,81 @@ import { Metadata } from "next";
 import { PageHeader } from "@/components/text/PageHeader";
 import { ProductList } from "@/components/productList/ProductList";
 import { getCategoryBySlug, getProductsByCategory } from "@/lib/sanity/content";
+import { createClient } from "next-sanity";
 
 interface CategoryPageProps {
   params: Promise<{ category: string }>;
+}
+
+interface StaticCategoryParams {
+  slug: {
+    current: string;
+  };
+}
+
+export async function generateStaticParams() {
+  try {
+    const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
+    const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET;
+
+    console.log(
+      `[generateStaticParams] Category: Starting with projectId=${projectId}, dataset=${dataset}`,
+    );
+
+    if (!projectId || !dataset) {
+      console.error(
+        "[generateStaticParams] Category: Missing Sanity credentials",
+      );
+      return [];
+    }
+
+    const client = createClient({
+      projectId,
+      dataset,
+      apiVersion: "2024-01-01",
+      useCdn: false,
+    });
+
+    const categories = await Promise.race([
+      client.fetch<StaticCategoryParams[]>(`
+        *[_type == "category" && defined(slug.current)] {
+          slug { current }
+        }
+      `),
+      new Promise<never>((_, reject) =>
+        setTimeout(
+          () => reject(new Error("Sanity query timeout after 5s")),
+          5000,
+        ),
+      ),
+    ]);
+
+    console.log(
+      `[generateStaticParams] Category: Successfully fetched ${categories.length} categories`,
+    );
+
+    if (!categories || categories.length === 0) {
+      console.warn(
+        "[generateStaticParams] Category: No categories found, returning empty array",
+      );
+      return [];
+    }
+
+    const params = categories.map((cat) => ({
+      category: cat.slug.current,
+    }));
+
+    console.log(
+      `[generateStaticParams] Category: Returning ${params.length} param sets`,
+    );
+    return params;
+  } catch (error) {
+    console.error(
+      "[generateStaticParams] Category Error:",
+      error instanceof Error ? error.message : String(error),
+    );
+    return [];
+  }
 }
 
 export async function generateMetadata({
