@@ -128,9 +128,20 @@ export const PRODUCT_PAGE_QUERY = (slug: string) => `
   *[_type == "productPage" && seo.slug.current == "${slug}"][0] {
     ${SEO_FRAGMENT},
     pageTitle,
-    pageDescription,
+    pageDescription[] {
+      _type,
+      _key,
+      children[] {
+        _type,
+        text,
+        marks[]
+      },
+      markDefs[],
+      style
+    },
     productName,
-    gallery[] | sort(order asc) {
+    category,
+    gallery | order(order asc) [] {
       image {
         asset -> {
           url
@@ -150,12 +161,69 @@ export const PRODUCT_PAGE_QUERY = (slug: string) => `
   }
 `;
 
+// Products by category query
+export const PRODUCTS_BY_CATEGORY_QUERY = (category: string) => `
+  *[_type == "productPage" && category == "${category}"] | order(productName asc) {
+    productName,
+    category,
+    ${SEO_FRAGMENT},
+    gallery | order(order asc) [] {
+      image {
+        asset -> {
+          url
+        },
+        alt
+      }
+    },
+    specs[] {
+      lead,
+      text
+    }
+  }
+`;
+
+// All products query
+export const ALL_PRODUCTS_QUERY = `
+  *[_type == "productPage"] | order(category asc, productName asc) {
+    productName,
+    category,
+    ${SEO_FRAGMENT},
+    gallery | order(order asc) [] {
+      image {
+        asset -> {
+          url
+        },
+        alt
+      }
+    }
+  }
+`;
+
 // Contact page query
 export const CONTACT_PAGE_QUERY = `
   *[_type == "contactPage"][0] {
     ${SEO_FRAGMENT},
     pageTitle,
     pageDescription
+  }
+`;
+
+// Category by slug query
+export const CATEGORY_BY_SLUG_QUERY = (slug: string) => `
+  *[_type == "category" && slug.current == "${slug}"][0] {
+    name,
+    slug {
+      current
+    },
+    ${SEO_FRAGMENT},
+    pageTitle,
+    pageDescription,
+    image {
+      asset -> {
+        url
+      },
+      alt
+    }
   }
 `;
 

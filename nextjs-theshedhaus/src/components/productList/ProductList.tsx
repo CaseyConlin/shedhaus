@@ -14,7 +14,10 @@ export const ProductList = ({ products }: { products?: Product[] }) => {
       products.forEach((product, index) => {
         // Add the active product card
         listItems.push(
-          <ProductCard key={`prod-${product.id}-${index}`} {...product} />,
+          <ProductCard
+            key={`prod-${product.productName}-${index}`}
+            {...product}
+          />,
         );
 
         // Frame 167.jpg (mobile) and Frame 168.jpg (desktop) insert the "Lot Update" card

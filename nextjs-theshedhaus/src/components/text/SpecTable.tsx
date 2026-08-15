@@ -5,9 +5,9 @@ export const SpecTable = ({
   specs: { lead: string; text: string }[];
 }) => {
   return (
-    <div className="flex flex-col items-center justify-center w-full max-w-6xl gap-4 px-2 py-4 md:py-8 md:px-0">
+    <div className="flex flex-col items-center justify-center w-full max-w-6xl gap-4 px-2 md:px-0">
       <div className="flex flex-col items-center justify-center w-full gap-2">
-        <H2 className="text-primary w-full text-left" text="Specs" />
+        <H2 className="text-primary w-full text-left" text="Base Specs" />
         <table className="w-full border-collapse border border-black">
           <tbody>
             {specs.map((spec, index) => (

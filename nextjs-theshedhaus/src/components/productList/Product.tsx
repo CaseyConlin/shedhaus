@@ -1,38 +1,54 @@
 "use client";
 import Image from "next/image";
 import { LinkButton } from "../buttons/LinkButton";
+import Link from "next/link";
+import { GalleryItem } from "@/lib/sanity/types";
 
 export interface Product {
-  id: string;
-  title: string;
-  dimensions: string;
-  bullets: string[];
-  imageUrl: string;
-  slug: string; // Add slug field from Sanity
-  category: string; // e.g., "sheds", "a-frame", etc.
-
-  // link: string;
+  productName: string;
+  specs?: Array<{ lead?: string; text?: string }>;
+  features?: Array<{ lead?: string; text?: string }>;
+  gallery?: GalleryItem[];
+  seo?: { slug?: { current?: string } };
+  category: string;
 }
-/**
- * ProductCard
- * Represents a single standard shed item card shown in Frame 167.jpg and Frame 168.jpg.
- */
+
 export const ProductCard = ({
-  title,
-  dimensions,
-  bullets,
-  imageUrl,
-  slug,
+  productName,
+  specs,
+  gallery,
+  seo,
   category,
 }: Product) => {
+  const slug =
+    seo?.slug?.current || productName?.toLowerCase().replace(/\s+/g, "-");
+  const imageUrl = gallery?.[0]?.image?.asset?.url || "/placeholder.png";
+
+  const dimensions = specs?.find((s) => s.lead === "Footprint");
+
+  const dimensionsValues =
+    dimensions?.text?.split(",").map((d) => d.trim()) || [];
+  const firstDimension = dimensionsValues[0] || "Multiple sizes available";
+  const lastDimension =
+    dimensionsValues[dimensionsValues.length - 1] || "Various sizes available";
+  const dimensionText =
+    firstDimension !== lastDimension
+      ? `Available sizes from ${firstDimension} to ${lastDimension}`
+      : firstDimension;
+
+  const bullets =
+    specs
+      ?.map((s) => s.text)
+      .filter(Boolean)
+      .slice(0, 4) || [];
   const link = `/signature-styles/${category}/${slug}`;
   return (
-    <article className="flex flex-col bg-white text-black rounded-md overflow-hidden shadow-xl border border-neutral-200 w-full  md:w-xs md:max-w-none md:min-w-75 h-120 transition duration-300 hover:shadow-2xl hover:transform hover:scale-105">
+    <article className="flex flex-col bg-white text-black rounded-md overflow-hidden shadow-xl border border-neutral-200 w-full md:w-xs md:max-w-none md:min-w-75 min-h-120 transition duration-300 hover:shadow-2xl hover:transform hover:scale-105">
       {/* Aspect Ratio Container for Shed Image */}
-      <div className="relative w-full h-45 bg-neutral-100 overflow-hidden">
+      <div className="relative w-full h-45 bg-neutral-100 overflow-hidden flex-shrink-0">
         <Image
           src={imageUrl}
-          alt={title}
+          alt={productName}
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 340px"
           className="object-cover object-center"
@@ -43,22 +59,25 @@ export const ProductCard = ({
       <div className="flex-1 flex flex-col p-5 justify-between">
         <div className="flex flex-col">
           {/* Header Title */}
-          <h3 className="font-montserrat font-black text-xl text-primary tracking-tight leading-tight uppercase">
-            {title}
-          </h3>
+          <Link href={link}>
+            <h3 className="font-montserrat font-black text-xl text-primary tracking-tight leading-tight uppercase">
+              {productName}
+            </h3>
+          </Link>
           {/* Sizes / Subtitle */}
           <p className="font-inter italic text-xs text-neutral-500 mt-1 mb-4">
-            {dimensions}
+            {dimensionText}
           </p>
 
           {/* Key Bullet Features */}
           <ul className="space-y-1.5 text-sm font-semibold text-neutral-800">
-            {bullets.map((bullet, idx) => (
-              <li key={idx} className="flex items-start gap-1">
-                <span className="text-neutral-400 shrink-0 select-none">•</span>
-                <span>{bullet}</span>
-              </li>
-            ))}
+            {bullets &&
+              bullets.map((bullet, idx) => (
+                <li key={idx} className="flex items-start gap-1">
+                  <span className="text-primary shrink-0 select-none">•</span>
+                  <span>{bullet}</span>
+                </li>
+              ))}
           </ul>
         </div>
 

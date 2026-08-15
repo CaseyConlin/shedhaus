@@ -42,6 +42,21 @@ export const productPage = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: 'category',
+      title: 'Category',
+      type: 'string',
+      description: 'e.g., "sheds", "playhouses", "garages"',
+      options: {
+        list: [
+          {title: 'Sheds', value: 'sheds'},
+          {title: 'Playhouses', value: 'playhouses'},
+          {title: 'Garages', value: 'garages'},
+          {title: 'Cottages', value: 'cottages'},
+        ],
+      },
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
       name: 'gallery',
       title: 'Product Gallery',
       type: 'array',

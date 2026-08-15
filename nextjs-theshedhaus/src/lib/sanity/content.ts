@@ -7,6 +7,9 @@ import {
   CONTACT_PAGE_QUERY,
   QUOTE_PAGE_QUERY,
   PRODUCT_PAGE_QUERY,
+  PRODUCTS_BY_CATEGORY_QUERY,
+  ALL_PRODUCTS_QUERY,
+  CATEGORY_BY_SLUG_QUERY,
 } from "./queries";
 
 /**
@@ -110,6 +113,47 @@ export async function getProductPageData(slug: string) {
     return data;
   } catch (error) {
     console.error(`Error fetching product page for ${slug}:`, error);
+    return null;
+  }
+}
+
+/**
+ * Fetch all products in a category
+ */
+export async function getProductsByCategory(category: string) {
+  try {
+    const query = PRODUCTS_BY_CATEGORY_QUERY(category);
+    const data = await client.fetch(query);
+    return data;
+  } catch (error) {
+    console.error(`Error fetching products for category ${category}:`, error);
+    return null;
+  }
+}
+
+/**
+ * Fetch all products
+ */
+export async function getAllProducts() {
+  try {
+    const data = await client.fetch(ALL_PRODUCTS_QUERY);
+    return data;
+  } catch (error) {
+    console.error("Error fetching all products:", error);
+    return null;
+  }
+}
+
+/**
+ * Fetch category data by slug
+ */
+export async function getCategoryBySlug(slug: string) {
+  try {
+    const query = CATEGORY_BY_SLUG_QUERY(slug);
+    const data = await client.fetch(query);
+    return data;
+  } catch (error) {
+    console.error(`Error fetching category ${slug}:`, error);
     return null;
   }
 }

@@ -26,7 +26,7 @@ export const BreadCrumbs = () => {
 
   return (
     <nav aria-label="Breadcrumb" className="flex text-sm py-4  mx-auto w-full">
-      <ol className="flex items-center space-x-2">
+      <ol className="flex flex-wrap items-center space-x-2">
         <li>
           <Link
             href="/"
