@@ -4,6 +4,8 @@ import { ProductList } from "@/components/productList/ProductList";
 import { getCategoryBySlug, getProductsByCategory } from "@/lib/sanity/content";
 import { createClient } from "next-sanity";
 
+export const revalidate = 3600; // Revalidate every hour for ISR
+
 interface CategoryPageProps {
   params: Promise<{ category: string }>;
 }

@@ -9,6 +9,8 @@ import { GalleryItem } from "@/lib/sanity/types";
 import { LinkButton } from "@/components/buttons/LinkButton";
 import { createClient } from "next-sanity";
 
+export const revalidate = 3600; // Revalidate every hour for ISR
+
 interface ProductPageProps {
   params: Promise<{
     category: string;
