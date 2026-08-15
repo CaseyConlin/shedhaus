@@ -4,8 +4,6 @@ import { ProductList } from "@/components/productList/ProductList";
 import { getCategoryBySlug, getProductsByCategory } from "@/lib/sanity/content";
 import { createClient } from "next-sanity";
 
-export const revalidate = 3600; // Revalidate every hour for ISR
-
 interface CategoryPageProps {
   params: Promise<{ category: string }>;
 }
@@ -20,10 +18,6 @@ export async function generateStaticParams() {
   try {
     const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
     const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET;
-
-    console.log(
-      `[generateStaticParams] Category: Starting with projectId=${projectId}, dataset=${dataset}`,
-    );
 
     if (!projectId || !dataset) {
       console.error(
@@ -53,14 +47,7 @@ export async function generateStaticParams() {
       ),
     ]);
 
-    console.log(
-      `[generateStaticParams] Category: Successfully fetched ${categories.length} categories`,
-    );
-
     if (!categories || categories.length === 0) {
-      console.warn(
-        "[generateStaticParams] Category: No categories found, returning empty array",
-      );
       return [];
     }
 
@@ -68,9 +55,6 @@ export async function generateStaticParams() {
       category: cat.slug.current,
     }));
 
-    console.log(
-      `[generateStaticParams] Category: Returning ${params.length} param sets`,
-    );
     return params;
   } catch (error) {
     console.error(

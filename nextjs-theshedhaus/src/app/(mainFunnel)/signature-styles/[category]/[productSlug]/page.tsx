@@ -9,8 +9,6 @@ import { GalleryItem } from "@/lib/sanity/types";
 import { LinkButton } from "@/components/buttons/LinkButton";
 import { createClient } from "next-sanity";
 
-export const revalidate = 3600; // Revalidate every hour for ISR
-
 interface ProductPageProps {
   params: Promise<{
     category: string;
@@ -32,16 +30,9 @@ export async function generateStaticParams() {
     const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
     const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET;
 
-    console.log(
-      `[generateStaticParams] Starting with projectId=${projectId}, dataset=${dataset}`,
-    );
-
     if (!projectId || !dataset) {
       console.error(
-        "[generateStaticParams] Missing Sanity credentials. projectId:",
-        projectId ? "set" : "MISSING",
-        "dataset:",
-        dataset ? "set" : "MISSING",
+        "[generateStaticParams] Missing Sanity credentials",
       );
       return [];
     }
@@ -52,8 +43,6 @@ export async function generateStaticParams() {
       apiVersion: "2024-01-01",
       useCdn: false,
     });
-
-    console.log("[generateStaticParams] Client created, fetching products...");
 
     const products = await Promise.race([
       client.fetch<StaticProductParams[]>(`
@@ -70,14 +59,7 @@ export async function generateStaticParams() {
       ),
     ]);
 
-    console.log(
-      `[generateStaticParams] Successfully fetched ${products.length} products`,
-    );
-
     if (!products || products.length === 0) {
-      console.warn(
-        "[generateStaticParams] No products found, returning empty array",
-      );
       return [];
     }
 
@@ -86,7 +68,6 @@ export async function generateStaticParams() {
       category: product.category,
     }));
 
-    console.log(`[generateStaticParams] Returning ${params.length} param sets`);
     return params;
   } catch (error) {
     console.error(
