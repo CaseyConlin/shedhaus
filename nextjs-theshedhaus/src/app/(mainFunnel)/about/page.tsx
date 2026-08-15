@@ -26,7 +26,6 @@ export default async function Page() {
   }
 
   const { seo, pageTitle, pageDescription, teamMembers } = pageData;
-  console.log("seo", seo);
   const teamList = teamMembers || [];
 
   const integrityDetails = [

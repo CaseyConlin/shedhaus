@@ -26,24 +26,38 @@ interface StaticProductParams {
 }
 
 export async function generateStaticParams() {
-  const client = createClient({
-    projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
-    dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
-    apiVersion: "2024-01-01",
-    useCdn: false,
-  });
+  try {
+    const client = createClient({
+      projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
+      dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
+      apiVersion: "2024-01-01",
+      useCdn: false,
+    });
 
-  const products = await client.fetch<StaticProductParams[]>(`
-    *[_type == "product" && defined(seo.slug.current)] {
-      seo { slug { current } },
-      category
+    const products = await client.fetch<StaticProductParams[]>(`
+      *[_type == "product" && defined(seo.slug.current)] {
+        seo { slug { current } },
+        category
+      }
+    `);
+
+    console.log(`[generateStaticParams] Fetched ${products.length} products`);
+
+    if (!products || products.length === 0) {
+      console.warn(
+        "[generateStaticParams] No products found, returning empty array",
+      );
+      return [];
     }
-  `);
 
-  return products.map((product) => ({
-    productSlug: product.seo.slug.current,
-    category: product.category,
-  }));
+    return products.map((product) => ({
+      productSlug: product.seo.slug.current,
+      category: product.category,
+    }));
+  } catch (error) {
+    console.error("[generateStaticParams] Error fetching products:", error);
+    return [];
+  }
 }
 
 export async function generateMetadata({
