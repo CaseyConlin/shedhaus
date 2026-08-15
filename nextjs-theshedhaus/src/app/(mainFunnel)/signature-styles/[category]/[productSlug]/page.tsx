@@ -27,21 +27,50 @@ interface StaticProductParams {
 
 export async function generateStaticParams() {
   try {
+    const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
+    const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET;
+
+    console.log(
+      `[generateStaticParams] Starting with projectId=${projectId}, dataset=${dataset}`,
+    );
+
+    if (!projectId || !dataset) {
+      console.error(
+        "[generateStaticParams] Missing Sanity credentials. projectId:",
+        projectId ? "set" : "MISSING",
+        "dataset:",
+        dataset ? "set" : "MISSING",
+      );
+      return [];
+    }
+
     const client = createClient({
-      projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
-      dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
+      projectId,
+      dataset,
       apiVersion: "2024-01-01",
       useCdn: false,
     });
 
-    const products = await client.fetch<StaticProductParams[]>(`
-      *[_type == "product" && defined(seo.slug.current)] {
-        seo { slug { current } },
-        category
-      }
-    `);
+    console.log("[generateStaticParams] Client created, fetching products...");
 
-    console.log(`[generateStaticParams] Fetched ${products.length} products`);
+    const products = await Promise.race([
+      client.fetch<StaticProductParams[]>(`
+        *[_type == "product" && defined(seo.slug.current)] {
+          seo { slug { current } },
+          category
+        }
+      `),
+      new Promise<never>((_, reject) =>
+        setTimeout(
+          () => reject(new Error("Sanity query timeout after 5s")),
+          5000,
+        ),
+      ),
+    ]);
+
+    console.log(
+      `[generateStaticParams] Successfully fetched ${products.length} products`,
+    );
 
     if (!products || products.length === 0) {
       console.warn(
@@ -50,12 +79,18 @@ export async function generateStaticParams() {
       return [];
     }
 
-    return products.map((product) => ({
+    const params = products.map((product) => ({
       productSlug: product.seo.slug.current,
       category: product.category,
     }));
+
+    console.log(`[generateStaticParams] Returning ${params.length} param sets`);
+    return params;
   } catch (error) {
-    console.error("[generateStaticParams] Error fetching products:", error);
+    console.error(
+      "[generateStaticParams] Error:",
+      error instanceof Error ? error.message : String(error),
+    );
     return [];
   }
 }
