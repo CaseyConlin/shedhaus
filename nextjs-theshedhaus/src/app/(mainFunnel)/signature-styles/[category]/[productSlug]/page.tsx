@@ -7,12 +7,43 @@ import { ProductGallery } from "@/components/ProductGallery";
 import { getProductPageData } from "@/lib/sanity/content";
 import { GalleryItem } from "@/lib/sanity/types";
 import { LinkButton } from "@/components/buttons/LinkButton";
+import { createClient } from "next-sanity";
 
 interface ProductPageProps {
   params: Promise<{
     category: string;
     productSlug: string;
   }>;
+}
+
+interface StaticProductParams {
+  seo: {
+    slug: {
+      current: string;
+    };
+  };
+  category: string;
+}
+
+export async function generateStaticParams() {
+  const client = createClient({
+    projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
+    dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
+    apiVersion: "2024-01-01",
+    useCdn: false,
+  });
+
+  const products = await client.fetch<StaticProductParams[]>(`
+    *[_type == "product" && defined(seo.slug.current)] {
+      seo { slug { current } },
+      category
+    }
+  `);
+
+  return products.map((product) => ({
+    productSlug: product.seo.slug.current,
+    category: product.category,
+  }));
 }
 
 export async function generateMetadata({
