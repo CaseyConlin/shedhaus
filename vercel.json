@@ -1,0 +1,6 @@
+{
+  "buildCommand": "cd nextjs-theshedhaus && npm run build",
+  "installCommand": "cd nextjs-theshedhaus && npm install",
+  "outputDirectory": "nextjs-theshedhaus/.next",
+  "framework": "nextjs"
+}
