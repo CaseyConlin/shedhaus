@@ -4,13 +4,16 @@ import { ShedXray } from "@/components/shedxray/ShedXray";
 import { LocallyTrustedSection } from "@/components/TwoColRightImage";
 import { ShedDesignOptions } from "@/components/HomeMasonrySection";
 import { OurProcess } from "@/components/OurProcess";
+import { getAllCategories } from "@/lib/sanity/content";
 
-export default function Home() {
+export default async function Home() {
+  const categories = await getAllCategories();
+
   return (
     <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
       <main>
         <Hero />
-        <InventorySection />
+        <InventorySection categories={categories || []} limit={4} />
         <ShedXray />
         <LocallyTrustedSection
           title={"Locally Trusted for Sheds That Last"}

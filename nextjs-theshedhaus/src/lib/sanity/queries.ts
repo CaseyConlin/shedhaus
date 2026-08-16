@@ -227,6 +227,23 @@ export const CATEGORY_BY_SLUG_QUERY = (slug: string) => `
   }
 `;
 
+// All categories query
+export const ALL_CATEGORIES_QUERY = `
+  *[_type == "category"] {
+    name,
+    slug {
+      current
+    },
+    image {
+      asset -> {
+        url
+      },
+      alt
+    },
+    ${SEO_FRAGMENT}
+  }
+`;
+
 // Quote page query
 export const QUOTE_PAGE_QUERY = `
   *[_type == "quotePage"][0] {

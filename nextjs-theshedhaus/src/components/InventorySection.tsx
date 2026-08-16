@@ -1,7 +1,32 @@
 import Link from "next/link";
-// import { LinkButton } from "./buttons/LinkButton";
 import { H2 } from "./text/H2";
 import { Body } from "./text/Body";
+
+interface Category {
+  name: string;
+  slug: {
+    current: string;
+  };
+  image?: {
+    asset?: {
+      url: string;
+    };
+    alt?: string;
+  };
+  seo?: {
+    socialImage?: {
+      asset?: {
+        url: string;
+      };
+      alt?: string;
+    };
+  };
+}
+
+interface InventorySectionProps {
+  categories: Category[];
+  limit?: number;
+}
 
 const InventoryItem = ({
   title,
@@ -28,7 +53,14 @@ const InventoryItem = ({
   );
 };
 
-export const InventorySection = () => {
+export const InventorySection = ({
+  categories,
+  limit,
+}: InventorySectionProps) => {
+  const displayedCategories = limit
+    ? categories.slice(0, limit)
+    : categories;
+
   return (
     <div className="flex flex-col items-center justify-center gap-5 px-2 py-16">
       <H2
@@ -43,27 +75,19 @@ export const InventorySection = () => {
           ]}
         />
       </div>
-      <div className="flex flex-col md:flex-row items-center justify-center gap-2 w-full max-w-7xl">
-        <InventoryItem
-          title="Sheds"
-          imgSrc="/images/sheds.png"
-          link="/signature-styles/sheds"
-        />
-        <InventoryItem
-          title="Barns"
-          imgSrc="/images/barns.jpg"
-          link="/signature-styles/barns"
-        />
-        <InventoryItem
-          title="Gazebos"
-          imgSrc="/images/gazebos.jpg"
-          link="/signature-styles/gazebos"
-        />
-        <InventoryItem
-          title="Pergolas"
-          imgSrc="/images/pergolas.jpg"
-          link="/signature-styles/pergolas"
-        />
+      <div className="flex flex-col md:flex-row items-center justify-center gap-2 w-full max-w-7xl flex-wrap">
+        {displayedCategories.map((category) => (
+          <InventoryItem
+            key={category.slug.current}
+            title={category.name}
+            imgSrc={
+              category.seo?.socialImage?.asset?.url ||
+              category.image?.asset?.url ||
+              "/images/tempImage.png"
+            }
+            link={`/signature-styles/${category.slug.current}`}
+          />
+        ))}
       </div>
       <div className="flex flex-col md:flex-row items-center justify-center gap-4 ">
         {/* <LinkButton text="See All Our Structures" link="/inventory" />

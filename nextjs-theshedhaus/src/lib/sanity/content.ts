@@ -10,6 +10,7 @@ import {
   PRODUCTS_BY_CATEGORY_QUERY,
   ALL_PRODUCTS_QUERY,
   CATEGORY_BY_SLUG_QUERY,
+  ALL_CATEGORIES_QUERY,
 } from "./queries";
 
 /**
@@ -154,6 +155,19 @@ export async function getCategoryBySlug(slug: string) {
     return data;
   } catch (error) {
     console.error(`Error fetching category ${slug}:`, error);
+    return null;
+  }
+}
+
+/**
+ * Fetch all categories
+ */
+export async function getAllCategories() {
+  try {
+    const data = await client.fetch(ALL_CATEGORIES_QUERY);
+    return data;
+  } catch (error) {
+    console.error("Error fetching all categories:", error);
     return null;
   }
 }
