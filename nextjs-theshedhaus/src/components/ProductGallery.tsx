@@ -77,7 +77,7 @@ export const ProductGallery = ({
                 key={img.id}
                 className="snap-center shrink-0 flex-none w-full h-full flex flex-col  border border-neutral-200 rounded-lg"
               >
-                <div className="relative aspect-5/3 rounded-tl-lg  rounded-tr-lg overflow-hidden flex-shrink-0 ">
+                <div className="relative aspect-5/3 rounded-tl-lg  rounded-tr-lg overflow-hidden shrink-0 ">
                   <Image
                     src={img.src}
                     alt={img.alt}

@@ -25,7 +25,7 @@ export default async function Page() {
     );
   }
 
-  const { seo, pageTitle, pageDescription, teamMembers } = pageData;
+  const { pageTitle, pageDescription, teamMembers } = pageData;
   const teamList = teamMembers || [];
 
   const integrityDetails = [

@@ -27,7 +27,7 @@ export default async function Page() {
     );
   }
 
-  const { seo, pageTitle, pageDescription, steps } = pageData;
+  const { pageTitle, pageDescription, steps } = pageData;
   const processSteps = steps || [];
   return (
     <>

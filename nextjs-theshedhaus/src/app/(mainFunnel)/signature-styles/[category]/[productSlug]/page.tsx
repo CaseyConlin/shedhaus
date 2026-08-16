@@ -8,6 +8,8 @@ import { getProductPageData } from "@/lib/sanity/content";
 import { GalleryItem } from "@/lib/sanity/types";
 import { LinkButton } from "@/components/buttons/LinkButton";
 import { createClient } from "next-sanity";
+import { generateProductStructuredData } from "@/lib/sanity/structured-data";
+import { ProductStructuredData } from "@/components/ProductStructuredData";
 
 interface ProductPageProps {
   params: Promise<{
@@ -31,9 +33,7 @@ export async function generateStaticParams() {
     const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET;
 
     if (!projectId || !dataset) {
-      console.error(
-        "[generateStaticParams] Missing Sanity credentials",
-      );
+      console.error("[generateStaticParams] Missing Sanity credentials");
       return [];
     }
 
@@ -102,7 +102,7 @@ export async function generateMetadata({
 }
 
 export default async function ProductPage({ params }: ProductPageProps) {
-  const { productSlug } = await params;
+  const { productSlug, category } = await params;
   const productData = await getProductPageData(productSlug);
 
   if (!productData) {
@@ -125,8 +125,16 @@ export default async function ProductPage({ params }: ProductPageProps) {
   const specs = productData.specs || [];
   const features = productData.features || [];
 
+  // Generate structured data for SEO
+  const structuredData = generateProductStructuredData(
+    productData,
+    category,
+    productSlug,
+  );
+
   return (
     <>
+      <ProductStructuredData data={structuredData} />
       <PageHeader
         title={productData.pageTitle}
         description={

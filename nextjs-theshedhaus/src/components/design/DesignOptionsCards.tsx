@@ -97,8 +97,8 @@ export const SwatchSmallCard = ({ item }: { item: SwatchItem }) => {
 
 export const MediumLandscapeCard = ({ item }: { item: MediumItem }) => {
   return (
-    <article className="shrink-0 w-full bg-white text-black border border-neutral-200 rounded-lg overflow-hidden shadow-xl flex flex-row h-[150px] md:h-[250px]">
-      <div className="relative w-[500px] sm:w-[130px] h-full bg-neutral-100 shrink-0 flex-2">
+    <article className="shrink-0 w-full bg-white text-black border border-neutral-200 rounded-lg overflow-hidden shadow-xl flex flex-row h-37.5 md:h-62.5">
+      <div className="relative w-125 sm:w-32.5 h-full bg-neutral-100 shrink-0 flex-2">
         <Image
           src={item.imageUrl}
           alt={item.title}
