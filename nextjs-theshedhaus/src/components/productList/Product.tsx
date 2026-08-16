@@ -43,7 +43,7 @@ export const ProductCard = ({
       .slice(0, 4) || [];
   const link = `/signature-styles/${category}/${slug}`;
   return (
-    <article className="flex flex-col bg-white text-black rounded-md overflow-hidden shadow-xl border border-neutral-200 w-full md:w-xs md:max-w-none md:min-w-75 min-h-120 transition duration-300 hover:shadow-2xl hover:transform hover:scale-105">
+    <article className="flex flex-col bg-white text-black rounded-lg overflow-hidden shadow-xl border border-neutral-200 w-full md:w-xs md:max-w-none md:min-w-90 min-h-120 transition duration-300 hover:shadow-2xl hover:transform hover:scale-105">
       {/* Aspect Ratio Container for Shed Image */}
       <div className="relative w-full h-45 bg-neutral-100 overflow-hidden flex-shrink-0">
         <Image

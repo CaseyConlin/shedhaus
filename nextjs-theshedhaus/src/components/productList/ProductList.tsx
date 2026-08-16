@@ -52,10 +52,10 @@ export const ProductList = ({ products }: { products?: Product[] }) => {
   };
 
   return (
-    <section className="w-full py-12 px-5 md:px-8 select-none">
+    <section className="w-full py-12 px-5 md:px-0 select-none">
       <div className="max-w-6xl mx-auto">
         {/* Responsive flex wrapping list. Maps perfectly to Frame 167.jpg and Frame 168.jpg */}
-        <div className="flex flex-wrap justify-center md:justify-start gap-x-6 gap-y-8 w-full">
+        <div className="flex flex-wrap justify-between  gap-y-8 w-full">
           {renderList()}
         </div>
       </div>

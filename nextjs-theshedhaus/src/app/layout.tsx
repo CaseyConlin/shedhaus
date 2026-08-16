@@ -3,7 +3,6 @@ import { Navbar } from "@/components/navigation/Navbar";
 import { Footer } from "@/components/Footer";
 import { Geist, Geist_Mono, Montserrat, Inter } from "next/font/google";
 import "./globals.css";
-import "@fortawesome/fontawesome-svg-core/styles.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import { ConditionallyRenderContactFooter } from "@/components/ConditionallyRenderContactFooter";
 import { RecaptchaProvider } from "@/components/RecaptchaProvider";

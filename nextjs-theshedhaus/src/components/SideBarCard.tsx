@@ -27,7 +27,7 @@ export const SideBarCard = ({
 }: SideBarCardProps) => {
   return (
     <div
-      className={`w-xs bg-[#707070] text-white font-bold rounded-md ${shadow} font-inter overflow-hidden md:flex flex-col border border-[#575757] ${className}`}
+      className={`w-90 bg-[#707070] text-white font-bold rounded-md ${shadow} font-inter overflow-hidden md:flex flex-col border border-[#575757] ${className}`}
     >
       <div className="py-4 px-2">
         {topBadgeTitle && (
