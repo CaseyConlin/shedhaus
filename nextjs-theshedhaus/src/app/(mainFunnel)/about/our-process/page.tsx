@@ -29,7 +29,6 @@ export default async function Page() {
 
   const { seo, pageTitle, pageDescription, steps } = pageData;
   const processSteps = steps || [];
-  console.log("seo", seo);
   return (
     <>
       <PageHeader
