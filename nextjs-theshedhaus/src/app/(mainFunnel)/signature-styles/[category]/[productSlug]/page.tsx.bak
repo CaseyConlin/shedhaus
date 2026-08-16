@@ -31,7 +31,9 @@ export async function generateStaticParams() {
     const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET;
 
     if (!projectId || !dataset) {
-      console.error("[generateStaticParams] Missing Sanity credentials");
+      console.error(
+        "[generateStaticParams] Missing Sanity credentials",
+      );
       return [];
     }
 
