@@ -244,6 +244,31 @@ export const ALL_CATEGORIES_QUERY = `
   }
 `;
 
+// Suggested products query (same category, excluding current product)
+// Fetches ALL products in category to shuffle and return 3 random ones
+export const SUGGESTED_PRODUCTS_QUERY = (
+  category: string,
+  excludeSlug: string,
+) => `
+  *[_type == "productPage" && category == "${category}" && seo.slug.current != "${excludeSlug}"] | order(_key asc) {
+    productName,
+    category,
+    ${SEO_FRAGMENT},
+    gallery | order(order asc) [] {
+      image {
+        asset -> {
+          url
+        },
+        alt
+      }
+    },
+    specs[] {
+      lead,
+      text
+    }
+  }
+`;
+
 // Quote page query
 export const QUOTE_PAGE_QUERY = `
   *[_type == "quotePage"][0] {

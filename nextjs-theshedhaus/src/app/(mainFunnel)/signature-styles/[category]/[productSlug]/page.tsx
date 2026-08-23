@@ -4,12 +4,13 @@ import { PageHeader } from "@/components/text/PageHeader";
 import { KeyFeatures } from "@/components/text/KeyFeatures";
 import { SpecTable } from "@/components/text/SpecTable";
 import { ProductGallery } from "@/components/ProductGallery";
-import { getProductPageData } from "@/lib/sanity/content";
+import { getProductPageData, getSuggestedProducts } from "@/lib/sanity/content";
 import { GalleryItem } from "@/lib/sanity/types";
 import { LinkButton } from "@/components/buttons/LinkButton";
 import { createClient } from "next-sanity";
 import { generateProductStructuredData } from "@/lib/sanity/structured-data";
 import { ProductStructuredData } from "@/components/ProductStructuredData";
+import { ProductList } from "@/components/productList/ProductList";
 
 interface ProductPageProps {
   params: Promise<{
@@ -104,6 +105,7 @@ export async function generateMetadata({
 export default async function ProductPage({ params }: ProductPageProps) {
   const { productSlug, category } = await params;
   const productData = await getProductPageData(productSlug);
+  const suggestedProducts = await getSuggestedProducts(category, productSlug);
 
   if (!productData) {
     return (
@@ -169,6 +171,22 @@ export default async function ProductPage({ params }: ProductPageProps) {
           </div>
         </div>
       </div>
+      {suggestedProducts && suggestedProducts.length > 0 && (
+        <div className="w-full my-12">
+          <div className="bg-[#f2f2f2] border-gray-300 border-[0.5px] shadow-xl">
+            <div className="flex flex-col items-center justify-center w-screen">
+              <div className="w-full md:px-4 py-8">
+                <h2 className="text-2xl font-bold text-center font-montserrat">
+                  You Might Also Like
+                </h2>
+                <div className="flex flex-col md:flex-row items-start justify-center max-w-6xl gap-4 md:gap-10 py-4 md:py-8 md:px-0 mx-auto">
+                  <ProductList products={suggestedProducts} />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }

@@ -11,6 +11,7 @@ import {
   ALL_PRODUCTS_QUERY,
   CATEGORY_BY_SLUG_QUERY,
   ALL_CATEGORIES_QUERY,
+  SUGGESTED_PRODUCTS_QUERY,
 } from "./queries";
 
 /**
@@ -168,6 +169,42 @@ export async function getAllCategories() {
     return data;
   } catch (error) {
     console.error("Error fetching all categories:", error);
+    return null;
+  }
+}
+
+/**
+ * Fisher-Yates shuffle for randomizing arrays
+ */
+function shuffleArray<T>(array: T[]): T[] {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+}
+
+/**
+ * Fetch suggested products in same category (excluding current product)
+ * Returns 3 random products from all available in the category
+ */
+export async function getSuggestedProducts(
+  category: string,
+  excludeSlug: string,
+) {
+  try {
+    const query = SUGGESTED_PRODUCTS_QUERY(category, excludeSlug);
+    const data = await client.fetch(query);
+    if (!data || data.length === 0) return data;
+    // Shuffle and return only first 3
+    const shuffled = shuffleArray(data);
+    return shuffled.slice(0, 3);
+  } catch (error) {
+    console.error(
+      `Error fetching suggested products for category ${category}:`,
+      error,
+    );
     return null;
   }
 }

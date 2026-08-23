@@ -1,39 +1,3 @@
-// import { LinkButton } from "@/components/buttons/LinkButton";
-// export const Hero = () => {
-//   return (
-//     <div
-//       className="relative w-full h-screen flex bg-top bg-no-repeat bg-cover justify-center overflow-hidden"
-//       style={{
-//         backgroundImage:
-//           "url('/no-bg-a123712-11-cropped_upscayl_4x_ultrasharp-4x1.webp'), linear-gradient(to top, #3a66e9a1,#fff)",
-//       }}
-//     >
-//       <div className="flex justify-end items-center w-full h-full">
-//         <div className="bg-black/69  text-white p-4 rounded-md w-xl">
-//           <div className="flex flex-col py-4 px-4 gap-4 ">
-//             <h2 className="text-2xl font-black text-white border-primary border-b-2 border-solid">
-//               Locally trusted for sheds that last{" "}
-//             </h2>
-//             <p className="w-sm">
-//               As your neighbors we know exactly what a true four-season build
-//               requires. From heavy-duty floor joists to premium siding, we
-//               provide structures built to last that help you expand your space,
-//               and we’re right in your own backyard.{" "}
-//             </p>
-//             <div className="mt-4 flex gap-4">
-//               <LinkButton text="Get a Quote" link="/contact" />
-//               <LinkButton
-//                 variant="transWt"
-//                 text="Shop Our Inventory"
-//                 link="/inventory"
-//               />
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
 "use client";
 
 import { useState } from "react";
