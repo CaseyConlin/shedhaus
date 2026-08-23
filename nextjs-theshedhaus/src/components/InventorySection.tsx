@@ -57,9 +57,7 @@ export const InventorySection = ({
   categories,
   limit,
 }: InventorySectionProps) => {
-  const displayedCategories = limit
-    ? categories.slice(0, limit)
-    : categories;
+  const displayedCategories = limit ? categories.slice(0, limit) : categories;
 
   return (
     <div className="flex flex-col items-center justify-center gap-5 px-2 py-16">
