@@ -42,7 +42,7 @@ export default async function Page() {
     {
       leadText: "Logistics-First Approach",
       bodyText:
-        "Our delivery partners are local experts who specialize in navigating the tight driveways and tricky terrain typical of Dutchess and Putnam Counties.",
+        "Our delivery staff are local experts who specialize in navigating the tight driveways and tricky terrain typical from Dutchess and Putnam Counties to Westchester and Fairfield Counties.",
     },
   ];
 
