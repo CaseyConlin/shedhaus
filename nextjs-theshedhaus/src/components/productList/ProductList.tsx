@@ -40,7 +40,9 @@ export const ProductList = ({ products }: { products?: Product[] }) => {
               />
               <LinkButton
                 text="Check Our Facebook"
-                link="https://facebook.com/theshedhaus"
+                target="_blank"
+                rel="noopener noreferrer"
+                link="https://www.facebook.com/media/set/?vanity=TheShedHaus&set=a.2157873454450349"
               />
             </SideBarCard>,
           );
@@ -55,7 +57,7 @@ export const ProductList = ({ products }: { products?: Product[] }) => {
     <section className="w-full py-12 px-5 md:px-0 select-none">
       <div className="max-w-6xl mx-auto">
         {/* Responsive flex wrapping list. Maps perfectly to Frame 167.jpg and Frame 168.jpg */}
-        <div className="flex flex-wrap justify-between  gap-y-8 w-full">
+        <div className="flex flex-wrap justify-between gap-x-6 gap-y-8 w-full">
           {renderList()}
         </div>
       </div>

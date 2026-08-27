@@ -7,7 +7,6 @@ import { GalleryItem } from "@/lib/sanity/types";
 export interface Product {
   productName: string;
   specs?: Array<{ lead?: string; text?: string }>;
-  features?: Array<{ lead?: string; text?: string }>;
   gallery?: GalleryItem[];
   seo?: { slug?: { current?: string } };
   category: string;
@@ -32,11 +31,13 @@ export const ProductCard = ({
   const lastDimension =
     dimensionsValues[dimensionsValues.length - 1] || "Various sizes available";
   const dimensionText =
+    dimensionsValues[0] &&
+    dimensionsValues[dimensionsValues.length - 1] &&
     firstDimension !== lastDimension
       ? `Available sizes from ${firstDimension} to ${lastDimension}`
       : firstDimension;
 
-  const bullets =
+  const bulletItems =
     specs
       ?.map((s) => s.text)
       .filter(Boolean)
@@ -71,8 +72,8 @@ export const ProductCard = ({
 
           {/* Key Bullet Features */}
           <ul className="space-y-1.5 text-sm font-semibold text-neutral-800">
-            {bullets &&
-              bullets.map((bullet, idx) => (
+            {bulletItems &&
+              bulletItems.map((bullet, idx) => (
                 <li key={idx} className="flex items-start gap-1">
                   <span className="text-primary shrink-0 select-none">•</span>
                   <span>{bullet}</span>
