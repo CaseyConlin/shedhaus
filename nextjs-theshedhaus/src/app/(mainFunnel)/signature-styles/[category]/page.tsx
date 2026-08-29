@@ -108,7 +108,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
       />
       <div className="flex flex-col items-center justify-center w-screen">
         <div className="flex flex-col md:flex-row items-start justify-center max-w-6xl gap-4 md:gap-10 py-4 md:py-8 md:px-0">
-          <ProductList products={products} />
+          <ProductList products={products} currentCategory={category} />
         </div>
       </div>
     </>

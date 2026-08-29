@@ -161,9 +161,9 @@ export const PRODUCT_PAGE_QUERY = (slug: string) => `
   }
 `;
 
-// Products by category query
+// Products by category - handles both string and array formats
 export const PRODUCTS_BY_CATEGORY_QUERY = (category: string) => `
-  *[_type == "productPage" && category == "${category}"] | order(productName asc) {
+  *[_type == "productPage" && ("${category}" in category || category == "${category}")] | order(productName asc) {
     productName,
     category,
     ${SEO_FRAGMENT},
@@ -250,7 +250,7 @@ export const SUGGESTED_PRODUCTS_QUERY = (
   category: string,
   excludeSlug: string,
 ) => `
-  *[_type == "productPage" && category == "${category}" && seo.slug.current != "${excludeSlug}"] | order(_key asc) {
+  *[_type == "productPage" && ("${category}" in category || category == "${category}") && seo.slug.current != "${excludeSlug}"] | order(_key asc) {
     productName,
     category,
     ${SEO_FRAGMENT},

@@ -6,7 +6,13 @@ import { LinkButton } from "../buttons/LinkButton";
  * Displays an elegant product grid wrapping cards. Fits Frame 167.jpg and Frame 168.jpg layouts.
  * Interleaves Lot Update cards exactly after the 3rd and 9th card elements.
  */
-export const ProductList = ({ products }: { products?: Product[] }) => {
+export const ProductList = ({
+  products,
+  currentCategory,
+}: {
+  products?: Product[];
+  currentCategory?: string;
+}) => {
   // Method to interleave Lot Update Cards beautifully at the indices matching both mobile and desktop frames
   const renderList = () => {
     const listItems: React.ReactNode[] = [];
@@ -17,6 +23,7 @@ export const ProductList = ({ products }: { products?: Product[] }) => {
           <ProductCard
             key={`prod-${product.productName}-${index}`}
             {...product}
+            currentCategory={currentCategory}
           />,
         );
 

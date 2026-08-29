@@ -9,7 +9,8 @@ export interface Product {
   specs?: Array<{ lead?: string; text?: string }>;
   gallery?: GalleryItem[];
   seo?: { slug?: { current?: string } };
-  category: string;
+  category: string | string[];
+  currentCategory?: string;
 }
 
 export const ProductCard = ({
@@ -18,6 +19,7 @@ export const ProductCard = ({
   gallery,
   seo,
   category,
+  currentCategory,
 }: Product) => {
   const slug =
     seo?.slug?.current || productName?.toLowerCase().replace(/\s+/g, "-");
@@ -42,7 +44,18 @@ export const ProductCard = ({
       ?.map((s) => s.text)
       .filter(Boolean)
       .slice(0, 4) || [];
-  const link = `/signature-styles/${category}/${slug}`;
+
+  let linkCategory: string;
+  if (currentCategory) {
+    const categories = Array.isArray(category) ? category : [category];
+    linkCategory = categories.includes(currentCategory)
+      ? currentCategory
+      : categories[0];
+  } else {
+    linkCategory = Array.isArray(category) ? category[0] : category;
+  }
+
+  const link = `/signature-styles/${linkCategory}/${slug}`;
   return (
     <article className="flex flex-col bg-white text-black rounded-lg overflow-hidden shadow-xl border border-neutral-200 w-full md:w-xs md:max-w-none md:min-w-90 min-h-120 transition duration-300 hover:shadow-2xl hover:transform hover:scale-105">
       {/* Aspect Ratio Container for Shed Image */}

@@ -294,10 +294,16 @@ export async function generateStaticParams() {
       return [];
     }
 
-    const params = products.map((product) => ({
-      productSlug: product.seo.slug.current,
-      category: product.category,
-    }));
+    const params = products.flatMap((product) => {
+      const categories = Array.isArray(product.category)
+        ? product.category
+        : [product.category];
+
+      return categories.map((cat) => ({
+        productSlug: product.seo.slug.current,
+        category: cat,
+      }));
+    });
 
     return params;
   } catch (error) {
@@ -410,7 +416,10 @@ export default async function ProductPage({ params }: ProductPageProps) {
                   You Might Also Like
                 </h2>
                 <div className="flex flex-col md:flex-row items-start justify-center max-w-6xl gap-4 md:gap-10 py-4 md:py-8 md:px-0 mx-auto">
-                  <ProductList products={suggestedProducts} />
+                  <ProductList
+                    products={suggestedProducts}
+                    currentCategory={category}
+                  />
                 </div>
                 <div>{getLocalityMessage()}</div>
               </div>
