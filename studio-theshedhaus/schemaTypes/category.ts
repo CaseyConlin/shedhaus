@@ -48,6 +48,13 @@ export const category = defineType({
         hotspot: true,
       },
     }),
+    defineField({
+      name: 'order',
+      title: 'Display Order',
+      type: 'number',
+      description: 'Controls the order categories appear on pages',
+      validation: (Rule) => Rule.required().min(0),
+    }),
   ],
   preview: {
     select: {

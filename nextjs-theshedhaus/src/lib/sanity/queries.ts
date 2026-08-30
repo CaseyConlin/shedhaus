@@ -229,7 +229,7 @@ export const CATEGORY_BY_SLUG_QUERY = (slug: string) => `
 
 // All categories query
 export const ALL_CATEGORIES_QUERY = `
-  *[_type == "category"] {
+   *[_type == "category"] | order(order asc) {
     name,
     slug {
       current
