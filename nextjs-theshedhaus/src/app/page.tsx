@@ -13,7 +13,11 @@ export default async function Home() {
     <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
       <main>
         <Hero />
-        <InventorySection categories={categories || []} limit={4} />
+        <InventorySection
+          categories={categories || []}
+          limit={4}
+          showButtons={true}
+        />
         <ShedXray />
         <LocallyTrustedSection
           title={"Locally Trusted for Sheds That Last"}

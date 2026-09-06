@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { H2 } from "./text/H2";
 import { Body } from "./text/Body";
-
+import { LinkButton } from "./buttons/LinkButton";
 interface Category {
   name: string;
   slug: {
@@ -25,6 +25,7 @@ interface Category {
 
 interface InventorySectionProps {
   categories: Category[];
+  showButtons?: boolean;
   limit?: number;
 }
 
@@ -56,6 +57,7 @@ const InventoryItem = ({
 export const InventorySection = ({
   categories,
   limit,
+  showButtons,
 }: InventorySectionProps) => {
   const displayedCategories = limit ? categories.slice(0, limit) : categories;
 
@@ -87,14 +89,16 @@ export const InventorySection = ({
           />
         ))}
       </div>
-      <div className="flex flex-col md:flex-row items-center justify-center gap-4 ">
-        {/* <LinkButton text="See All Our Structures" link="/inventory" />
-        <LinkButton
-          text="Design Your Own Shed"
-          link="/custom"
-          variant="transRed"
-        /> */}
-      </div>
+      {showButtons && (
+        <div className="flex flex-col md:flex-row items-center justify-center gap-4 ">
+          <LinkButton text="See All Our Structures" link="/signature-styles" />
+          <LinkButton
+            text="Design Your Own Shed"
+            link="/configuration"
+            variant="transRed"
+          />
+        </div>
+      )}
     </div>
   );
 };
