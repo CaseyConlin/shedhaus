@@ -167,8 +167,7 @@ export const RequestAQuoteForm: React.FC = () => {
   };
 
   // Get available style options for currently selected structure type
-  const currentStyleOptions =
-    stylesByCategory[formData.structureType] || [];
+  const currentStyleOptions = stylesByCategory[formData.structureType] || [];
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

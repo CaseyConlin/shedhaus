@@ -232,15 +232,15 @@ export async function getFormOptions() {
     for (const category of categories) {
       const categorySlug = category.slug?.current;
       if (!categorySlug) continue; // Skip if no slug
-      
+
       const query = FORM_PRODUCTS_BY_CATEGORY_QUERY(categorySlug);
       const products = await client.fetch(query);
-      
+
       // Extract product names
       const productNames = (products || []).map(
         (product: { productName: string }) => product.productName,
       );
-      
+
       // Store by category name (for component to use)
       stylesByCategory[category.name] = productNames;
     }

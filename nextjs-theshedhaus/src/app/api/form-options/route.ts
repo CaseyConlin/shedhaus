@@ -11,7 +11,7 @@ export async function GET() {
     const response = NextResponse.json(formOptions);
     response.headers.set(
       "Cache-Control",
-      "public, max-age=3600, stale-while-revalidate=86400"
+      "public, max-age=3600, stale-while-revalidate=86400",
     );
 
     return response;
@@ -19,7 +19,7 @@ export async function GET() {
     console.error("Error in form-options API:", error);
     return NextResponse.json(
       { error: "Failed to fetch form options" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
