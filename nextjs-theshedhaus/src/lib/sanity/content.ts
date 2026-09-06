@@ -12,6 +12,8 @@ import {
   CATEGORY_BY_SLUG_QUERY,
   ALL_CATEGORIES_QUERY,
   SUGGESTED_PRODUCTS_QUERY,
+  FORM_CATEGORIES_QUERY,
+  FORM_PRODUCTS_BY_CATEGORY_QUERY,
 } from "./queries";
 
 /**
@@ -206,5 +208,46 @@ export async function getSuggestedProducts(
       error,
     );
     return null;
+  }
+}
+
+/**
+ * Fetch form options - categories for structure types and products by category for style options
+ * Returns { structureTypes: string[], stylesByCategory: Record<string, string[]> }
+ */
+export async function getFormOptions() {
+  try {
+    // Fetch all categories
+    const categories = await client.fetch(FORM_CATEGORIES_QUERY);
+    if (!categories || categories.length === 0) {
+      console.warn("No categories found");
+      return { structureTypes: [], stylesByCategory: {} };
+    }
+
+    // Extract category names for structure types
+    const structureTypes = categories.map((cat: { name: string }) => cat.name);
+
+    // Fetch products for each category using the slug
+    const stylesByCategory: Record<string, string[]> = {};
+    for (const category of categories) {
+      const categorySlug = category.slug?.current;
+      if (!categorySlug) continue; // Skip if no slug
+      
+      const query = FORM_PRODUCTS_BY_CATEGORY_QUERY(categorySlug);
+      const products = await client.fetch(query);
+      
+      // Extract product names
+      const productNames = (products || []).map(
+        (product: { productName: string }) => product.productName,
+      );
+      
+      // Store by category name (for component to use)
+      stylesByCategory[category.name] = productNames;
+    }
+
+    return { structureTypes, stylesByCategory };
+  } catch (error) {
+    console.error("Error fetching form options:", error);
+    return { structureTypes: [], stylesByCategory: {} };
   }
 }

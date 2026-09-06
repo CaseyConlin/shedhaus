@@ -277,3 +277,22 @@ export const QUOTE_PAGE_QUERY = `
     pageDescription
   }
 `;
+
+// Form options query - fetch all categories for structure types
+export const FORM_CATEGORIES_QUERY = `
+  *[_type == "category"] | order(order asc) {
+    name,
+    slug {
+      current
+    },
+    order
+  }
+`;
+
+// Form options query - fetch products by category slug for style options
+export const FORM_PRODUCTS_BY_CATEGORY_QUERY = (categorySlug: string) => `
+  *[_type == "productPage" && "${categorySlug}" in category] | order(productName asc) {
+    productName,
+    category
+  }
+`;

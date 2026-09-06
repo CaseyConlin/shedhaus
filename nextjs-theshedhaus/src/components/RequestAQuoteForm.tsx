@@ -14,19 +14,22 @@ interface DropdownState {
   bestTime: boolean;
 }
 
-const STRUCTURE_TYPES = [
+// Fallback values if API fails
+const FALLBACK_STRUCTURE_TYPES = [
   "A-Frame Shed",
   "High Barn",
   "Quaker Shed",
   "Cottage",
   "Custom Build",
 ];
-const STYLE_OPTIONS = [
+const FALLBACK_STYLE_OPTIONS = [
   "Vinyl Siding",
   "T1-11 Wood Siding",
   "Premium Lap Siding",
   "Board & Batten",
 ];
+
+// Static options (not dependent on CMS data)
 const DIMENSION_OPTIONS = [
   "8' x 10'",
   "10' x 12'",
@@ -51,6 +54,13 @@ const TIME_OPTIONS = [
 export const RequestAQuoteForm: React.FC = () => {
   const googleReCaptcha = useGoogleReCaptcha();
   const [errorFields, setErrorFields] = useState<string[]>([]);
+
+  // Dynamic form options state
+  const [structureTypes, setStructureTypes] = useState<string[]>([]);
+  const [stylesByCategory, setStylesByCategory] = useState<
+    Record<string, string[]>
+  >({});
+  const [isLoadingOptions, setIsLoadingOptions] = useState(true);
 
   const [formData, setFormData] = useState({
     structureType: "",
@@ -81,9 +91,34 @@ export const RequestAQuoteForm: React.FC = () => {
 
   // Refs for handling clicks outside dropdowns to close them gracefully
   const formRef = useRef<HTMLFormElement>(null);
-  // Add refs for scrolling
   const structureTypeRef = useRef<HTMLDivElement>(null);
 
+  // Fetch form options on mount
+  useEffect(() => {
+    const fetchFormOptions = async () => {
+      try {
+        const response = await fetch("/api/form-options");
+        if (!response.ok) throw new Error("Failed to fetch form options");
+
+        const data = await response.json();
+        setStructureTypes(data.structureTypes || FALLBACK_STRUCTURE_TYPES);
+        setStylesByCategory(data.stylesByCategory || {});
+      } catch (error) {
+        console.error("Error fetching form options, using fallback:", error);
+        // Use fallback values
+        setStructureTypes(FALLBACK_STRUCTURE_TYPES);
+        setStylesByCategory({
+          [FALLBACK_STRUCTURE_TYPES[0]]: FALLBACK_STYLE_OPTIONS,
+        });
+      } finally {
+        setIsLoadingOptions(false);
+      }
+    };
+
+    fetchFormOptions();
+  }, []);
+
+  // Handle clicks outside dropdowns
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (formRef.current && !formRef.current.contains(event.target as Node)) {
@@ -130,6 +165,10 @@ export const RequestAQuoteForm: React.FC = () => {
   ) => {
     setFormData((prev) => ({ ...prev, [group]: value }));
   };
+
+  // Get available style options for currently selected structure type
+  const currentStyleOptions =
+    stylesByCategory[formData.structureType] || [];
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -270,11 +309,12 @@ export const RequestAQuoteForm: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => toggleDropdown("structureType")}
+                    disabled={isLoadingOptions}
                     className={`w-full bg-white border rounded-md py-3.5 px-4 text-left flex items-center justify-between text-base ${
                       errorFields.includes("structureType")
                         ? "border-red-500 border-2"
                         : "border-neutral-300"
-                    }`}
+                    } ${isLoadingOptions ? "opacity-50 cursor-not-allowed" : ""}`}
                   >
                     <span
                       className={
@@ -283,13 +323,15 @@ export const RequestAQuoteForm: React.FC = () => {
                           : "text-neutral-500"
                       }
                     >
-                      {formData.structureType || "Structure type"}
+                      {isLoadingOptions
+                        ? "Loading..."
+                        : formData.structureType || "Structure type"}
                     </span>
                     <Caret isOpen={dropdownOpen.structureType} />
                   </button>
                   {dropdownOpen.structureType && (
                     <div className="absolute left-0 right-0 mt-1 bg-white border border-neutral-200 rounded-md shadow-lg z-50 overflow-hidden">
-                      {STRUCTURE_TYPES.map((type) => (
+                      {structureTypes.map((type) => (
                         <button
                           key={type}
                           type="button"
@@ -310,20 +352,28 @@ export const RequestAQuoteForm: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => toggleDropdown("style")}
-                    className="w-full bg-white border border-neutral-300 rounded-md py-3.5 px-4 text-left flex items-center justify-between text-base"
+                    disabled={!formData.structureType || isLoadingOptions}
+                    className={`w-full bg-white border border-neutral-300 rounded-md py-3.5 px-4 text-left flex items-center justify-between text-base ${
+                      !formData.structureType || isLoadingOptions
+                        ? "opacity-50 cursor-not-allowed"
+                        : ""
+                    }`}
                   >
                     <span
                       className={
                         formData.style ? "text-neutral-900" : "text-neutral-500"
                       }
                     >
-                      {formData.style || "Style"}
+                      {formData.style ||
+                        (formData.structureType
+                          ? "Select a style"
+                          : "Choose structure type first")}
                     </span>
                     <Caret isOpen={dropdownOpen.style} />
                   </button>
-                  {dropdownOpen.style && (
+                  {dropdownOpen.style && currentStyleOptions.length > 0 && (
                     <div className="absolute left-0 right-0 mt-1 bg-white border border-neutral-200 rounded-md shadow-lg z-50 overflow-hidden">
-                      {STYLE_OPTIONS.map((style) => (
+                      {currentStyleOptions.map((style) => (
                         <button
                           key={style}
                           type="button"
