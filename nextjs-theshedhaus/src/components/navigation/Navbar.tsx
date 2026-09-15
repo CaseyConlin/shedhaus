@@ -7,16 +7,19 @@ import Link from "next/link";
 import { Body } from "../text/Body";
 
 interface MegaMenuCategory {
+  name?: string;
   title: string;
   description: string;
-  slug?: string;
+  slug: string;
   items: { name: string; href: string }[];
 }
 
 const structureMegaMenu: Record<string, MegaMenuCategory[]> = {
   Sheds: [
     {
+      name: "Sheds",
       title: "Popular Styles",
+      slug: "/signature-styles/sheds",
       description: "Explore our most popular shed styles.",
       items: [
         {
@@ -54,7 +57,9 @@ const structureMegaMenu: Record<string, MegaMenuCategory[]> = {
       ],
     },
     {
-      title: "Custom Options",
+      name: "Custom Options",
+      slug: "/configuration",
+      title: "",
       description: "Personalize your shed with our custom options.",
       items: [
         { name: "Siding & Trim Colors", href: "/configuration#siding" },
@@ -65,7 +70,9 @@ const structureMegaMenu: Record<string, MegaMenuCategory[]> = {
   ],
   Barns: [
     {
-      title: "Barn Styles",
+      name: "Barns",
+      title: "Popular Styles",
+      slug: "barns",
       description: "Discover the variety of barn styles we offer.",
       items: [
         { name: "Mini Barns", href: "/signature-styles/barns/mini" },
@@ -77,7 +84,9 @@ const structureMegaMenu: Record<string, MegaMenuCategory[]> = {
       ],
     },
     {
-      title: "Custom Options",
+      name: "Custom Options",
+      title: "",
+      slug: "/configuration",
       description: "Customize your barn to fit your needs.",
       items: [
         { name: "Siding & Trim Colors", href: "/configuration#siding" },
@@ -88,7 +97,9 @@ const structureMegaMenu: Record<string, MegaMenuCategory[]> = {
   ],
   Gazebos: [
     {
-      title: "Shapes & Styles",
+      name: "Gazebos",
+      title: "Popular Styles",
+      slug: "/signature-styles/gazebos",
       description: "Choose from various gazebo shapes and styles.",
       items: [
         {
@@ -119,7 +130,8 @@ const structureMegaMenu: Record<string, MegaMenuCategory[]> = {
     {
       title: "Sheds",
       description: "Storage sheds and garden structures.",
-      slug: "sheds",
+      slug: "/signature-styles/sheds",
+      name: "More",
       items: [
         {
           name: "A-Frame Signature Series",
@@ -138,7 +150,8 @@ const structureMegaMenu: Record<string, MegaMenuCategory[]> = {
     {
       title: "Garages",
       description: "Vehicle storage solutions.",
-      slug: "garages",
+      slug: "/signature-styles/garages",
+      name: "More",
       items: [
         {
           name: "Board & Batten Garage",
@@ -157,7 +170,8 @@ const structureMegaMenu: Record<string, MegaMenuCategory[]> = {
     {
       title: "Barns & Livestock Shelters",
       description: "Agricultural and animal structures.",
-      slug: "barns",
+      slug: "/signature-styles/barns",
+      name: "More",
       items: [
         { name: "Run-In Shed", href: "/signature-styles/barns/run-in-shed" },
         {
@@ -174,7 +188,8 @@ const structureMegaMenu: Record<string, MegaMenuCategory[]> = {
       title: "Board and Batten",
       description:
         "Classic architectural style with vertical boards and battens.",
-      slug: "board-and-batten",
+      slug: "/signature-styles/board-and-batten",
+      name: "More",
       items: [
         {
           name: "A-Frame Board & Batten Shed",
@@ -197,7 +212,8 @@ const structureMegaMenu: Record<string, MegaMenuCategory[]> = {
     {
       title: "Pavilions",
       description: "Open-air gathering spaces.",
-      slug: "pavilions",
+      slug: "/signature-styles/pavilions",
+      name: "More",
       items: [
         {
           name: "Hampton Vinyl Pavilion",
@@ -216,7 +232,8 @@ const structureMegaMenu: Record<string, MegaMenuCategory[]> = {
     {
       title: "Playhouses",
       description: "Imaginative play structures.",
-      slug: "playhouses",
+      slug: "/signature-styles/playhouses",
+      name: "More",
       items: [
         {
           name: "A-Frame Style Playhouse",
@@ -235,7 +252,8 @@ const structureMegaMenu: Record<string, MegaMenuCategory[]> = {
     {
       title: "Pool Houses",
       description: "Waterside retreats and changing rooms.",
-      slug: "poolhouses",
+      slug: "/signature-styles/poolhouses",
+      name: "More",
       items: [
         {
           name: "A-Frame Seaside Bar",
@@ -253,7 +271,8 @@ const structureMegaMenu: Record<string, MegaMenuCategory[]> = {
     },
     {
       title: "Gazebos",
-      slug: "gazebos",
+      slug: "/signature-styles/gazebos",
+      name: "More",
       description: "Elegant outdoor shelters.",
       items: [
         {
@@ -272,7 +291,8 @@ const structureMegaMenu: Record<string, MegaMenuCategory[]> = {
     },
     {
       title: "Pergolas",
-      slug: "pergolas",
+      slug: "/signature-styles/pergolas",
+      name: "More",
       description: "Latticed outdoor structures.",
       items: [
         {
@@ -291,7 +311,8 @@ const structureMegaMenu: Record<string, MegaMenuCategory[]> = {
     },
     {
       title: "Poly Furniture",
-      slug: "poly-furniture",
+      slug: "/signature-styles/poly-furniture",
+      name: "More",
       description: "Durable outdoor furnishings.",
       items: [
         {
@@ -314,7 +335,8 @@ const structureMegaMenu: Record<string, MegaMenuCategory[]> = {
     },
     {
       title: "Chicken Coops",
-      slug: "coops",
+      slug: "/signature-styles/coops",
+      name: "More",
       description: "Secure poultry housing solutions.",
       items: [
         {
@@ -330,7 +352,8 @@ const structureMegaMenu: Record<string, MegaMenuCategory[]> = {
     },
     {
       title: "Kennels",
-      slug: "kennels",
+      slug: "/signature-styles/kennels",
+      name: "More",
       description: "Safe pet enclosures.",
       items: [
         {
@@ -349,7 +372,8 @@ const structureMegaMenu: Record<string, MegaMenuCategory[]> = {
     },
     {
       title: "Small Structures",
-      slug: "small-structures",
+      slug: "/signature-styles/small-structures",
+      name: "More",
       description: "Compact and specialized buildings.",
       items: [
         {
@@ -389,7 +413,9 @@ const structureMegaMenu: Record<string, MegaMenuCategory[]> = {
   ],
   About: [
     {
-      title: "About the Shed Haus",
+      name: "About the Shed Haus",
+      title: "",
+      slug: "/about",
       description: "Learn more about our company and team.",
       items: [
         { name: "About Us", href: "/about" },
@@ -626,14 +652,18 @@ export const Navbar = () => {
               className={`${hoveredLink === "More" ? "col-span-1" : "col-span-1"} ${hoveredLink !== "More" ? "border-r border-neutral-100 pr-8" : ""}`}
             >
               <h4 className="text-primary font-montserrat font-extrabold text-xl tracking-tight mb-2">
-                {hoveredLink === "More"
-                  ? "All Structures"
-                  : `Explore ${hoveredLink}`}
+                {hoveredLink === "More" ? (
+                  <Link href="/signature-styles">All Structures</Link>
+                ) : (
+                  <Link href={`/signature-styles/`}>
+                    {`Explore ${hoveredLink}`}{" "}
+                  </Link>
+                )}
               </h4>
               <Body
                 text={[
                   hoveredLink === "More"
-                    ? "Browse our complete collection of hand-crafted architectural designs to find the perfect structure for your needs."
+                    ? "Browse our complete collection of hand-crafted, architectural structures to find the perfect structure for your needs."
                     : "Choose from our hand-crafted, architectural structures built to last.",
                 ]}
                 className="text-left text-black font-inter text-sm leading-relaxed"
@@ -649,17 +679,17 @@ export const Navbar = () => {
             >
               {structureMegaMenu[hoveredLink].map((category, index) => (
                 <div key={index} className="space-y-1">
-                  <h5 className="font-montserrat font-black text-xs text-primary border-b border-neutral-100 pb-0">
-                    {category?.slug ? (
-                      <Link
-                        onClick={() => setHoveredLink(null)}
-                        href={`/signature-styles/${category?.slug}`}
-                      >
-                        {category.title}
-                      </Link>
-                    ) : (
-                      category.title
-                    )}
+                  <h5 className="font-montserrat font-black text-md text-primary border-b border-neutral-100 pb-0">
+                    <Link href={category?.slug}>
+                      {hoveredLink === "More"
+                        ? `${category.title}`
+                        : `${category.name}`}
+                    </Link>
+                  </h5>
+                  <h5 className="font-montserrat font-bold text-xs text-gray-800 pb-0">
+                    {hoveredLink === "More" && category?.slug
+                      ? ` Featured ${category.title}`
+                      : category.title}
                   </h5>
                   <ul className="">
                     {category.items.map((item, itemIndex) => (
@@ -673,6 +703,18 @@ export const Navbar = () => {
                         </Link>
                       </li>
                     ))}
+                    <li>
+                      {hoveredLink !== "About" && (
+                        <Link
+                          href={`/signature-styles/${category?.slug}`}
+                          className="font-inter text-sm  hover:text-neutral-600 font-bold text-primary transition-colors"
+                        >
+                          {hoveredLink === "More"
+                            ? `All ${category.title}`
+                            : `All ${category.name}`}
+                        </Link>
+                      )}
+                    </li>
                   </ul>
                 </div>
               ))}
@@ -737,8 +779,10 @@ export const Navbar = () => {
                                 href={`/signature-styles/${category.slug}`}
                                 onClick={() => setMobileMenuOpen(false)}
                               >
-                                <h6 className="font-montserrat font-black text-xs text-primary cursor-pointer hover:underline transition-colors">
-                                  {category.title}
+                                <h6 className="font-montserrat font-black text-sm text-primary cursor-pointer hover:underline transition-colors">
+                                  {category.name === "More"
+                                    ? category.title
+                                    : category.name}
                                 </h6>
                               </Link>
                               <div className="flex flex-col gap-2 pl-2 font-inter">
@@ -753,6 +797,21 @@ export const Navbar = () => {
                                     {item.name}
                                   </button>
                                 ))}
+
+                                {category.name !== "About" && (
+                                  <button
+                                    onClick={() =>
+                                      handleMobileNavigation(
+                                        `${category?.slug}`,
+                                      )
+                                    }
+                                    className="text-left font-inter text-sm  hover:text-neutral-600 font-bold text-primary transition-colors bg-transparent border-0 cursor-pointer mb-2"
+                                  >
+                                    {category.name === "More"
+                                      ? `All ${category.title}`
+                                      : `All ${category.name}`}
+                                  </button>
+                                )}
                               </div>
                             </div>
                           ),
