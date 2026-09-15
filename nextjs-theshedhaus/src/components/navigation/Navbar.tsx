@@ -23,36 +23,32 @@ const structureMegaMenu: Record<string, MegaMenuCategory[]> = {
       description: "Explore our most popular shed styles.",
       items: [
         {
-          name: "A-Frame Signature Series",
-          href: "/signature-styles/sheds/a-frame-signature-series-shed",
-        },
-        {
-          name: "Quaker Deluxe",
-          href: "/signature-styles/sheds/quaker-deluxe-series-shed",
-        },
-        {
-          name: "Cape Cod Board & Batten",
-          href: "/signature-styles/sheds/cape-cod-board-and-batten-shed",
-        },
-        {
-          name: "Classic Deluxe",
-          href: "/signature-styles/sheds/classic-deluxe-series-shed",
-        },
-        {
-          name: "Colonial Dutch Barn Signature Series",
-          href: "/signature-styles/sheds/colonial-dutch-barn-signature-series",
+          name: "Cape Cod Signature Series",
+          href: "/signature-styles/sheds/cape-cod-signature-series-shed",
         },
         {
           name: "Studio Deluxe Series",
           href: "/signature-styles/sheds/studio-deluxe-series",
         },
         {
-          name: "Mini Barn Signature Series",
-          href: "/signature-styles/sheds/mini-barn-signature-series",
+          name: "Cape Cod Deluxe Series",
+          href: "/signature-styles/sheds/cape-cod-deluxe-series-shed",
         },
         {
-          name: "Monterey Deluxe",
-          href: "/signature-styles/sheds/monterey-deluxe-series-shed",
+          name: "Quaker Deluxe Series",
+          href: "/signature-styles/sheds/quaker-deluxe-series-shed",
+        },
+        {
+          name: "Colonial Dutch Barn Signature Series",
+          href: "/signature-styles/sheds/colonial-dutch-barn-signature-series",
+        },
+        {
+          name: "A-Frame Board & Batten",
+          href: "/signature-styles/sheds/a-frame-board-and-batten-shed",
+        },
+        {
+          name: "Monterey Signature Series",
+          href: "/signature-styles/sheds/monterey-signature-series-shed",
         },
       ],
     },
@@ -134,16 +130,16 @@ const structureMegaMenu: Record<string, MegaMenuCategory[]> = {
       name: "More",
       items: [
         {
-          name: "A-Frame Signature Series",
-          href: "/signature-styles/sheds/a-frame-signature-series-shed",
+          name: "Cape Cod Signature Series",
+          href: "/signature-styles/sheds/cape-cod-signature-series-shed",
         },
         {
-          name: "Cape Cod Deluxe",
+          name: "Studio Deluxe Series",
+          href: "/signature-styles/sheds/studio-deluxe-series",
+        },
+        {
+          name: "Cape Cod Deluxe Series",
           href: "/signature-styles/sheds/cape-cod-deluxe-series-shed",
-        },
-        {
-          name: "Colonial Dutch Barn",
-          href: "/signature-styles/sheds/colonial-dutch-barn-signature-series",
         },
       ],
     },
