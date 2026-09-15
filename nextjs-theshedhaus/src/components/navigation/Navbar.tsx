@@ -1,12 +1,15 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { Body } from "../text/Body";
 
 interface MegaMenuCategory {
   title: string;
+  description: string;
+  slug?: string;
   items: { name: string; href: string }[];
 }
 
@@ -14,15 +17,45 @@ const structureMegaMenu: Record<string, MegaMenuCategory[]> = {
   Sheds: [
     {
       title: "Popular Styles",
+      description: "Explore our most popular shed styles.",
       items: [
-        { name: "A-Frame Sheds", href: "/signature-styles/sheds" },
-        { name: "High Barn Sheds", href: "/signature-styles/sheds" },
-        { name: "Quaker Sheds", href: "/signature-styles/sheds" },
-        { name: "Cottage Sheds", href: "/signature-styles/sheds" },
+        {
+          name: "A-Frame Signature Series",
+          href: "/signature-styles/sheds/a-frame-signature-series-shed",
+        },
+        {
+          name: "Quaker Deluxe",
+          href: "/signature-styles/sheds/quaker-deluxe-series-shed",
+        },
+        {
+          name: "Cape Cod Board & Batten",
+          href: "/signature-styles/sheds/cape-cod-board-and-batten-shed",
+        },
+        {
+          name: "Classic Deluxe",
+          href: "/signature-styles/sheds/classic-deluxe-series-shed",
+        },
+        {
+          name: "Colonial Dutch Barn Signature Series",
+          href: "/signature-styles/sheds/colonial-dutch-barn-signature-series",
+        },
+        {
+          name: "Studio Deluxe Series",
+          href: "/signature-styles/sheds/studio-deluxe-series",
+        },
+        {
+          name: "Mini Barn Signature Series",
+          href: "/signature-styles/sheds/mini-barn-signature-series",
+        },
+        {
+          name: "Monterey Deluxe",
+          href: "/signature-styles/sheds/monterey-deluxe-series-shed",
+        },
       ],
     },
     {
       title: "Custom Options",
+      description: "Personalize your shed with our custom options.",
       items: [
         { name: "Siding & Trim Colors", href: "/configuration#siding" },
         { name: "Rooflines & Shingles", href: "/configuration#roofs" },
@@ -33,6 +66,7 @@ const structureMegaMenu: Record<string, MegaMenuCategory[]> = {
   Barns: [
     {
       title: "Barn Styles",
+      description: "Discover the variety of barn styles we offer.",
       items: [
         { name: "Mini Barns", href: "/signature-styles/barns/mini" },
         { name: "Dutch Barns", href: "/signature-styles/barns/dutch" },
@@ -44,6 +78,7 @@ const structureMegaMenu: Record<string, MegaMenuCategory[]> = {
     },
     {
       title: "Custom Options",
+      description: "Customize your barn to fit your needs.",
       items: [
         { name: "Siding & Trim Colors", href: "/configuration#siding" },
         { name: "Rooflines & Shingles", href: "/configuration#roofs" },
@@ -54,27 +89,300 @@ const structureMegaMenu: Record<string, MegaMenuCategory[]> = {
   Gazebos: [
     {
       title: "Shapes & Styles",
+      description: "Choose from various gazebo shapes and styles.",
       items: [
-        { name: "Octagon Gazebos", href: "/signature-styles/gazebos/octagon" },
-        { name: "Oval Gazebos", href: "/signature-styles/gazebos/oval" },
         {
-          name: "Rectangular Gazebos",
-          href: "/signature-styles/gazebos/rectangular",
+          name: "Classic Gazebo",
+          href: "/signature-styles/gazebos/classic-gazebo",
+        },
+        {
+          name: "Belle Gazebo",
+          href: "/signature-styles/gazebos/belle-gazebo",
+        },
+        {
+          name: "Country Gazebo",
+          href: "/signature-styles/gazebos/country-gazebo",
+        },
+        {
+          name: "Cathedral Gazebo",
+          href: "/signature-styles/gazebos/cathedral-gazebo",
+        },
+        {
+          name: "Majestic Gazebo",
+          href: "/signature-styles/gazebos/majestic-gazebo",
         },
       ],
     },
   ],
-  Pergolas: [
+
+  More: [
     {
-      title: "Material Builds",
+      title: "Sheds",
+      description: "Storage sheds and garden structures.",
+      slug: "sheds",
       items: [
         {
-          name: "Traditional Wood Pergolas",
-          href: "/signature-styles/pergolas/wood",
+          name: "A-Frame Signature Series",
+          href: "/signature-styles/sheds/a-frame-signature-series-shed",
         },
         {
-          name: "Artisan Vinyl Pergolas",
-          href: "/signature-styles/pergolas/vinyl",
+          name: "Cape Cod Deluxe",
+          href: "/signature-styles/sheds/cape-cod-deluxe-series-shed",
+        },
+        {
+          name: "Colonial Dutch Barn",
+          href: "/signature-styles/sheds/colonial-dutch-barn-signature-series",
+        },
+      ],
+    },
+    {
+      title: "Garages",
+      description: "Vehicle storage solutions.",
+      slug: "garages",
+      items: [
+        {
+          name: "Board & Batten Garage",
+          href: "/signature-styles/garages/board-and-batten-garage",
+        },
+        {
+          name: "Deluxe Series Garage",
+          href: "/signature-styles/garages/deluxe-series-garage",
+        },
+        {
+          name: "Double Wide Garage",
+          href: "/signature-styles/garages/garages/double-wide-garage",
+        },
+      ],
+    },
+    {
+      title: "Barns & Livestock Shelters",
+      description: "Agricultural and animal structures.",
+      slug: "barns",
+      items: [
+        { name: "Run-In Shed", href: "/signature-styles/barns/run-in-shed" },
+        {
+          name: "Standard Horse Barn",
+          href: "/signature-styles/barns/standard-horse-barn",
+        },
+        {
+          name: "Run-In Stall Combo",
+          href: "/signature-styles/barns/run-in-stall-combo",
+        },
+      ],
+    },
+    {
+      title: "Board and Batten",
+      description:
+        "Classic architectural style with vertical boards and battens.",
+      slug: "board-and-batten",
+      items: [
+        {
+          name: "A-Frame Board & Batten Shed",
+          href: "/signature-styles/board-and-batten/a-frame-board-and-batten-shed",
+        },
+        {
+          name: "Board & Batten Garage",
+          href: "/signature-styles/board-and-batten/board-and-batten-garage",
+        },
+        {
+          name: "Board & Batten Wood Shed",
+          href: "/signature-styles/board-and-batten/board-and-batten-wood-shed",
+        },
+        {
+          name: "Carriage House Board & Batten Shed",
+          href: "/signature-styles/board-and-batten/carriage-house-board-and-batten-shed",
+        },
+      ],
+    },
+    {
+      title: "Pavilions",
+      description: "Open-air gathering spaces.",
+      slug: "pavilions",
+      items: [
+        {
+          name: "Hampton Vinyl Pavilion",
+          href: "/signature-styles/pavilions/hampton-vinyl-pavilion",
+        },
+        {
+          name: "Keystone Wood Pavilion",
+          href: "/signature-styles/pavilions/keystone-wood-pavilion",
+        },
+        {
+          name: "Manor Vinyl Pavilion",
+          href: "/signature-styles/pavilions/manor-vinyl-pavilion",
+        },
+      ],
+    },
+    {
+      title: "Playhouses",
+      description: "Imaginative play structures.",
+      slug: "playhouses",
+      items: [
+        {
+          name: "A-Frame Style Playhouse",
+          href: "/signature-styles/playhouses/a-frame-style-playhouse",
+        },
+        {
+          name: "Elite Style Playhouse",
+          href: "/signature-styles/playhouses/elite-style-playhouse",
+        },
+        {
+          name: "Victorian Style Playhouse",
+          href: "/signature-styles/playhouses/victorian-style-playhouse",
+        },
+      ],
+    },
+    {
+      title: "Pool Houses",
+      description: "Waterside retreats and changing rooms.",
+      slug: "poolhouses",
+      items: [
+        {
+          name: "A-Frame Seaside Bar",
+          href: "/signature-styles/poolhouses/a-frame-seaside-bar",
+        },
+        {
+          name: "Modern Poolhouse",
+          href: "/signature-styles/poolhouses/modern-poolhouse",
+        },
+        {
+          name: "A-Frame Poolhouse Patio",
+          href: "/signature-styles/poolhouses/a-frame-poolhouse-patio",
+        },
+      ],
+    },
+    {
+      title: "Gazebos",
+      slug: "gazebos",
+      description: "Elegant outdoor shelters.",
+      items: [
+        {
+          name: "Classic Gazebo",
+          href: "/signature-styles/gazebos/classic-gazebo",
+        },
+        {
+          name: "Belle Gazebo",
+          href: "/signature-styles/gazebos/belle-gazebo",
+        },
+        {
+          name: "Country Gazebo",
+          href: "/signature-styles/gazebos/country-gazebo",
+        },
+      ],
+    },
+    {
+      title: "Pergolas",
+      slug: "pergolas",
+      description: "Latticed outdoor structures.",
+      items: [
+        {
+          name: "Cozy Arch Wood Pergola",
+          href: "/signature-styles/pergolas/cozy-arch-wood-pergola",
+        },
+        {
+          name: "Elegant Vinyl Pergola",
+          href: "/signature-styles/pergolas/elegant-vinyl-pergola",
+        },
+        {
+          name: "Veranda Vinyl Pergola",
+          href: "/signature-styles/pergolas/veranda-vinyl-pergola",
+        },
+      ],
+    },
+    {
+      title: "Poly Furniture",
+      slug: "poly-furniture",
+      description: "Durable outdoor furnishings.",
+      items: [
+        {
+          name: "Poly Adirondack & Lounge Seating",
+          href: "/signature-styles/poly-furniture/poly-adirondack-lounge-seating",
+        },
+        {
+          name: "Poly Benches & Outdoor Accessories",
+          href: "/signature-styles/poly-furniture/poly-benches-outdoor-accessories",
+        },
+        {
+          name: "Poly Outdoor Dining",
+          href: "/signature-styles/poly-furniture/poly-outdoor-dining-sets",
+        },
+        {
+          name: "Poly Gliders & Swings",
+          href: "/signature-styles/poly-furniture/poly-gliders-swings",
+        },
+      ],
+    },
+    {
+      title: "Chicken Coops",
+      slug: "coops",
+      description: "Secure poultry housing solutions.",
+      items: [
+        {
+          name: "A-Frame Chicken Coop",
+          href: "/signature-styles/coops/a-frame-chicken-coop",
+        },
+        {
+          name: "Combination Chicken Coop",
+          href: "/signature-styles/coops/combination-chicken-coop",
+        },
+        { name: "Quaker Chicken Coop", href: "/coops/quaker-chicken-coop" },
+      ],
+    },
+    {
+      title: "Kennels",
+      slug: "kennels",
+      description: "Safe pet enclosures.",
+      items: [
+        {
+          name: "Single Residential Dog Kennel",
+          href: "/signature-styles/kennels/single-residential-dog-kennel",
+        },
+        {
+          name: "Double & Multi-Run Residential Kennel",
+          href: "/signature-styles/kennels/double-multi-run-residential-kennel",
+        },
+        {
+          name: "Commercial Dog Kennel",
+          href: "/signature-styles/kennels/commercial-dog-kennel",
+        },
+      ],
+    },
+    {
+      title: "Small Structures",
+      slug: "small-structures",
+      description: "Compact and specialized buildings.",
+      items: [
+        {
+          name: "Decorative Lighthouse",
+          href: "/signature-styles/small-structures/decorative-lighthouse",
+        },
+        {
+          name: "Decorative Windmill",
+          href: "/signature-styles/small-structures/decorative-windmill",
+        },
+        {
+          name: "Decorative Wishing Well",
+          href: "/signature-styles/small-structures/decorative-wishing-well",
+        },
+        {
+          name: "A-Frame with 10x12 Greenhouse",
+          href: "/signature-styles/small-structures/a-frame-with-greenhouse",
+        },
+        {
+          name: "Heavy-Duty Woodshed",
+          href: "/signature-styles/small-structures/heavy-duty-woodshed",
+        },
+        {
+          name: "Outdoor Trashcan Shed",
+          href: "/signature-styles/small-structures/outdoor-trashcan-shed",
+        },
+        {
+          name: "Premium Dog House",
+          href: "/signature-styles/small-structures/amish-made-dog-house",
+        },
+        {
+          name: "Amish-Made Rabbit Hutch",
+          href: "/signature-styles/small-structures/rabbit-hutch",
         },
       ],
     },
@@ -82,6 +390,7 @@ const structureMegaMenu: Record<string, MegaMenuCategory[]> = {
   About: [
     {
       title: "About the Shed Haus",
+      description: "Learn more about our company and team.",
       items: [
         { name: "About Us", href: "/about" },
         { name: "Our Process", href: "/about/our-process" },
@@ -95,7 +404,7 @@ const leftNavLinks = [
   { name: "Sheds", href: "/signature-styles/sheds", className: "mx-4" },
   { name: "Barns", href: "/signature-styles/barns", className: "mx-4" },
   { name: "Gazebos", href: "/signature-styles/gazebos", className: "mx-4" },
-  { name: "Pergolas", href: "/signature-styles/pergolas", className: "mx-4" },
+  { name: "More", href: "/signature-styles", className: "mx-4" },
 ];
 
 const rightNavLinks = [
@@ -200,6 +509,7 @@ const LinkItem = ({
 );
 
 export const Navbar = () => {
+  const router = useRouter();
   const [hoveredLink, setHoveredLink] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileExpandedSection, setMobileExpandedSection] = useState<
@@ -214,6 +524,11 @@ export const Navbar = () => {
     setMobileExpandedSection(
       mobileExpandedSection === section ? null : section,
     );
+  };
+
+  const handleMobileNavigation = (href: string) => {
+    setMobileMenuOpen(false);
+    router.push(href);
   };
 
   return (
@@ -302,30 +617,56 @@ export const Navbar = () => {
           onMouseEnter={() => setHoveredLink(hoveredLink)}
           onMouseLeave={() => setHoveredLink(null)}
         >
-          <div className="max-w-6xl mx-auto px-8 py-10 grid grid-cols-3 gap-8">
-            <div className="col-span-1 border-r border-neutral-100 pr-8">
+          <div
+            className={`max-w-7xl mx-auto px-8 py-10 grid gap-8 ${
+              hoveredLink === "More" ? "grid-cols-1" : "grid-cols-3"
+            }`}
+          >
+            <div
+              className={`${hoveredLink === "More" ? "col-span-1" : "col-span-1"} ${hoveredLink !== "More" ? "border-r border-neutral-100 pr-8" : ""}`}
+            >
               <h4 className="text-primary font-montserrat font-extrabold text-xl tracking-tight mb-2">
-                Explore {hoveredLink}
+                {hoveredLink === "More"
+                  ? "All Structures"
+                  : `Explore ${hoveredLink}`}
               </h4>
               <Body
                 text={[
-                  `Choose from our hand-crafted, architectural structures built to last. All standard builds are ready for fast customization or custom ordering.`,
+                  hoveredLink === "More"
+                    ? "Browse our complete collection of hand-crafted architectural designs to find the perfect structure for your needs."
+                    : "Choose from our hand-crafted, architectural structures built to last.",
                 ]}
                 className="text-left text-black font-inter text-sm leading-relaxed"
               />
             </div>
 
-            <div className="col-span-2 grid grid-cols-2 gap-6">
+            <div
+              className={`grid gap-4 ${
+                hoveredLink === "More"
+                  ? "col-span-1 grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+                  : "col-span-2 grid-cols-2"
+              }`}
+            >
               {structureMegaMenu[hoveredLink].map((category, index) => (
-                <div key={index} className="space-y-4">
-                  <h5 className="font-montserrat font-black text-xs text-primary  border-b border-neutral-100 pb-2">
-                    {category.title}
+                <div key={index} className="space-y-1">
+                  <h5 className="font-montserrat font-black text-xs text-primary border-b border-neutral-100 pb-0">
+                    {category?.slug ? (
+                      <Link
+                        onClick={() => setHoveredLink(null)}
+                        href={`/signature-styles/${category?.slug}`}
+                      >
+                        {category.title}
+                      </Link>
+                    ) : (
+                      category.title
+                    )}
                   </h5>
-                  <ul className="space-y-2.5">
+                  <ul className="">
                     {category.items.map((item, itemIndex) => (
                       <li key={itemIndex}>
                         <Link
                           href={item.href}
+                          onClick={() => setHoveredLink(null)}
                           className="font-inter text-sm text-neutral-600 hover:text-primary transition-colors"
                         >
                           {item.name}
@@ -344,81 +685,19 @@ export const Navbar = () => {
           MOBILE EXPANDABLE DRAWER (Figma layout compatible)
           ======================================================== */}
       {mobileMenuOpen && (
-        <div className="md:hidden absolute top-full left-0 right-0 bg-white border-t border-neutral-200 shadow-2xl z-40 p-6 flex flex-col gap-6 animate-in fade-in slide-in-from-top-4">
-          <div className="flex flex-col gap-4 font-montserrat font-bold">
-            {/* Structural Accordion Sections (No icons in mobile links as requested) */}
-            {leftNavLinks.map((link) => {
-              const hasSubmenu = !!structureMegaMenu[link.name];
-              const isExpanded = mobileExpandedSection === link.name;
-
-              return (
-                <div
-                  key={link.name}
-                  className="border-b border-neutral-100 pb-2"
-                >
-                  <div className="flex items-center justify-between w-full">
-                    <Link
-                      href={link.href}
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="text-primary text-lg font-black uppercase tracking-wide"
-                    >
-                      {link.name}
-                    </Link>
-                    {hasSubmenu && (
-                      <button
-                        onClick={() => toggleMobileSection(link.name)}
-                        className="p-1.5 text-neutral-500 hover:text-primary"
-                        aria-label={`Toggle ${link.name} submenu`}
-                      >
-                        <span
-                          className={`inline-block text-primary transform transition-transform duration-200 ${isExpanded ? "rotate-90" : ""}`}
-                        >
-                          ▶
-                        </span>
-                      </button>
-                    )}
-                  </div>
-
-                  {/* Accordion Items List */}
-                  {hasSubmenu && isExpanded && (
-                    <div className="mt-3 pl-4 flex flex-col gap-2.5 border-l border-neutral-100 font-inter">
-                      {structureMegaMenu[link.name]
-                        .flatMap((cat) => cat.items)
-                        .map((item, index) => (
-                          <Link
-                            key={index}
-                            href={item.href}
-                            onClick={() => setMobileMenuOpen(false)}
-                            className="text-neutral-600 text-sm py-1 hover:text-primary transition-colors"
-                          >
-                            {item.name}
-                          </Link>
-                        ))}
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-
-            {/* Standard Pages list */}
-            {/* Standard Pages list with submenu support */}
-            <div className="flex flex-col gap-4 pt-2 font-montserrat font-semibold">
-              {rightNavLinks.map((link) => {
+        <>
+          {/* Backdrop overlay to close menu on click */}
+          <div
+            className="md:hidden fixed inset-0 bg-black/20 z-30 top-16"
+            onClick={() => setMobileMenuOpen(false)}
+            style={{ pointerEvents: "auto" }}
+          />
+          <div className="md:hidden absolute top-full left-0 right-0 bg-white border-t border-neutral-200 shadow-2xl z-40 p-6 flex flex-col gap-6 animate-in fade-in slide-in-from-top-4">
+            <div className="flex flex-col gap-4 font-montserrat font-bold">
+              {/* Structural Accordion Sections (No icons in mobile links as requested) */}
+              {leftNavLinks.map((link) => {
                 const hasSubmenu = !!structureMegaMenu[link.name];
                 const isExpanded = mobileExpandedSection === link.name;
-
-                if (!hasSubmenu) {
-                  return (
-                    <Link
-                      key={link.name}
-                      href={link.href}
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="text-neutral-800 text-base py-1 hover:text-primary transition-colors"
-                    >
-                      {link.name}
-                    </Link>
-                  );
-                }
 
                 return (
                   <div
@@ -429,44 +708,130 @@ export const Navbar = () => {
                       <Link
                         href={link.href}
                         onClick={() => setMobileMenuOpen(false)}
-                        className="text-neutral-800 text-base font-black uppercase tracking-wide"
+                        className="text-primary text-lg font-black uppercase tracking-wide"
                       >
                         {link.name}
                       </Link>
-                      <button
-                        onClick={() => toggleMobileSection(link.name)}
-                        className="p-1.5 text-neutral-500 hover:text-primary"
-                        aria-label={`Toggle ${link.name} submenu`}
-                      >
-                        <span
-                          className={`inline-block text-primary transform transition-transform duration-200 ${isExpanded ? "rotate-90" : ""}`}
+                      {hasSubmenu && (
+                        <button
+                          onClick={() => toggleMobileSection(link.name)}
+                          className="p-1.5 text-neutral-500 hover:text-primary"
+                          aria-label={`Toggle ${link.name} submenu`}
                         >
-                          ▶
-                        </span>
-                      </button>
+                          <span
+                            className={`inline-block text-primary transform transition-transform duration-200 ${isExpanded ? "rotate-90" : ""}`}
+                          >
+                            ▶
+                          </span>
+                        </button>
+                      )}
                     </div>
-                    {isExpanded && (
-                      <div className="mt-3 pl-4 flex flex-col gap-2.5 border-l border-neutral-100 font-inter">
-                        {structureMegaMenu[link.name]
-                          .flatMap((cat) => cat.items)
-                          .map((item, index) => (
-                            <Link
-                              key={index}
-                              href={item.href}
-                              onClick={() => setMobileMenuOpen(false)}
-                              className="text-neutral-600 text-sm py-1 hover:text-primary transition-colors"
-                            >
-                              {item.name}
-                            </Link>
-                          ))}
+
+                    {/* Accordion Items List with Category Headings */}
+                    {hasSubmenu && isExpanded && (
+                      <div className="mt-3 pl-4 flex flex-col gap-3 border-l border-neutral-100">
+                        {structureMegaMenu[link.name].map(
+                          (category, catIndex) => (
+                            <div key={catIndex} className="flex flex-col gap-2">
+                              <Link
+                                href={`/signature-styles/${category.slug}`}
+                                onClick={() => setMobileMenuOpen(false)}
+                              >
+                                <h6 className="font-montserrat font-black text-xs text-primary cursor-pointer hover:underline transition-colors">
+                                  {category.title}
+                                </h6>
+                              </Link>
+                              <div className="flex flex-col gap-2 pl-2 font-inter">
+                                {category.items.map((item, itemIndex) => (
+                                  <button
+                                    key={itemIndex}
+                                    onClick={() =>
+                                      handleMobileNavigation(item.href)
+                                    }
+                                    className="text-left text-neutral-600 text-sm py-1 hover:text-primary transition-colors bg-transparent border-0 cursor-pointer font-inherit"
+                                  >
+                                    {item.name}
+                                  </button>
+                                ))}
+                              </div>
+                            </div>
+                          ),
+                        )}
                       </div>
                     )}
                   </div>
                 );
               })}
+
+              {/* Standard Pages list */}
+              {/* Standard Pages list with submenu support */}
+              <div className="flex flex-col gap-4 pt-2 font-montserrat font-semibold">
+                {rightNavLinks.map((link) => {
+                  const hasSubmenu = !!structureMegaMenu[link.name];
+                  const isExpanded = mobileExpandedSection === link.name;
+
+                  if (!hasSubmenu) {
+                    return (
+                      <Link
+                        key={link.name}
+                        href={link.href}
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="text-neutral-800 text-base py-1 hover:text-primary transition-colors"
+                      >
+                        {link.name}
+                      </Link>
+                    );
+                  }
+
+                  return (
+                    <div
+                      key={link.name}
+                      className="border-b border-neutral-100 pb-2"
+                    >
+                      <div className="flex items-center justify-between w-full">
+                        <Link
+                          href={link.href}
+                          onClick={() => setMobileMenuOpen(false)}
+                          className="text-neutral-800 text-base font-black uppercase tracking-wide"
+                        >
+                          {link.name}
+                        </Link>
+                        <button
+                          onClick={() => toggleMobileSection(link.name)}
+                          className="p-1.5 text-neutral-500 hover:text-primary"
+                          aria-label={`Toggle ${link.name} submenu`}
+                        >
+                          <span
+                            className={`inline-block text-primary transform transition-transform duration-200 ${isExpanded ? "rotate-90" : ""}`}
+                          >
+                            ▶
+                          </span>
+                        </button>
+                      </div>
+                      {isExpanded && (
+                        <div className="mt-3 pl-4 flex flex-col gap-2.5 border-l border-neutral-100 font-inter">
+                          {structureMegaMenu[link.name]
+                            .flatMap((cat) => cat.items)
+                            .map((item, index) => (
+                              <button
+                                key={index}
+                                onClick={() =>
+                                  handleMobileNavigation(item.href)
+                                }
+                                className="text-left text-neutral-600 text-sm py-1 hover:text-primary transition-colors bg-transparent border-0 cursor-pointer font-inherit"
+                              >
+                                {item.name}
+                              </button>
+                            ))}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </div>
-        </div>
+        </>
       )}
     </div>
   );
