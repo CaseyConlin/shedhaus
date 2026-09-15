@@ -61,7 +61,7 @@ export const Hero = () => {
             <LinkButton
               variant="white"
               text="Shop Our Inventory"
-              link="https://facebook.com/theshedhaus"
+              link="https://www.facebook.com/media/set/?vanity=TheShedHaus&set=a.2157873454450349"
               target="_blank"
               rel="noopener noreferrer"
             />
