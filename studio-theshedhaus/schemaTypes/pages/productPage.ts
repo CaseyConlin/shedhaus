@@ -42,6 +42,14 @@ export const productPage = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: 'order',
+      title: 'Display Order',
+      type: 'number',
+      description: 'Controls the order products appear on pages (0 = first)',
+      initialValue: 0,
+      validation: (Rule) => Rule.min(0),
+    }),
+    defineField({
       name: 'category',
       title: 'Categories',
       type: 'array',

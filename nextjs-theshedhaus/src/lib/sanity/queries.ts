@@ -163,7 +163,7 @@ export const PRODUCT_PAGE_QUERY = (slug: string) => `
 
 // Products by category - handles both string and array formats
 export const PRODUCTS_BY_CATEGORY_QUERY = (category: string) => `
-  *[_type == "productPage" && ("${category}" in category || category == "${category}")] | order(productName asc) {
+  *[_type == "productPage" && ("${category}" in category || category == "${category}")] | order(order asc) {
     productName,
     category,
     ${SEO_FRAGMENT},
@@ -184,7 +184,7 @@ export const PRODUCTS_BY_CATEGORY_QUERY = (category: string) => `
 
 // All products query
 export const ALL_PRODUCTS_QUERY = `
-  *[_type == "productPage"] | order(category asc, productName asc) {
+  *[_type == "productPage"] | order(category asc, order asc) {
     productName,
     category,
     ${SEO_FRAGMENT},
@@ -250,7 +250,7 @@ export const SUGGESTED_PRODUCTS_QUERY = (
   category: string,
   excludeSlug: string,
 ) => `
-  *[_type == "productPage" && ("${category}" in category || category == "${category}") && seo.slug.current != "${excludeSlug}"] | order(_key asc) {
+  *[_type == "productPage" && ("${category}" in category || category == "${category}") && seo.slug.current != "${excludeSlug}"] | order(order asc) {
     productName,
     category,
     ${SEO_FRAGMENT},
@@ -291,7 +291,7 @@ export const FORM_CATEGORIES_QUERY = `
 
 // Form options query - fetch products by category slug for style options
 export const FORM_PRODUCTS_BY_CATEGORY_QUERY = (categorySlug: string) => `
-  *[_type == "productPage" && "${categorySlug}" in category] | order(productName asc) {
+  *[_type == "productPage" && "${categorySlug}" in category] | order(order asc) {
     productName,
     category
   }
