@@ -152,7 +152,7 @@ export const OurProcess = () => {
 
                 {/* Step Description Card (shProcessCard) */}
                 {/* Fixed dimensions matching Figma: Width 229px, Height 215px */}
-                <div className="relative w-57.25 h-53.75 bg-white border border-black rounded-[5px] shadow-[0px_4px_4px_rgba(0,0,0,0.25)] p-4 flex flex-col items-center shrink-0">
+                <div className="relative w-57.25 md:h-75 bg-white border border-black rounded-[5px] shadow-[0px_4px_4px_rgba(0,0,0,0.25)] p-4 flex flex-col items-center shrink-0">
                   {/* Card Title (shH3 / Montserrat Bold 17px/21px) */}
                   <div className="pt-2 pb-1 border-b-2 border-transparent">
                     <h3 className="font-montserrat font-bold text-[17px] leading-5.25 text-center text-primary tracking-tight">
@@ -161,7 +161,7 @@ export const OurProcess = () => {
                   </div>
 
                   {/* Card Description (shBody / Inter Medium 16px/19px) */}
-                  <div className="mt-2 overflow-hidden h-34.5">
+                  <div className="mt-2 overflow-hidden ">
                     <Body text={[step.description]} className="text-black " />
                   </div>
                 </div>
