@@ -68,7 +68,7 @@ const structureMegaMenu: Record<string, MegaMenuCategory[]> = {
     {
       name: "Barns",
       title: "Popular Styles",
-      slug: "barns",
+      slug: "/signature-styles/barns",
       description: "Discover the variety of barn styles we offer.",
       items: [
         { name: "Mini Barns", href: "/signature-styles/barns/mini" },
@@ -702,7 +702,7 @@ export const Navbar = () => {
                     <li>
                       {hoveredLink !== "About" && (
                         <Link
-                          href={`/signature-styles/${category?.slug}`}
+                          href={`${category?.slug}`}
                           className="font-inter text-sm  hover:text-neutral-600 font-bold text-primary transition-colors"
                         >
                           {hoveredLink === "More"
