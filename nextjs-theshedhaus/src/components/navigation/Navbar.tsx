@@ -243,8 +243,8 @@ const structureMegaMenu: Record<string, MegaMenuCategory[]> = {
           href: "/signature-styles/playhouses/a-frame-style-playhouse",
         },
         {
-          name: "Elite Style Playhouse",
-          href: "/signature-styles/playhouses/elite-style-playhouse",
+          name: "Stone Siding Playhouse",
+          href: "/signature-styles/playhouses/stone-siding-playhouse",
         },
         {
           name: "Victorian Style Playhouse",
@@ -472,6 +472,7 @@ const LinkItem = ({
   className,
   onMouseEnter,
   onMouseLeave,
+  onClick,
 }: {
   name: string;
   href: string;
@@ -479,11 +480,13 @@ const LinkItem = ({
   hovered?: boolean;
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
+  onClick?: () => void;
 }) => (
   <div
     className={`flex items-center justify-center flex-col group ${className}`}
     onMouseEnter={onMouseEnter}
     onMouseLeave={onMouseLeave}
+    onClick={onClick}
   >
     <div className="relative w-10 h-10">
       <svg
@@ -628,6 +631,7 @@ export const Navbar = () => {
               className={link.className}
               hovered={hoveredLink === link.name}
               onMouseEnter={() => setHoveredLink(link.name)}
+              onClick={() => setHoveredLink(null)}
             />
           ))}
         </div>
@@ -655,6 +659,7 @@ export const Navbar = () => {
               className={link.className}
               hovered={hoveredLink === link.name}
               onMouseEnter={() => setHoveredLink(link.name)}
+              onClick={() => setHoveredLink(null)}
             />
           ))}
         </div>
@@ -679,9 +684,17 @@ export const Navbar = () => {
             >
               <h4 className="text-primary font-montserrat font-extrabold text-xl tracking-tight mb-2">
                 {hoveredLink === "More" ? (
-                  <Link href="/signature-styles">All Structures</Link>
+                  <Link
+                    href="/signature-styles"
+                    onClick={() => setHoveredLink(null)}
+                  >
+                    All Structures
+                  </Link>
                 ) : (
-                  <Link href={`/signature-styles/`}>
+                  <Link
+                    href={`/signature-styles/`}
+                    onClick={() => setHoveredLink(null)}
+                  >
                     {`Explore ${hoveredLink}`}{" "}
                   </Link>
                 )}
@@ -706,7 +719,10 @@ export const Navbar = () => {
               {structureMegaMenu[hoveredLink].map((category, index) => (
                 <div key={index} className="space-y-1">
                   <h5 className="font-montserrat font-black text-md text-primary border-b border-neutral-100 pb-0">
-                    <Link href={category?.slug}>
+                    <Link
+                      href={category?.slug}
+                      onClick={() => setHoveredLink(null)}
+                    >
                       {hoveredLink === "More"
                         ? `${category.title}`
                         : `${category.name}`}
@@ -734,6 +750,7 @@ export const Navbar = () => {
                         <Link
                           href={`${category?.slug}`}
                           className="font-inter text-sm  hover:text-neutral-600 font-bold text-primary transition-colors"
+                          onClick={() => setHoveredLink(null)}
                         >
                           {hoveredLink === "More"
                             ? `All ${category.title}`
