@@ -71,11 +71,18 @@ const structureMegaMenu: Record<string, MegaMenuCategory[]> = {
       slug: "/signature-styles/barns",
       description: "Discover the variety of barn styles we offer.",
       items: [
-        { name: "Mini Barns", href: "/signature-styles/barns/mini" },
-        { name: "Dutch Barns", href: "/signature-styles/barns/dutch" },
         {
-          name: "Double Wide Barns",
-          href: "/signature-styles/barns/double-wide",
+          name: "Standard Horse Barn",
+          href: "/signature-styles/barns/standard-horse-barn",
+        },
+        { name: "Run-in Shed", href: "/signature-styles/barns/run-in-shed" },
+        {
+          name: "Stall Barn",
+          href: "/signature-styles/barns/stall-barn",
+        },
+        {
+          name: "Run-in Stall Combo",
+          href: "/signature-styles/barns/run-in-stall-combo",
         },
       ],
     },
@@ -159,7 +166,7 @@ const structureMegaMenu: Record<string, MegaMenuCategory[]> = {
         },
         {
           name: "Double Wide Garage",
-          href: "/signature-styles/garages/garages/double-wide-garage",
+          href: "/signature-styles/garages/double-wide-garage",
         },
       ],
     },
@@ -242,6 +249,26 @@ const structureMegaMenu: Record<string, MegaMenuCategory[]> = {
         {
           name: "Victorian Style Playhouse",
           href: "/signature-styles/playhouses/victorian-style-playhouse",
+        },
+      ],
+    },
+    {
+      title: "Playsets",
+      description: "Imaginative play structures.",
+      slug: "/signature-styles/playsets",
+      name: "More",
+      items: [
+        {
+          name: "Imagination Station",
+          href: "/signature-styles/playsets/imagination-station",
+        },
+        {
+          name: "Discovery Depot Swing Set",
+          href: "/signature-styles/playsets/discovery-depot-swing-set",
+        },
+        {
+          name: "Busy Basecamp",
+          href: "/signature-styles/playsets/busy-basecamp",
         },
       ],
     },
@@ -343,7 +370,10 @@ const structureMegaMenu: Record<string, MegaMenuCategory[]> = {
           name: "Combination Chicken Coop",
           href: "/signature-styles/coops/combination-chicken-coop",
         },
-        { name: "Quaker Chicken Coop", href: "/coops/quaker-chicken-coop" },
+        {
+          name: "Quaker Chicken Coop",
+          href: "/signature-styles/coops/quaker-chicken-coop",
+        },
       ],
     },
     {
@@ -385,7 +415,7 @@ const structureMegaMenu: Record<string, MegaMenuCategory[]> = {
           href: "/signature-styles/small-structures/decorative-wishing-well",
         },
         {
-          name: "A-Frame with 10x12 Greenhouse",
+          name: "Greenhouse",
           href: "/signature-styles/small-structures/a-frame-with-greenhouse",
         },
         {

@@ -419,6 +419,18 @@ export default async function ProductPage({ params }: ProductPageProps) {
                   <ProductList
                     products={suggestedProducts}
                     currentCategory={category}
+                    showInventoryCard={false}
+                  />
+                </div>
+                <div className="flex flex-col md:flex-row items-center justify-center gap-4 mb-4">
+                  <LinkButton
+                    text="See All Our Structures"
+                    link="/signature-styles"
+                  />
+                  <LinkButton
+                    text="Design Your Own Shed"
+                    link="/configuration"
+                    variant="white"
                   />
                 </div>
                 <div>{getLocalityMessage()}</div>

@@ -9,9 +9,11 @@ import { LinkButton } from "../buttons/LinkButton";
 export const ProductList = ({
   products,
   currentCategory,
+  showInventoryCard = true,
 }: {
   products?: Product[];
   currentCategory?: string;
+  showInventoryCard?: boolean;
 }) => {
   // Method to interleave Lot Update Cards beautifully at the indices matching both mobile and desktop frames
   const renderList = () => {
@@ -26,12 +28,11 @@ export const ProductList = ({
             currentCategory={currentCategory}
           />,
         );
-
-        // Frame 167.jpg (mobile) and Frame 168.jpg (desktop) insert the "Lot Update" card
-        // after the 3rd product card (index 2) and after the 9th product card (index 8).
         if (
-          (index % 4 === 0 && index !== 0) ||
-          (index === products.length - 1 && products.length <= 4)
+          (showInventoryCard && index % 4 === 0 && index !== 0) ||
+          (showInventoryCard &&
+            index === products.length - 1 &&
+            products.length <= 4)
         ) {
           listItems.push(
             <SideBarCard
