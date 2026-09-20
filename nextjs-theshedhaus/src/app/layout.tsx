@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import { Navbar } from "@/components/navigation/Navbar";
 import { Footer } from "@/components/Footer";
 import { Geist, Geist_Mono, Montserrat, Inter } from "next/font/google";
@@ -51,6 +52,7 @@ export default function RootLayout({
           <ConditionallyRenderContactFooter />
         </RecaptchaProvider>
         <Footer />
+        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID!} />
       </body>
     </html>
   );
