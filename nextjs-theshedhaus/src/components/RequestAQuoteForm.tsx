@@ -92,6 +92,7 @@ export const RequestAQuoteForm: React.FC = () => {
   // Refs for handling clicks outside dropdowns to close them gracefully
   const formRef = useRef<HTMLFormElement>(null);
   const structureTypeRef = useRef<HTMLDivElement>(null);
+  const successMessageRef = useRef<HTMLDivElement>(null);
 
   // Fetch form options on mount
   useEffect(() => {
@@ -134,6 +135,18 @@ export const RequestAQuoteForm: React.FC = () => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  // Scroll to success message when form is submitted successfully
+  useEffect(() => {
+    if (submitSuccess && successMessageRef.current) {
+      setTimeout(() => {
+        successMessageRef.current?.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
+      }, 100);
+    }
+  }, [submitSuccess]);
 
   const handleDropdownSelect = (field: keyof DropdownState, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -273,7 +286,10 @@ export const RequestAQuoteForm: React.FC = () => {
     <section className="w-full bg-white text-black px-4 md:px-8">
       <div className="max-w-4xl mx-auto">
         {submitSuccess ? (
-          <div className="text-center py-16 px-4 bg-neutral-50 rounded-lg border border-neutral-200">
+          <div
+            ref={successMessageRef}
+            className="text-center py-16 px-4 bg-neutral-50 rounded-lg border border-neutral-200"
+          >
             <h2 className="text-2xl font-bold text-[#860000] mb-4">
               Quote Request Received!
             </h2>
