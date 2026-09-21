@@ -19,7 +19,7 @@ const nextConfig: NextConfig = {
     ],
   },
   redirects: async () => [
-    // Top-level category redirects
+    // Top-level category redirects (old site structure)
     {
       source: "/sheds/:path*",
       destination: "/signature-styles/sheds",
@@ -46,12 +46,6 @@ const nextConfig: NextConfig = {
       destination: "/signature-styles/garages",
       permanent: true,
     },
-    { source: "/contact/:path*", destination: "/contact", permanent: true },
-    {
-      source: "/options/:path*",
-      destination: "/configuration",
-      permanent: true,
-    },
     {
       source: "/playhouses/:path*",
       destination: "/signature-styles/playhouses",
@@ -62,6 +56,8 @@ const nextConfig: NextConfig = {
       destination: "/signature-styles/small-structures",
       permanent: true,
     },
+    // Note: /contact and /configuration already exist as real pages, so no redirects needed
+    // /contact/:path* and /options/:path* would cause redirect loops
 
     // Portfolio category redirects
     {
