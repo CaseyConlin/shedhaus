@@ -188,7 +188,7 @@ const structureMegaMenu: Record<string, MegaMenuCategory[]> = {
       ],
     },
     {
-      title: "Board and Batten",
+      title: "Board & Batten",
       description:
         "Classic architectural style with vertical boards and battens.",
       slug: "/signature-styles/board-and-batten",
