@@ -73,11 +73,12 @@ export async function POST(request: Request): Promise<Response> {
       );
     }
 
-    // Fetch price list from Sanity
+    // Fetch price list from Sanity based on structure type
     let priceListUrl = "";
     try {
       const priceListDoc = await client.fetch(
-        `*[_type == "priceList"][0] { file }`,
+        `*[_type == "priceList" && structureType == $structureType][0] { file }`,
+        { structureType }
       );
       if (priceListDoc?.file?.asset?._ref) {
         const assetRef = priceListDoc.file.asset._ref;
@@ -102,10 +103,10 @@ export async function POST(request: Request): Promise<Response> {
       "<p>Please find our current pricing information below:</p>";
 
     if (priceListUrl) {
-      customerEmailBody += `<p><a href="${priceListUrl}" target="_blank" style="background-color: #860000; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px; display: inline-block;">Download Price List</a></p>`;
+      customerEmailBody += `<p><a href="${priceListUrl}" target="_blank" style="background-color: #860000; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px; display: inline-block;">Download ${structureType} Price List</a></p>`;
     } else {
       customerEmailBody +=
-        "<p>A price list will be sent to you shortly by our team.</p>";
+        `<p>Our team will be in contact shortly with pricing information tailored to your ${structureType} project.</p>`;
     }
 
     customerEmailBody +=

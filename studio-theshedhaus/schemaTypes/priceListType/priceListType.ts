@@ -6,6 +6,13 @@ export const priceListType = defineType({
   type: 'document',
   fields: [
     defineField({
+      name: 'structureType',
+      title: 'Structure Type',
+      type: 'string',
+      description: 'e.g., "Sheds", "Barns", "Garages", "Playhouses", "Poolhouses", etc.',
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
       name: 'title',
       title: 'Title',
       type: 'string',

@@ -261,8 +261,12 @@ export const RequestAQuoteForm: React.FC = () => {
       email: "",
       phone: "",
     });
-    setSubmitSuccess(false);
     setErrorMessage("");
+  };
+
+  const handleStartNewQuote = () => {
+    setSubmitSuccess(false);
+    resetForm();
   };
 
   return (
@@ -274,11 +278,13 @@ export const RequestAQuoteForm: React.FC = () => {
               Quote Request Received!
             </h2>
             <p className="text-neutral-700 max-w-md mx-auto mb-8">
-              Thank you for reaching out. A team member from The Shed Haus will
-              review your project specs and contact you with custom estimates.
+              Thank you for reaching out! You should receive a price list for
+              your selected structure type in your email shortly. A team member
+              from The Shed Haus will also review your project specs and contact
+              you with custom estimates.
             </p>
             <button
-              onClick={resetForm}
+              onClick={handleStartNewQuote}
               className="bg-[#860000] hover:bg-[#a00000] text-white font-bold py-3 px-8 rounded-md transition-all"
             >
               Request Another Quote
