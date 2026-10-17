@@ -243,8 +243,8 @@ const structureMegaMenu: Record<string, MegaMenuCategory[]> = {
           href: "/signature-styles/playhouses/a-frame-style-playhouse",
         },
         {
-          name: "Stone Siding Playhouse",
-          href: "/signature-styles/playhouses/stone-siding-playhouse",
+          name: "Customized Playhouse",
+          href: "/signature-styles/playhouses/customized-playhouse",
         },
         {
           name: "Victorian Style Playhouse",
