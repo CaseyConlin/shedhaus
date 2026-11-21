@@ -111,6 +111,7 @@ export default async function Page() {
                     key={index}
                     leadText={detail.leadText}
                     bodyText={detail.bodyText}
+                    className="dark:text-black"
                   />
                 ))}
               </ul>

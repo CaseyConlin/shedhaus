@@ -588,7 +588,7 @@ export const Navbar = () => {
 
   return (
     <div
-      className="relative w-full z-50 bg-white"
+      className="relative w-full z-50 bg-white dark:text-gray-600"
       onMouseLeave={() => setHoveredLink(null)}
     >
       <nav className="flex items-center justify-between w-full font-montserrat px-8 md:px-0">

@@ -22,6 +22,7 @@ export const TeamCard = ({ name, title, details }: TeamCardProps) => {
             key={index}
             leadText={leadText}
             bodyText={bodyText}
+            className="dark:text-black"
           />
         ))}
         {/* <li>

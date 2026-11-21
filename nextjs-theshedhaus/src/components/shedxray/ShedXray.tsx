@@ -151,17 +151,20 @@ export const ShedXray = () => {
   const activeArrow = ARROWS.find((arrow) => arrow.id === activeArrowId);
 
   return (
-    <div className="flex flex-col md:mt-15 items-center justify-center gap-5 pt-16 w-screen">
-      <div className=" bg-black/75 flex h-160 md:h-110 w-full flex-row justify-center">
+    <div className="flex flex-col md:mt-15 items-center justify-center gap-5 pt-16 w-screen ">
+      <div className=" bg-black/75 dark:bg-white/75 flex h-160 md:h-110 w-full flex-row justify-center">
         <div className="flex h-full w-full max-w-7xl flex-col md:flex-row items-center justify-start md:justify-center gap-6 md:gap-0">
           <div className="flex min-w-0 basis-0 flex-[0_1_0%] md:flex-[1_1_0%] justify-center">
             <div className="flex px-5 md:px-0 md:w-75 max-w-lg flex-col justify-center gap-4 pt-7 md:pt-5">
-              <H2 className="text-white" text="Our Sheds Stand Out" />
+              <H2
+                className="text-white dark:text-primary"
+                text="Our Sheds Stand Out"
+              />
               <Body
                 text={[
                   "The difference in our quality is clear. Our hand-crafted structures begin with premium grade pressure treated lumber foundation and are tied together with the highest quality vinyl or T1-11 wood siding, 30 year architectural grade shingles and a 10 year limited warranty.",
                 ]}
-                className="text-white"
+                className="dark:text-black"
               />
               <div className="mt-4 flex justify-center">
                 <LinkButton text="Learn More" link="/sheds" />

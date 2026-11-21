@@ -38,7 +38,7 @@ export default async function Page() {
         }
       />
       <div className="flex flex-col items-center justify-center w-screen">
-        <div className="flex flex-col md:flex-row items-start justify-center max-w-6xl md:gap-10 py-4 md:py-8md:px-0">
+        <div className="flex flex-col dark:bg-white md:flex-row items-start justify-center max-w-6xl md:gap-10 py-4 md:py-8md:px-0">
           <div className="flex-3 flex flex-col justify-start items-start min-w-screen md:min-w-xl gap-4 px-4 md:px-0">
             <RequestAQuoteForm />
           </div>

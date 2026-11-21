@@ -186,7 +186,7 @@ export const ContactFooter = () => {
           </div>
 
           {/* Grid Layout: Stacks on mobile, splits 50/50 on desktop */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start text-black">
             {/* Left Column: Business Info & Contact List */}
             <div className="flex flex-col gap-8 md:gap-10">
               <div className="space-y-6 md:space-y-8">

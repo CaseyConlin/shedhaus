@@ -55,7 +55,7 @@ export default function RootLayout({
       lang="en"
       className={`${montserrat.variable} ${inter.variable} ${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body>
+      <body className="dark:bg-white">
         <JsonLdScript data={generateLocalBusinessStructuredData()} />
         <Navbar />
         <RecaptchaProvider>

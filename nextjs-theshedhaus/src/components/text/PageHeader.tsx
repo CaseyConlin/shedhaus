@@ -7,7 +7,7 @@ export const PageHeader = ({
   description?: string | React.ReactNode;
 }) => {
   return (
-    <div className="flex flex-col items-center justify-center w-screen">
+    <div className="flex flex-col items-center justify-center w-screen dark:bg-white">
       <div className="flex flex-col items-start justify-start w-full max-w-6xl px-4 md:px-2 md:pl-0">
         <BreadCrumbs />
         <h1 className="flex text-3xl font-montserrat text-primary font-black">

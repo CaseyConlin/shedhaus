@@ -75,6 +75,7 @@ export const InventorySection = ({
       />
       <div className="font-medium max-w-xl text-center">
         <Body
+          className="dark:text-white"
           text={[
             "Whether you need a quiet backyard retreat, a rugged workspace, or a custom shelter for your next project, our team can help you find a structure built with industrial precision to meet your needs.",
             "Explore the collections below to find your perfect fit.",
@@ -99,6 +100,7 @@ export const InventorySection = ({
         <div className="flex flex-col md:flex-row items-center justify-center gap-4 ">
           <LinkButton text="See All Our Structures" link="/signature-styles" />
           <LinkButton
+            className="dark:bg-white"
             text={secondaryAction?.text || "Design Your Own Shed"}
             link={secondaryAction?.link || "/configuration"}
             variant={secondaryAction?.variant || "transRed"}
