@@ -819,7 +819,7 @@ export const Navbar = () => {
                           (category, catIndex) => (
                             <div key={catIndex} className="flex flex-col gap-2">
                               <Link
-                                href={`/signature-styles/${category.slug}`}
+                                href={category.slug}
                                 onClick={() => setMobileMenuOpen(false)}
                               >
                                 <h6 className="font-montserrat font-black text-sm text-primary cursor-pointer hover:underline transition-colors">
