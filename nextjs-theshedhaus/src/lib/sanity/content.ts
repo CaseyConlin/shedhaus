@@ -1,4 +1,9 @@
 import { client } from "./client";
+import type {
+  ServiceAreaRouteData,
+  ServiceAreaSitemapEntry,
+  ServiceCounty,
+} from "./types";
 import {
   OUR_PROCESS_PAGE_QUERY,
   FAQ_PAGE_QUERY,
@@ -14,6 +19,10 @@ import {
   SUGGESTED_PRODUCTS_QUERY,
   FORM_CATEGORIES_QUERY,
   FORM_PRODUCTS_BY_CATEGORY_QUERY,
+  ALL_SERVICE_COUNTIES_QUERY,
+  SERVICE_COUNTY_BY_SLUG_QUERY,
+  SERVICE_AREA_BY_SLUGS_QUERY,
+  ALL_SERVICE_AREAS_QUERY,
 } from "./queries";
 
 /**
@@ -171,6 +180,60 @@ export async function getAllCategories() {
     return data;
   } catch (error) {
     console.error("Error fetching all categories:", error);
+    return null;
+  }
+}
+
+export async function getAllServiceCounties(): Promise<ServiceCounty[] | null> {
+  try {
+    return await client.fetch<ServiceCounty[]>(ALL_SERVICE_COUNTIES_QUERY);
+  } catch (error) {
+    console.error("Error fetching service counties:", error);
+    return null;
+  }
+}
+
+export async function getServiceCountyBySlug(
+  slug: string,
+): Promise<ServiceCounty | null> {
+  try {
+    return await client.fetch<ServiceCounty | null>(
+      SERVICE_COUNTY_BY_SLUG_QUERY,
+      { slug },
+    );
+  } catch (error) {
+    console.error(`Error fetching service county ${slug}:`, error);
+    return null;
+  }
+}
+
+export async function getServiceAreaBySlugs(
+  countySlug: string,
+  locationSlug: string,
+): Promise<ServiceAreaRouteData | null> {
+  try {
+    return await client.fetch<ServiceAreaRouteData | null>(
+      SERVICE_AREA_BY_SLUGS_QUERY,
+      { countySlug, locationSlug },
+    );
+  } catch (error) {
+    console.error(
+      `Error fetching service area ${countySlug}/${locationSlug}:`,
+      error,
+    );
+    return null;
+  }
+}
+
+export async function getAllServiceAreas(): Promise<
+  ServiceAreaSitemapEntry[] | null
+> {
+  try {
+    return await client.fetch<ServiceAreaSitemapEntry[]>(
+      ALL_SERVICE_AREAS_QUERY,
+    );
+  } catch (error) {
+    console.error("Error fetching service areas:", error);
     return null;
   }
 }

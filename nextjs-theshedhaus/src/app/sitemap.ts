@@ -1,5 +1,10 @@
 import { MetadataRoute } from "next";
-import { getAllCategories, getProductsByCategory } from "@/lib/sanity/content";
+import {
+  getAllCategories,
+  getAllServiceAreas,
+  getAllServiceCounties,
+  getProductsByCategory,
+} from "@/lib/sanity/content";
 import { getPrimaryCategory } from "@/lib/sanity/categories";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -44,6 +49,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.9,
     },
     {
+      url: `${baseUrl}/areas-served`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.85,
+    },
+    {
       url: `${baseUrl}/contact`,
       lastModified: new Date(),
       changeFrequency: "yearly",
@@ -59,10 +70,35 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Dynamic product/category pages
   try {
-    const categories = await getAllCategories();
+    const [categories, counties, serviceAreas] = await Promise.all([
+      getAllCategories(),
+      getAllServiceCounties(),
+      getAllServiceAreas(),
+    ]);
 
     if (!categories || categories.length === 0) {
-      return staticPages;
+      const locationPages: MetadataRoute.Sitemap = [
+        ...(counties || []).map((county) => ({
+          url: `${baseUrl}/areas-served/${county.seo.slug.current}`,
+          lastModified: new Date(),
+          changeFrequency: "monthly" as const,
+          priority: 0.75,
+        })),
+        ...(serviceAreas || []).flatMap((area) => {
+          const countySlug = area.county?.seo?.slug?.current;
+          const locationSlug = area.seo?.slug?.current;
+          if (!countySlug || !locationSlug) return [];
+          return [
+            {
+              url: `${baseUrl}/areas-served/${countySlug}/${locationSlug}`,
+              lastModified: new Date(),
+              changeFrequency: "monthly" as const,
+              priority: 0.7,
+            },
+          ];
+        }),
+      ];
+      return [...staticPages, ...locationPages];
     }
 
     const dynamicPages: MetadataRoute.Sitemap = [];
@@ -97,7 +133,29 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       }
     }
 
-    return [...staticPages, ...dynamicPages];
+    const locationPages: MetadataRoute.Sitemap = [
+      ...(counties || []).map((county) => ({
+        url: `${baseUrl}/areas-served/${county.seo.slug.current}`,
+        lastModified: new Date(),
+        changeFrequency: "monthly" as const,
+        priority: 0.75,
+      })),
+      ...(serviceAreas || []).flatMap((area) => {
+        const countySlug = area.county?.seo?.slug?.current;
+        const locationSlug = area.seo?.slug?.current;
+        if (!countySlug || !locationSlug) return [];
+        return [
+          {
+            url: `${baseUrl}/areas-served/${countySlug}/${locationSlug}`,
+            lastModified: new Date(),
+            changeFrequency: "monthly" as const,
+            priority: 0.7,
+          },
+        ];
+      }),
+    ];
+
+    return [...staticPages, ...dynamicPages, ...locationPages];
   } catch (error) {
     console.error("Error generating sitemap:", error);
     return staticPages;

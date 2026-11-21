@@ -18,6 +18,7 @@ const PRODUCTS_LINKS = [
 
 const COMPANY_LINKS = [
   { label: "About us", href: "/about" },
+  { label: "Areas We Serve", href: "/areas-served" },
   { label: "FAQ", href: "/faq" },
   { label: "Contact", href: "/contact" },
   { label: "Request a Quote", href: "/contact?type=quote" },

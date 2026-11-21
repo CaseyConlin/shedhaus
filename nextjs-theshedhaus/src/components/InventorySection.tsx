@@ -27,6 +27,11 @@ interface InventorySectionProps {
   categories: Category[];
   showButtons?: boolean;
   limit?: number;
+  secondaryAction?: {
+    text: string;
+    link: string;
+    variant?: "default" | "white" | "transRed";
+  };
 }
 
 const InventoryItem = ({
@@ -58,6 +63,7 @@ export const InventorySection = ({
   categories,
   limit,
   showButtons,
+  secondaryAction,
 }: InventorySectionProps) => {
   const displayedCategories = limit ? categories.slice(0, limit) : categories;
 
@@ -93,9 +99,9 @@ export const InventorySection = ({
         <div className="flex flex-col md:flex-row items-center justify-center gap-4 ">
           <LinkButton text="See All Our Structures" link="/signature-styles" />
           <LinkButton
-            text="Design Your Own Shed"
-            link="/configuration"
-            variant="transRed"
+            text={secondaryAction?.text || "Design Your Own Shed"}
+            link={secondaryAction?.link || "/configuration"}
+            variant={secondaryAction?.variant || "transRed"}
           />
         </div>
       )}

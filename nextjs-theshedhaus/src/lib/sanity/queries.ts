@@ -218,6 +218,7 @@ export const CATEGORY_BY_SLUG_QUERY = (slug: string) => `
     ${SEO_FRAGMENT},
     pageTitle,
     pageDescription,
+    body[],
     image {
       asset -> {
         url
@@ -241,6 +242,109 @@ export const ALL_CATEGORIES_QUERY = `
       alt
     },
     ${SEO_FRAGMENT}
+  }
+`;
+
+export const ALL_SERVICE_COUNTIES_QUERY = `
+  *[_type == "serviceCounty" && defined(seo.slug.current)] | order(name asc) {
+    name,
+    ${SEO_FRAGMENT},
+    pageTitle,
+    pageDescription,
+    image {
+      asset -> { url },
+      alt
+    }
+  }
+`;
+
+export const SERVICE_COUNTY_BY_SLUG_QUERY = `
+  *[_type == "serviceCounty" && seo.slug.current == $slug][0] {
+    _id,
+    name,
+    ${SEO_FRAGMENT},
+    pageTitle,
+    pageDescription,
+    image {
+      asset -> { url },
+      alt
+    },
+    "towns": *[
+      _type == "serviceArea" &&
+      county._ref == ^._id &&
+      defined(seo.slug.current)
+    ] | order(name asc) {
+      name,
+      seo {
+        title,
+        description,
+        slug
+      },
+      pageTitle,
+      pageDescription,
+      image {
+        asset -> { url },
+        alt
+      }
+    }
+  }
+`;
+
+export const SERVICE_AREA_BY_SLUGS_QUERY = `
+  *[
+    _type == "serviceArea" &&
+    seo.slug.current == $locationSlug &&
+    county->seo.slug.current == $countySlug
+  ][0] {
+    name,
+    seo {
+      title,
+      description,
+      slug,
+      socialImage {
+        asset -> { url },
+        alt
+      }
+    },
+    pageTitle,
+    pageDescription,
+    body[] {
+      _type,
+      _key,
+      style,
+      children[] {
+        _type,
+        _key,
+        text,
+        marks
+      },
+      markDefs[]
+    },
+    image {
+      asset -> { url },
+      alt
+    },
+    "county": county->{
+      name,
+      seo {
+        slug
+      }
+    }
+  }
+`;
+
+export const ALL_SERVICE_AREAS_QUERY = `
+  *[_type == "serviceArea" && defined(seo.slug.current)] {
+    name,
+    seo {
+      slug
+    },
+    "county": county->{
+      name,
+      seo {
+        slug
+      }
+    }
   }
 `;
 

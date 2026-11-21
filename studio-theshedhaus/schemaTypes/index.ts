@@ -7,6 +7,8 @@ import {teamMember} from './teamMember'
 import {designOption, designSubsection, designSection} from './designSection'
 import {spec, productFeature, galleryImage} from './product'
 import {category} from './category'
+import {serviceArea} from './serviceArea'
+import {serviceCounty} from './serviceCounty'
 import {ourProcessPage} from './pages/ourProcessPage'
 import {faqPage} from './pages/faqPage'
 import {aboutPage} from './pages/aboutPage'
@@ -38,4 +40,6 @@ export const schemaTypes = [
   contactPage,
   quotePage,
   category,
+  serviceCounty,
+  serviceArea,
 ]

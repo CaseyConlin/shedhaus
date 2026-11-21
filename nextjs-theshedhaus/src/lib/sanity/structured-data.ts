@@ -140,6 +140,24 @@ export function generateCollectionStructuredData(options: {
   };
 }
 
+export function generateServiceAreaPageStructuredData(options: {
+  name: string;
+  description: string;
+  path: string;
+}): JsonLdRecord {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: options.name,
+    description: options.description,
+    url: getAbsoluteUrl(options.path),
+    about: {
+      "@type": "Place",
+      name: options.name,
+    },
+  };
+}
+
 export function generateCategoryCollectionStructuredData(
   category: {
     name: string;
@@ -201,6 +219,37 @@ export function generateLocalBusinessStructuredData(): JsonLdRecord {
       addressRegion: "NY",
       addressCountry: "US",
     },
+    areaServed: [
+      {
+        "@type": "AdministrativeArea",
+        name: "Westchester County, NY",
+      },
+      {
+        "@type": "AdministrativeArea",
+        name: "Putnam County, NY",
+      },
+      {
+        "@type": "AdministrativeArea",
+        name: "Dutchess County, NY",
+      },
+      {
+        "@type": "AdministrativeArea",
+        name: "Fairfield County, CT",
+      },
+      ...[
+        "Ardsley",
+        "Hastings",
+        "Mount Pleasant",
+        "Elmsford",
+        "North Castle",
+        "Verplank",
+        "Buchanan",
+        "New Castle",
+      ].map((name) => ({
+        "@type": "Place",
+        name: `${name}, NY`,
+      })),
+    ],
     openingHoursSpecification: [
       {
         "@type": "OpeningHoursSpecification",
