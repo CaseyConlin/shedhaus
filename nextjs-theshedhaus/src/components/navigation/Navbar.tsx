@@ -803,11 +803,18 @@ export const Navbar = () => {
                           className="p-1.5 text-neutral-500 hover:text-primary"
                           aria-label={`Toggle ${link.name} submenu`}
                         >
-                          <span
-                            className={`inline-block text-primary transform transition-transform duration-200 ${isExpanded ? "rotate-90" : ""}`}
+                          <svg
+                            aria-hidden="true"
+                            viewBox="0 0 20 20"
+                            className={`h-4 w-4 text-primary transition-transform duration-200 ${isExpanded ? "rotate-90" : ""}`}
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
                           >
-                            ▶
-                          </span>
+                            <path d="M7 4l6 6-6 6" />
+                          </svg>
                         </button>
                       )}
                     </div>
@@ -903,11 +910,18 @@ export const Navbar = () => {
                           className="p-1.5 text-neutral-500 hover:text-primary"
                           aria-label={`Toggle ${link.name} submenu`}
                         >
-                          <span
-                            className={`inline-block text-primary transform transition-transform duration-200 ${isExpanded ? "rotate-90" : ""}`}
+                          <svg
+                            aria-hidden="true"
+                            viewBox="0 0 20 20"
+                            className={`h-4 w-4 text-primary transition-transform duration-200 ${isExpanded ? "rotate-90" : ""}`}
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
                           >
-                            ▶
-                          </span>
+                            <path d="M7 4l6 6-6 6" />
+                          </svg>
                         </button>
                       </div>
                       {isExpanded && (
