@@ -5,11 +5,20 @@ import { PageHeader } from "@/components/text/PageHeader";
 import { KeyFeatures } from "@/components/text/KeyFeatures";
 import { SpecTable } from "@/components/text/SpecTable";
 import { ProductGallery } from "@/components/ProductGallery";
-import { getProductPageData, getSuggestedProducts } from "@/lib/sanity/content";
+import {
+  getCategoryBySlug,
+  getProductPageData,
+  getSuggestedProducts,
+} from "@/lib/sanity/content";
 import { GalleryItem } from "@/lib/sanity/types";
 import { LinkButton } from "@/components/buttons/LinkButton";
 import { createClient } from "next-sanity";
-import { generateProductStructuredData } from "@/lib/sanity/structured-data";
+import { getPrimaryCategory } from "@/lib/sanity/categories";
+import {
+  generateBreadcrumbStructuredData,
+  generateProductStructuredData,
+  getAbsoluteUrl,
+} from "@/lib/sanity/structured-data";
 import { ProductStructuredData } from "@/components/ProductStructuredData";
 import { ProductList } from "@/components/productList/ProductList";
 
@@ -318,7 +327,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: ProductPageProps): Promise<Metadata> {
-  const { productSlug } = await params;
+  const { category, productSlug } = await params;
   const productData = await getProductPageData(productSlug);
 
   if (!productData) {
@@ -327,21 +336,32 @@ export async function generateMetadata({
     };
   }
 
+  const primaryCategory =
+    getPrimaryCategory(productData.category, category) ?? category;
+  const canonicalUrl = getAbsoluteUrl(
+    `/signature-styles/${primaryCategory}/${productSlug}`,
+  );
+
   return {
     title: productData.seo?.title || productData.pageTitle,
-    description: productData.seo?.description || productData.pageDescription,
+    description: productData.seo?.description,
+    alternates: {
+      canonical: canonicalUrl,
+    },
     openGraph: productData.seo?.socialImage
       ? {
+          url: canonicalUrl,
           images: [productData.seo.socialImage.asset.url],
         }
-      : undefined,
+      : {
+          url: canonicalUrl,
+        },
   };
 }
 
 export default async function ProductPage({ params }: ProductPageProps) {
   const { productSlug, category } = await params;
   const productData = await getProductPageData(productSlug);
-  const suggestedProducts = await getSuggestedProducts(category, productSlug);
 
   if (!productData) {
     return (
@@ -350,6 +370,14 @@ export default async function ProductPage({ params }: ProductPageProps) {
       </div>
     );
   }
+
+  const primaryCategory =
+    getPrimaryCategory(productData.category, category) ?? category;
+  const [primaryCategoryData, suggestedProducts] = await Promise.all([
+    getCategoryBySlug(primaryCategory),
+    getSuggestedProducts(category, productSlug),
+  ]);
+  const primaryCategoryName = primaryCategoryData?.name || primaryCategory;
 
   // Convert gallery to ProductGallery format
   const galleryImages =
@@ -366,13 +394,27 @@ export default async function ProductPage({ params }: ProductPageProps) {
   // Generate structured data for SEO
   const structuredData = generateProductStructuredData(
     productData,
-    category,
+    primaryCategory,
     productSlug,
+    primaryCategoryName,
   );
+  const breadcrumbData = generateBreadcrumbStructuredData([
+    { name: "Home", path: "/" },
+    { name: "Structures", path: "/signature-styles" },
+    {
+      name: primaryCategoryName,
+      path: `/signature-styles/${primaryCategory}`,
+    },
+    {
+      name: productData.productName,
+      path: `/signature-styles/${primaryCategory}/${productSlug}`,
+    },
+  ]);
 
   return (
     <>
       <ProductStructuredData data={structuredData} />
+      <ProductStructuredData data={breadcrumbData} />
       <PageHeader
         title={productData.pageTitle}
         description={

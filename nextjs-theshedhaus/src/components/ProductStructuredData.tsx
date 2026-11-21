@@ -1,23 +1,20 @@
-"use client";
+import type { JsonLdRecord } from "@/lib/sanity/structured-data";
 
-import type { ProductStructuredData } from "@/lib/sanity/structured-data";
-
-/**
- * Client component that renders JSON-LD structured data script tag
- * Injects Product schema into page <head> for SEO
- */
-
-interface ProductStructuredDataProps {
-  data: ProductStructuredData;
+interface JsonLdScriptProps {
+  data: JsonLdRecord;
 }
 
-export function ProductStructuredData({ data }: ProductStructuredDataProps) {
+export function JsonLdScript({ data }: JsonLdScriptProps) {
   return (
     <script
       type="application/ld+json"
       dangerouslySetInnerHTML={{
-        __html: JSON.stringify(data),
+        __html: JSON.stringify(data).replace(/</g, "\\u003c"),
       }}
     />
   );
+}
+
+export function ProductStructuredData({ data }: JsonLdScriptProps) {
+  return <JsonLdScript data={data} />;
 }

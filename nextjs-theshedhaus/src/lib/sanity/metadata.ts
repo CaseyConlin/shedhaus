@@ -170,12 +170,15 @@ export async function getConfigurationPageMetadata(): Promise<Metadata> {
 export async function getContactPageMetadata(): Promise<Metadata> {
   try {
     const page = await client.fetch(CONTACT_PAGE_QUERY);
-    return convertSeoToMetadata(page?.seo);
+    return convertSeoToMetadata(page?.seo, "/contact");
   } catch (error) {
     console.error("Error fetching contact page metadata:", error);
     return {
       title: "Contact Us | The Shed Haus",
       description: "Get in touch with us",
+      alternates: {
+        canonical: "/contact",
+      },
     };
   }
 }

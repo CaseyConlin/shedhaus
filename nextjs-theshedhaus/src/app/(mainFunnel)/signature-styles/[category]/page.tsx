@@ -3,6 +3,12 @@ import { PageHeader } from "@/components/text/PageHeader";
 import { ProductList } from "@/components/productList/ProductList";
 import { getCategoryBySlug, getProductsByCategory } from "@/lib/sanity/content";
 import { createClient } from "next-sanity";
+import { JsonLdScript } from "@/components/ProductStructuredData";
+import {
+  generateBreadcrumbStructuredData,
+  generateCategoryCollectionStructuredData,
+  getAbsoluteUrl,
+} from "@/lib/sanity/structured-data";
 
 interface CategoryPageProps {
   params: Promise<{ category: string }>;
@@ -77,9 +83,14 @@ export async function generateMetadata({
     };
   }
 
+  const canonicalUrl = getAbsoluteUrl(`/signature-styles/${category}`);
+
   return {
     title: categoryData.seo?.title || categoryData.pageTitle,
     description: categoryData.seo?.description || categoryData.pageDescription,
+    alternates: {
+      canonical: canonicalUrl,
+    },
     openGraph: categoryData.seo?.socialImage
       ? {
           images: [categoryData.seo.socialImage.asset.url],
@@ -100,8 +111,20 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
       </div>
     );
   }
+  const collectionData = generateCategoryCollectionStructuredData(
+    categoryData,
+    products,
+  );
+  const breadcrumbData = generateBreadcrumbStructuredData([
+    { name: "Home", path: "/" },
+    { name: "Structures", path: "/signature-styles" },
+    { name: categoryData.name, path: `/signature-styles/${category}` },
+  ]);
+
   return (
     <>
+      <JsonLdScript data={collectionData} />
+      <JsonLdScript data={breadcrumbData} />
       <PageHeader
         title={categoryData.pageTitle}
         description={categoryData.pageDescription}

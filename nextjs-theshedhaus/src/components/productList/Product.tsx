@@ -3,6 +3,7 @@ import Image from "next/image";
 import { LinkButton } from "../buttons/LinkButton";
 import Link from "next/link";
 import { GalleryItem } from "@/lib/sanity/types";
+import { getPrimaryCategory } from "@/lib/sanity/categories";
 
 export interface Product {
   productName: string;
@@ -45,15 +46,10 @@ export const ProductCard = ({
       .filter(Boolean)
       .slice(0, 4) || [];
 
-  let linkCategory: string;
-  if (currentCategory) {
-    const categories = Array.isArray(category) ? category : [category];
-    linkCategory = categories.includes(currentCategory)
-      ? currentCategory
-      : categories[0];
-  } else {
-    linkCategory = Array.isArray(category) ? category[0] : category;
-  }
+  const categories = Array.isArray(category) ? category : [category];
+  const linkCategory = currentCategory && categories.includes(currentCategory)
+    ? currentCategory
+    : getPrimaryCategory(category) || "";
 
   const link = `/signature-styles/${linkCategory}/${slug}`;
   return (

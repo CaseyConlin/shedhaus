@@ -1,8 +1,15 @@
 import { MetadataRoute } from "next";
 import { getAllCategories, getProductsByCategory } from "@/lib/sanity/content";
+import { getPrimaryCategory } from "@/lib/sanity/categories";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.SITE_URL || "http://localhost:3000";
+  const configuredUrl =
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    process.env.SITE_URL ||
+    "https://theshedhaus.com";
+  const baseUrl = /^https?:\/\//i.test(configuredUrl)
+    ? configuredUrl.replace(/\/$/, "")
+    : `https://${configuredUrl.replace(/\/$/, "")}`;
 
   // Static pages
   const staticPages: MetadataRoute.Sitemap = [
@@ -75,9 +82,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       if (products && products.length > 0) {
         for (const product of products) {
           // Option B: Use only the first category to avoid duplicate product URLs
-          const firstCategory = Array.isArray(product.category)
-            ? product.category[0]
-            : product.category;
+          const firstCategory = getPrimaryCategory(product.category);
 
           // Only add product if it belongs to current category (avoid duplicates)
           if (firstCategory === category.slug.current) {

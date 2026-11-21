@@ -1,26 +1,19 @@
 /**
- * JSON-LD Structured Data for Product Pages
- * Generates schema.org Product schema for SEO
+ * JSON-LD structured data builders for schema.org entities.
  */
 
-export interface ProductStructuredData {
-  "@context": string;
-  "@type": string;
+export type JsonLdRecord = Record<string, unknown>;
+
+export interface ProductStructuredData extends JsonLdRecord {
+  "@context": "https://schema.org";
+  "@type": "Product";
   name: string;
+  url: string;
+  category: string;
   image: string[];
   description: string;
-  brand: {
-    "@type": string;
-    name: string;
-  };
-  offers: {
-    "@type": string;
-    availability: string;
-    url: string;
-    priceCurrency: string;
-  };
   additionalProperty: Array<{
-    "@type": string;
+    "@type": "PropertyValue";
     name: string;
     value: string;
   }>;
@@ -44,65 +37,181 @@ interface ProductPageData {
   }>;
 }
 
-/**
- * Get the site domain, preferring env variable, falling back to hardcoded domain
- */
-function getSiteDomain(): string {
-  return (
-    process.env.NEXT_PUBLIC_SITE_URL ||
-    process.env.VERCEL_PROJECT_PRODUCTION_URL ||
-    "https://theshedhaus.com"
-  );
+interface CategoryListItem {
+  name: string;
+  slug: { current: string };
+  seo?: { description?: string };
+  pageDescription?: string;
 }
 
-/**
- * Generate Product schema.org JSON-LD for a product page
- * @param productData - Product data from Sanity
- * @param category - Product category (e.g., "sheds")
- * @param productSlug - Product URL slug (e.g., "a-frame-shed")
- * @returns JSON-LD Product schema object
- */
+interface ProductListItem {
+  productName: string;
+  seo?: { slug?: { current?: string } };
+}
+
+export function getSiteUrl(): string {
+  const configuredUrl =
+    process.env.NEXT_PUBLIC_SITE_URL || "https://theshedhaus.com";
+  const withProtocol = /^https?:\/\//i.test(configuredUrl)
+    ? configuredUrl
+    : `https://${configuredUrl}`;
+
+  return withProtocol.replace(/\/$/, "");
+}
+
+export function getAbsoluteUrl(path: string): string {
+  return `${getSiteUrl()}${path.startsWith("/") ? path : `/${path}`}`;
+}
+
 export function generateProductStructuredData(
   productData: ProductPageData,
   category: string,
   productSlug: string,
+  categoryName: string = category,
 ): ProductStructuredData {
-  const domain = getSiteDomain();
-  const baseUrl = domain.endsWith("/") ? domain : `${domain}/`;
-  const productUrl = `${baseUrl}signature-styles/${category}/${productSlug}`;
-
-  // Extract all gallery image URLs
+  const productUrl = getAbsoluteUrl(
+    `/signature-styles/${category}/${productSlug}`,
+  );
   const imageUrls =
     productData.gallery
       ?.map((item) => item.image?.asset?.url)
-      .filter((url): url is string => !!url) || [];
-
-  // Map all specs to additionalProperty
+      .filter((url): url is string => Boolean(url)) || [];
   const additionalProperties =
-    productData.specs?.map((spec) => ({
-      "@type": "PropertyValue",
-      name: spec.lead,
-      value: spec.text,
-    })) || [];
+    productData.specs
+      ?.filter((spec) => spec.lead && spec.text)
+      .map((spec) => ({
+        "@type": "PropertyValue" as const,
+        name: spec.lead,
+        value: spec.text,
+      })) || [];
 
-  const structuredData: ProductStructuredData = {
-    "@context": "https://schema.org/",
+  return {
+    "@context": "https://schema.org",
     "@type": "Product",
     name: productData.productName,
+    url: productUrl,
+    category: categoryName,
     image: imageUrls,
     description: productData.seo?.description || productData.productName,
-    brand: {
-      "@type": "Brand",
-      name: "The Shed Haus",
-    },
-    offers: {
-      "@type": "Offer",
-      availability: "https://schema.org/InStock",
-      url: productUrl,
-      priceCurrency: "USD",
-    },
     additionalProperty: additionalProperties,
   };
+}
 
-  return structuredData;
+export function generateBreadcrumbStructuredData(
+  items: Array<{ name: string; path: string }>,
+): JsonLdRecord {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.name,
+      item: getAbsoluteUrl(item.path),
+    })),
+  };
+}
+
+export function generateCollectionStructuredData(options: {
+  name: string;
+  description: string;
+  path: string;
+  items: Array<{
+    name: string;
+    path: string;
+  }>;
+}): JsonLdRecord {
+  return {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: options.name,
+    description: options.description,
+    url: getAbsoluteUrl(options.path),
+    mainEntity: {
+      "@type": "ItemList",
+      numberOfItems: options.items.length,
+      itemListElement: options.items.map((item, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: item.name,
+        url: getAbsoluteUrl(item.path),
+      })),
+    },
+  };
+}
+
+export function generateCategoryCollectionStructuredData(
+  category: {
+    name: string;
+    slug: { current: string };
+    seo?: { description?: string };
+    pageTitle?: string;
+    pageDescription?: string;
+  },
+  products: ProductListItem[],
+): JsonLdRecord {
+  const categorySlug = category.slug.current;
+  return generateCollectionStructuredData({
+    name: category.pageTitle || category.name,
+    description:
+      category.seo?.description ||
+      category.pageDescription ||
+      `Explore ${category.name} structures.`,
+    path: `/signature-styles/${categorySlug}`,
+    items: products
+      .filter((product) => product.seo?.slug?.current)
+      .map((product) => ({
+        name: product.productName,
+        path: `/signature-styles/${categorySlug}/${product.seo!.slug!.current}`,
+      })),
+  });
+}
+
+export function generateIndexCollectionStructuredData(
+  categories: CategoryListItem[],
+): JsonLdRecord {
+  return generateCollectionStructuredData({
+    name: "Structures",
+    description:
+      "Explore sheds, garages, barns, playhouses, and other outdoor structures.",
+    path: "/signature-styles",
+    items: categories.map((category) => ({
+      name: category.name,
+      path: `/signature-styles/${category.slug.current}`,
+    })),
+  });
+}
+
+export function generateLocalBusinessStructuredData(): JsonLdRecord {
+  return {
+    "@context": "https://schema.org",
+    "@type": ["Store", "HomeAndConstructionBusiness"],
+    name: "The Shed Haus",
+    url: getSiteUrl(),
+    image: getAbsoluteUrl("/images/shedhaus-sign.webp"),
+    description:
+      "Sells and installs sheds, garages, barns, playhouses, pavilions, and outdoor structures.",
+    telephone: "+1-845-855-5989",
+    email: "info@theshedhaus.com",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "816 Route 22",
+      addressLocality: "Pawling",
+      postalCode: "12564",
+      addressRegion: "NY",
+      addressCountry: "US",
+    },
+    openingHoursSpecification: [
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        opens: "09:00",
+        closes: "15:00",
+      },
+    ],
+    sameAs: [
+      "https://facebook.com/theshedhaus",
+      "https://instagram.com/theshedhaus",
+    ],
+  };
 }
