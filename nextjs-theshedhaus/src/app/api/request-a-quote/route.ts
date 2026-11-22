@@ -78,7 +78,7 @@ export async function POST(request: Request): Promise<Response> {
     try {
       const priceListDoc = await client.fetch(
         `*[_type == "priceList" && structureType == $structureType][0] { file }`,
-        { structureType }
+        { structureType },
       );
       if (priceListDoc?.file?.asset?._ref) {
         const assetRef = priceListDoc.file.asset._ref;
@@ -99,14 +99,13 @@ export async function POST(request: Request): Promise<Response> {
     // Email 1: Send to the submitter with the price list
     let customerEmailBody =
       "<p>Thank you for your interest in The Shed Haus! We've received your quote request.</p>";
-    customerEmailBody +=
-      "<p>Please find our current pricing information below:</p>";
 
     if (priceListUrl) {
+      customerEmailBody +=
+        "<p>Please find our current pricing information below:</p>";
       customerEmailBody += `<p><a href="${priceListUrl}" target="_blank" style="background-color: #860000; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px; display: inline-block;">Download ${structureType} Price List</a></p>`;
     } else {
-      customerEmailBody +=
-        `<p>Our team will be in contact shortly with pricing information tailored to your ${structureType} project.</p>`;
+      customerEmailBody += `<p>Our team will be in contact shortly with pricing information tailored to your ${structureType} project.</p>`;
     }
 
     customerEmailBody +=
