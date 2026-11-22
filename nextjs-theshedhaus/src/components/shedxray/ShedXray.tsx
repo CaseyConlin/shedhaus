@@ -164,7 +164,7 @@ export const ShedXray = () => {
                 text={[
                   "The difference in our quality is clear. Our hand-crafted structures begin with premium grade pressure treated lumber foundation and are tied together with the highest quality vinyl or T1-11 wood siding, 30 year architectural grade shingles and a 10 year limited warranty.",
                 ]}
-                className="dark:text-black"
+                className="text-white dark:text-black "
               />
               <div className="mt-4 flex justify-center">
                 <LinkButton text="Learn More" link="/sheds" />
