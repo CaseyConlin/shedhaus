@@ -167,7 +167,12 @@ export const ShedXray = () => {
                 className="text-white dark:text-black "
               />
               <div className="mt-4 flex justify-center">
-                <LinkButton text="Learn More" link="/sheds" />
+                <LinkButton
+                  aria-label="Learn more about shed configuration"
+
+                  text="Learn More"
+                  link="/configuration"
+                />
               </div>
             </div>
           </div>

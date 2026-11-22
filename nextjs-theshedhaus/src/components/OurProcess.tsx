@@ -173,7 +173,11 @@ export const OurProcess = () => {
         {/* Buttons Action Group (Frame 258) */}
         {/* Width 317px, gap: 33px */}
         <div className="flex flex-col md:flex-row justify-center gap-4">
-          <LinkButton text="Learn More" link="/about" />
+          <LinkButton
+            text="Learn More"
+            link="/about"
+            aria-label="Learn more about the Shed Haus."
+          />
           <LinkButton
             text="Request a Quote"
             link="/contact?type=quote"
