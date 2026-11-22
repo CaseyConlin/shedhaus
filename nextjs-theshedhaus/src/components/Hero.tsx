@@ -20,6 +20,7 @@ export const Hero = () => {
         />
         <Image
           src={heroImage}
+          fetchPriority="high"
           alt="Custom-built shed exterior"
           fill
           priority

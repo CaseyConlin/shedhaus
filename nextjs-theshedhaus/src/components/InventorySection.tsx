@@ -2,6 +2,7 @@ import Link from "next/link";
 import { H2 } from "./text/H2";
 import { Body } from "./text/Body";
 import { LinkButton } from "./buttons/LinkButton";
+import Image from "next/image";
 interface Category {
   name: string;
   slug: {
@@ -45,12 +46,16 @@ const InventoryItem = ({
 }) => {
   return (
     <Link href={link}>
-      <div
-        className="bg-white w-87 h-66 md:w-67 md:h-49 rounded-md shadow-xl bg-cover bg-bottom hover:scale-101 transition-transform duration-300"
-        style={{ backgroundImage: `url('${imgSrc}')` }}
-      >
-        <div className="flex justify-start items-end  pb-4 w-full h-full">
-          <div className="bg-black/65 text-white p-1 px-2 rounded-md rounded-l-none w-3/4">
+      <div className="relative bg-white w-87 h-66 md:w-67 md:h-49 overflow-hidden rounded-md shadow-xl hover:scale-101 transition-transform duration-300">
+        <Image
+          src={imgSrc}
+          alt=""
+          fill
+          sizes="(min-width: 768px) 268px, 348px"
+          className="object-cover object-bottom"
+        />
+        <div className="relative flex h-full w-full items-end pb-4">
+          <div className="w-3/4 rounded-md rounded-l-none bg-black/65 p-1 px-2 text-white">
             <h3 className="text-lg font-bold">{title}</h3>
           </div>
         </div>
