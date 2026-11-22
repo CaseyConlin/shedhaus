@@ -80,7 +80,7 @@ export const ShedDesignOptions = () => {
             <LinkButton text="View Custom Options" link="/configuration" />
             <LinkButton
               text="Request a Quote"
-              link="/request-quote"
+              link="/request-a-quote"
               variant="white"
             />
           </div>
@@ -135,7 +135,7 @@ export const ShedDesignOptions = () => {
           <LinkButton text="View Custom Options" link="/configuration" />
           <LinkButton
             text="Request a Quote"
-            link="/request-quote"
+            link="/request-a-quote"
             variant="white"
           />
         </div>

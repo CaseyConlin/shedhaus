@@ -65,6 +65,7 @@ export const Hero = () => {
               link="https://www.facebook.com/media/set/?vanity=TheShedHaus&set=a.2157873454450349"
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="Shop Our Inventory"
             />
           </div>
         </div>
